@@ -5,8 +5,8 @@
 	<legend>
 		<?php echo __('Merci d\'entrer votre username et password'); ?>
 	</legend>
-	<?php echo $this->Form->input('login');
-		  echo $this->Form->input('mdp'); ?>
+	<?php echo $this->Form->input('username');
+		  echo $this->Form->input('password'); ?>
 </fieldset>
 <?php echo $this->Form->end(__('login')); ?>
 </div>

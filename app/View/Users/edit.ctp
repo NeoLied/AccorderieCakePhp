@@ -1,3 +1,5 @@
+<!-- Fichier: /app/View/Posts/edit.ctp -->
+
 <h1>Editer l\'utilisateur</h1>
 <?php
 echo $this->Form->create('User');

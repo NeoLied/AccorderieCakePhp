@@ -1,7 +1,7 @@
 <!-- File: /app/View/Posts/offre.ctp -->
 
 
-<h1>Blog offres</h1>
+<h1>Offres</h1>
 
 <?php echo $this->Html->link(
     'Ajouter une annonce',

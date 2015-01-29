@@ -1,13 +1,13 @@
 <?php
 
-class UtilisateurFixture extends CakeTestFixture
+class UserFixture extends CakeTestFixture
 {
 	public $useDbConfig = 'test';
 	
 	public $fields = array(
 			'id' => array('type' => 'integer', 'key' => 'primary'),
-			'login' => array('type' => 'string', 'length' => '100'),
-			'mdp' => array('type' => 'string', 'length' => '100'),
+			'username' => array('type' => 'string', 'length' => '100'),
+			'password' => array('type' => 'string', 'length' => '100'),
 	);
 	
 	public $records = array(

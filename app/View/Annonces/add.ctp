@@ -9,7 +9,7 @@ echo $this->Form->input('temps_requis', array(
 		'empty' => '(choisissez)',
       'options' => array(0,1, 2, 3, 4, 5)
   ));
-$options = array('0' => 'Annonce', '1' => 'Requete');
+$options = array('0' => 'Demande', '1' => 'Offre');
 $attributes = array('legend' => false);
 echo $this->Form->radio('demande', $options, $attributes);
 echo $this->Form->input('date_post',array('type' => 'hidden','value' => date('Y-m-d')));

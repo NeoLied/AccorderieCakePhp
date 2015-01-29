@@ -11,7 +11,9 @@ class AnnoncesController extends AppController {
    
     public function offre() {
     	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.demande' => 1))));
+    			'conditions' => array('Annonce.demande' => 1,
+    								  'Annonce.validation' => 1)
+    	)));
     }
     
     
@@ -22,7 +24,8 @@ class AnnoncesController extends AppController {
     	 
     public function demande() {
     	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.demande' => 0))));
+    			'conditions' => array('Annonce.demande' => 0,
+    								  'Annonce.validation' => 1))));
     }
 
     public function view($id = null) {

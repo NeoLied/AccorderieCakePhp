@@ -1,3 +1,5 @@
+<!-- File: /app/View/Utilisateurs/index.ctp -->
+
 <h1>Utilisateurs</h1>
 <?php echo $this->Html->link(
     'Ajouter un Utilisateur',
@@ -13,7 +15,7 @@
         <th>Id</th>
         <th>Nom</th>
         <th>Prénom</th>
-        <th>login</th>
+        <th>Username</th>
     </tr>
 
     <!-- Here is where we loop through our $posts array, printing out post info -->
@@ -26,7 +28,7 @@
             array('controller' => 'users', 'action' => 'view', $user['User']['id'])); ?>
         </td>
         <td><?php echo $user['User']['prenom']; ?></td>
-        <td><?php echo $user['User']['login']; ?></td>
+        <td><?php echo $user['User']['username']; ?></td>
         <td>
         	<?php echo $this->Form->postLink(
                 'Supprimer',
