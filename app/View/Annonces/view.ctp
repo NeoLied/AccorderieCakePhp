@@ -2,5 +2,5 @@
 
 <h1><?php echo h($annonce['Annonce']['titre']); ?></h1>
 
-<p><small>Crיי le : <?php echo $annonce['Annonce']['description']; ?></small></p>
+<p><small>Crֳ©ֳ©e le : <?php echo $annonce['Annonce']['description']; ?></small></p>
 

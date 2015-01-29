@@ -3,7 +3,7 @@ class UsersController extends AppController {
 	
 public function beforeFilter() {
 	    parent::beforeFilter();
-	    // Permet aux utilisateurs de s'enregistrer et de se déconnecter
+	    // Permet aux utilisateurs de s'enregistrer et de se dÃ©connecter
 	    $this->Auth->allow('add', 'logout');
 	}
 
@@ -24,10 +24,10 @@ public function beforeFilter() {
         if ($this->request->is('post')) {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('L\'utilisateur a été sauvegardé'));
+                $this->Session->setFlash(__('L\'utilisateur a Ã©tÃ© sauvegardÃ©'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('L\'utilisateur n\'a pas été sauvegardé. Merci de réessayer.'));
+                $this->Session->setFlash(__('L\'utilisateur n\'a pas Ã©tÃ© sauvegardÃ©. Merci de rÃ©essayer.'));
             }
         }
     }
@@ -39,10 +39,10 @@ public function beforeFilter() {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('L\'utilisateur a été sauvegardé'));
+                $this->Session->setFlash(__('L\'utilisateur a Ã©tÃ© Ã©ditÃ©'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('L\'utilisateur n\'a pas été sauvegardé. Merci de réessayer.'));
+                $this->Session->setFlash(__('L\'utilisateur n\'a pas Ã©tÃ© Ã©ditÃ©. Merci de rÃ©essayer.'));
             }
         } else {
             $this->request->data = $this->User->read(null, $id);
@@ -61,10 +61,10 @@ public function beforeFilter() {
             throw new NotFoundException(__('Utilisateur invalide'));
         }
         if ($this->User->delete()) {
-            $this->Session->setFlash(__('Utilisateur supprimé'));
+            $this->Session->setFlash(__('Utilisateur supprimÃ©'));
             return $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('L\'utilisateur n\'a pas été supprimé'));
+        $this->Session->setFlash(__('L\'utilisateur n\'a pas Ã©tÃ© supprimÃ©'));
         return $this->redirect(array('action' => 'index'));
     }
 	
@@ -73,7 +73,7 @@ public function beforeFilter() {
 	        if ($this->Auth->login()) {
 	            return $this->redirect($this->Auth->redirectUrl());
 	        } else {
-	            $this->Session->setFlash(__("Nom d'user ou mot de passe invalide, réessayer"));
+	            $this->Session->setFlash(__("Nom d'user ou mot de passe invalide, rÃ©essayez"));
 	        }
 	    }
 	}
