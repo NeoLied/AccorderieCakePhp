@@ -1,7 +1,12 @@
 <?php
 
-class Utilisateur extends AppModel
+App::uses('AppModel', 'Model');
+App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
+
+class User extends AppModel
 {
+	public $name = 'User';
+	
 	public $validate = array(
 			'login' => array(
             	'alphaNumeric' => array(
@@ -29,8 +34,8 @@ class Utilisateur extends AppModel
 			
 			'mail' => array(
             	'rule'    => array('emailUnique'),
-            	'message' => 'Cet utilisateur existe déjà'
-       	 )
+            	'message' => 'Cet user existe déjà'
+       	 	),
 	);
 	
 	public function emailUnique($check)
@@ -40,6 +45,16 @@ class Utilisateur extends AppModel
 				'conditions' => $check,
 				'recursive' => -1
 		));
-		return $compteurCodeActuel < $limit;
+		return $compteur == 0;
+	}
+	
+	public function beforeSave($options = array()) {
+		if (isset($this->data[$this->alias]['mdp'])) {
+			$passwordHasher = new SimplePasswordHasher();
+			$this->data[$this->alias]['mdp'] = $passwordHasher->hash(
+					$this->data[$this->alias]['mdp']
+			);
+		}
+		return true;
 	}
 }

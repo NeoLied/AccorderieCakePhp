@@ -1,6 +1,6 @@
-<h1>Ajouter un utilisateur</h1>
+<h1>Ajouter un user</h1>
 <?php
-echo $this->Form->create('Utilisateur');
+echo $this->Form->create('User');
 echo $this->Form->input('login');
 echo $this->Form->input('mdp');
 echo $this->Form->input('nom');

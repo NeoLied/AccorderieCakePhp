@@ -4,7 +4,25 @@ class AnnoncesController extends AppController {
  	public $helpers = array('Html', 'Form');
 
     public function index() {
-         $this->set('annonces', $this->Annonce->find('all'));
+         $this->set('annonces', $this->Annonce->find('all', array(
+         		'conditions' => array('Annonce.validation' => 1
+         ))));
+    }
+   
+    public function offre() {
+    	$this->set('annonces',  $this->Annonce->find('all', array(
+    			'conditions' => array('Annonce.demande' => 1))));
+    }
+    
+    
+    public function validation() {
+    	$this->set('annonces',  $this->Annonce->find('all', array(
+    			'conditions' => array('Annonce.validation' => 0))));
+    	}
+    	 
+    public function demande() {
+    	$this->set('annonces',  $this->Annonce->find('all', array(
+    			'conditions' => array('Annonce.demande' => 0))));
     }
 
     public function view($id = null) {
@@ -64,6 +82,12 @@ class AnnoncesController extends AppController {
     		);
     		return $this->redirect(array('action' => 'index'));
     	}
+    }
+    
+    public function validateSelect($id){
+    	$this->Annonce->id = $id;
+    	$this->Annonce->saveField('validation', true);
+    	return $this->redirect(array('action' => 'validation'));
     }
 }
 ?>
