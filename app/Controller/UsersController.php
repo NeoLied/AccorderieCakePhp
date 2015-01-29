@@ -8,9 +8,9 @@ class UsersController extends AppController {
 		$this->Auth->allow('add', 'logout');
 	}
 	
-	public function index() 
-	{
-        $this->set('users', $this->User->find('all'));
+	public function index() {
+        $this->User->recursive = 0;
+        $this->set('users', $this->paginate());
     }
     
     public function view($id = null) 
