@@ -1,14 +1,14 @@
 <?php
-App::uses('Utilisateur', 'Model');
+App::uses('User', 'Model');
 
-class UtilisateurTestCase extends CakeTestCase
+class UserTestCase extends CakeTestCase
 {
-	public $fixtures = array('app.utilisateur');
+	public $fixtures = array('app.user');
 	
 	public function setUp()
 	{
 		parent::setUp();
-		$this->Utilisateur = ClassRegistry::init('Utilisateur');
+		$this->User = ClassRegistry::init('User');
 	}
 	
 	public function testPHPUNIT()
