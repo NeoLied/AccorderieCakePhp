@@ -7,14 +7,14 @@
 ); ?>
 <br>
 <?php echo $this->Html->link(
-    'Se deconnecter',
+    'Se dÃ©connecter',
     array('controller' => 'users', 'action' => 'logout')
 ); ?>
 <table>
     <tr>
         <th>Id</th>
         <th>Nom</th>
-        <th>Prénom</th>
+        <th>PrÃ©nom</th>
         <th>Username</th>
     </tr>
 
@@ -33,7 +33,7 @@
         	<?php echo $this->Form->postLink(
                 'Supprimer',
                 array('action' => 'delete', $user['User']['id']),
-                array('confirm' => 'Etes-vous sûr ?'));
+                array('confirm' => 'Etes-vous sÃ»r ?'));
             ?>
             <?php echo $this->Html->link(
                 'Editer',

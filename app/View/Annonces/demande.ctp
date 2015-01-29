@@ -33,7 +33,7 @@
          <?php echo $this->Form->postLink(
                 'Supprimer',
                 array('action' => 'delete', $annonce['Annonce']['id']),
-                array('confirm' => "Etes-vous s�r ?"));
+                array('confirm' => "Êtes-vous sûr ?"));
             ?>
             
             <?php echo $this->Html->link(
