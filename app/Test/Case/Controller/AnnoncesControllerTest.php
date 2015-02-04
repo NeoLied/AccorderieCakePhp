@@ -81,7 +81,7 @@ class UserControllerTest extends ControllerTestCase
 	public function test_annonces_view_null()
 	{
 		try {
-			$result = $this->testAction('/annonces/view/null');
+			$result = $this->testAction('/annonces/view');
 			debug($result);
 		}
 		catch (NOTFOUNDEXCEPTION $e)
