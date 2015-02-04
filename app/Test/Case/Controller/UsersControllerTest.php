@@ -26,25 +26,13 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_users_edit()
 	{
-		$result = $this->testAction('/users/edit');
+		$result = $this->testAction('/users/edit/1');
 		debug($result);
 	}
 	
 	public function test_users_offre()
 	{
 		$result = $this->testAction('/users/offre');
-		debug($result);
-	}
-	
-	public function test_users_index()
-	{
-		$result = $this->testAction('/users/validation');
-		debug($result);
-	}
-	
-	public function test_users_index()
-	{
-		$result = $this->testAction('/users/view');
 		debug($result);
 	}
 }
