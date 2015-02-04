@@ -113,4 +113,10 @@ class UserControllerTest extends ControllerTestCase
 		$result = $this->testAction('/annonces/delete/1/demande');
 		debug($result);
 	}
+	
+	public function test_annonces_delete_methodeGet()
+	{
+		$result = $this->testAction('/annonces/delete/1/demande', array('method' => 'get'));
+		debug($result);
+	}
 }
