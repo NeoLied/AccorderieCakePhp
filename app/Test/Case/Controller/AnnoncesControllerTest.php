@@ -62,7 +62,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_annonces_view()
 	{
-		$result = $this->testAction('/annonces/view');
+		$result = $this->testAction('/annonces/view/1');
 		debug($result);
 	}
 	
