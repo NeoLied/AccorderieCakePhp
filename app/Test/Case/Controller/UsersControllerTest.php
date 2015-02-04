@@ -30,15 +30,21 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	public function test_users_offre()
+	public function test_users_view()
 	{
 		$result = $this->testAction('/users/view/1');
 		debug($result);
 	}
 	
+	public function test_users_view_sans_id()
+	{
+		$result = $this->testAction('/users/view/null');
+		debug($result);
+	}
+	
 	public function test_users_logout()
 	{
-		$result = $this->testAction('/users/view/1');
+		$result = $this->testAction('/users/logout');
 		debug($result);
 	}
 	
