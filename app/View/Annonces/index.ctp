@@ -31,8 +31,13 @@
         <td>
         
          <?php echo $this->Form->postLink(
+                'Signaler cette annonce',
+                array('action' => 'signaler', $annonce['Annonce']['id']));
+            ?>
+            
+         <?php echo $this->Form->postLink(
                 'Supprimer',
-                array('action' => 'delete', $annonce['Annonce']['id']),
+                array('action' => 'delete', $annonce['Annonce']['id'],'index'),
                 array('confirm' => "Êtes-vous sûr ?"));
             ?>
             

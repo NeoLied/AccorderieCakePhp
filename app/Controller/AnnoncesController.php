@@ -4,28 +4,22 @@ class AnnoncesController extends AppController {
  	public $helpers = array('Html', 'Form');
 
     public function index() {
-         $this->set('annonces', $this->Annonce->find('all', array(
-         		'conditions' => array('Annonce.validation' => 1
-         ))));
+         $this->set('annonces', $this->Annonce->find('all'));
     }
    
     public function offre() {
     	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.demande' => 1,
-    								  'Annonce.validation' => 1)
+    			'conditions' => array('Annonce.demande' => 1)
     	)));
     }
     
-    
     public function validation() {
-    	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.validation' => 0))));
+    	$this->set('annonces',  $this->Annonce->find('all'));
     	}
     	 
     public function demande() {
     	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.demande' => 0,
-    								  'Annonce.validation' => 1))));
+    			'conditions' => array('Annonce.demande' => 0))));
     }
 
     public function view($id = null) {
@@ -75,7 +69,7 @@ class AnnoncesController extends AppController {
     	}
     }
     
-    public function delete($id) {
+    public function delete($id,$nameRedirect) {
     	if ($this->request->is('get')) {
     		throw new MethodNotAllowedException();
     	}
@@ -83,14 +77,20 @@ class AnnoncesController extends AppController {
     		$this->Session->setFlash(
     				__('L\annonce avec id : %s a été supprimée.', h($id))
     		);
-    		return $this->redirect(array('action' => 'index'));
+    		return $this->redirect(array('action' => $nameRedirect));
     	}
     }
     
-    public function validateSelect($id){
+    public function signaler($id){
     	$this->Annonce->id = $id;
-    	$this->Annonce->saveField('validation', true);
-    	return $this->redirect(array('action' => 'validation'));
+    	$this->Annonce->saveField('signalee', true);
+    	return $this->redirect(array('action' => 'index'));
+    }
+    
+    public function annonceSignalee() {
+    	$this->set('annonces',  $this->Annonce->find('all', array(
+    			'conditions' => array('Annonce.signalee' => 1)
+    	)));
     }
 }
 ?>

@@ -29,10 +29,9 @@
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
         <td><?php echo $annonce['Annonce']['date_post']; ?></td>
         <td>
-        
-         <?php echo $this->Form->postLink(
+         <?php echo $this->Html->link(
                 'Supprimer',
-                array('action' => 'delete', $annonce['Annonce']['id']),
+                array('action' => 'delete', $annonce['Annonce']['id'],'demande'),
                 array('confirm' => "Êtes-vous sûr ?"));
             ?>
             

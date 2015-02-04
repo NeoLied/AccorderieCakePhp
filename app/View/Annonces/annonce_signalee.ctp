@@ -1,12 +1,8 @@
-<!-- File: /app/View/Posts/offre.ctp -->
+<!-- File: /app/View/Posts/validation.ctp -->
 
+<?php echo $this->Form->create('Annonce'); ?>
 
-<h1>Offres</h1>
-
-<?php echo $this->Html->link(
-    'Ajouter une annonce',
-    array('controller' => 'annonces', 'action' => 'add')
-); ?>
+<h1>Annonces Signalées</h1>
 
 <table>
     <tr>
@@ -30,18 +26,11 @@
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
         <td><?php echo $annonce['Annonce']['date_post']; ?></td>
         <td>
-        
-         <?php echo $this->Form->postLink(
+          <?php echo $this->Form->postLink(
                 'Supprimer',
-                array('action' => 'delete', $annonce['Annonce']['id'],'offre'),
-                array('confirm' => "Êtes-vous sûr ?"));
-            ?>
-            
-            <?php echo $this->Html->link(
-                'Editer',
-                array('action' => 'edit', $annonce['Annonce']['id'])
-            ); ?>
-        </td>
+                array('action' => 'delete',$annonce['Annonce']['id'],'annonceSignalee'),
+                array('confirm' => "Êtes-vous sûr ?"));?>
+          </td>
     </tr>
     <?php endforeach; ?>
     <?php unset($annonce); ?>
