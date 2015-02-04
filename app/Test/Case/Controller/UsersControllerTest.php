@@ -35,4 +35,16 @@ class UserControllerTest extends ControllerTestCase
 		$result = $this->testAction('/users/view/1');
 		debug($result);
 	}
+	
+	public function test_users_logout()
+	{
+		$result = $this->testAction('/users/view/1');
+		debug($result);
+	}
+	
+	public function test_users_delete()
+	{
+		$result = $this->testAction('/users/delete/1');
+		debug($result);
+	}
 }
