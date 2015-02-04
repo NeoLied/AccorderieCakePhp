@@ -6,81 +6,51 @@ class UserControllerTest extends ControllerTestCase
 {
 	public $fixtures = array('app.annonce');
 	
-	public function test_users_index() 
+	public function test_annonces_add()
+	{
+		$result = $this->testAction('/annonces/add');
+		debug($result);
+	}
+	
+	public function test_annonces_annonce_signalee()
+	{
+		$result = $this->testAction('/annonces/add');
+		debug($result);
+	}
+	
+	public function test_annonces_demande()
+	{
+		$result = $this->testAction('/annonces/demande');
+		debug($result);
+	}
+	
+	public function test_annonces_edit()
+	{
+		$result = $this->testAction('/annonces/edit/1');
+		debug($result);
+	}
+	
+	public function test_annonces_edit_sans_id()
+	{
+		try {
+			$result = $this->testAction('/annonces/edit/2');
+			debug($result);
+		}
+		catch (NOTFOUNDEXCEPTION $e)
+		{
+			assert(true);
+		}	
+	}
+	
+	public function test_annonces_index() 
 	{
 		$result = $this->testAction('/annonces/index');
 		debug($result);
 	}
 	
-	/*public function test_users_add()
+	public function test_annonces_offre()
 	{
-		$result = $this->testAction('/users/add');
+		$result = $this->testAction('/annonces/offre');
 		debug($result);
 	}
-	
-	public function test_users_edit()
-	{
-		$result = $this->testAction('/users/edit/1');
-		debug($result);
-	}
-	
-	public function test_users_edit_sans_id()
-	{
-		try {
-			$result = $this->testAction('/users/edit/null');
-			debug($result);
-		}
-		catch (NOTFOUNDEXCEPTION $e)
-		{
-			assert(true);
-		}
-	}
-	
-	public function test_users_login()
-	{
-		$result = $this->testAction('/users/login');
-		debug($result);
-	}
-	
-	public function test_users_view()
-	{
-		$result = $this->testAction('/users/view/1');
-		debug($result);
-	}
-	
-	public function test_users_view_sans_id()
-	{
-		try {
-			$result = $this->testAction('/users/view/null');
-			debug($result);
-		}
-		catch (NOTFOUNDEXCEPTION $e)
-		{
-			assert(true);
-		}
-	}
-	
-	public function test_users_logout()
-	{
-		$result = $this->testAction('/users/logout');
-		debug($result);
-	}
-	
-	public function test_users_delete()
-	{
-		$result = $this->testAction('/users/delete/1');
-		debug($result);
-	}
-	
-	public function test_users_delete_sans_id()
-	{
-		try {
-			$result = $this->testAction('/users/delete/null');
-			debug($result);
-		}
-		catch (NOTFOUNDEXCEPTION $e)
-		{
-			assert(true);
-		}
-	}*/
 }
