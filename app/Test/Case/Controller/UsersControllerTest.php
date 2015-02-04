@@ -34,7 +34,6 @@ class UserControllerTest extends ControllerTestCase
 		{
 			assert(true);
 		}
-		assert(false);
 	}
 	
 	public function test_users_login()
@@ -59,7 +58,6 @@ class UserControllerTest extends ControllerTestCase
 		{
 			assert(true);
 		}
-		assert(false);
 	}
 	
 	public function test_users_logout()
@@ -84,6 +82,5 @@ class UserControllerTest extends ControllerTestCase
 		{
 			assert(true);
 		}
-		assert(false);
 	}
 }
