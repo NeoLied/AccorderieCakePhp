@@ -14,7 +14,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_annonces_annonce_signalee()
 	{
-		$result = $this->testAction('/annonces/add');
+		$result = $this->testAction('/annonces/annonceSignalee');
 		debug($result);
 	}
 	
@@ -40,6 +40,18 @@ class UserControllerTest extends ControllerTestCase
 		{
 			assert(true);
 		}	
+	}
+	
+	public function test_annonces_edit_null()
+	{
+		try {
+			$result = $this->testAction('/annonces/edit');
+			debug($result);
+		}
+		catch (NOTFOUNDEXCEPTION $e)
+		{
+			assert(true);
+		}
 	}
 	
 	public function test_annonces_index() 
@@ -88,5 +100,11 @@ class UserControllerTest extends ControllerTestCase
 		{
 			assert(true);
 		}
+	}
+	
+	public function test_annonces_signaler()
+	{
+			$result = $this->testAction('/annonces/signaler/1');
+			debug($result);
 	}
 }
