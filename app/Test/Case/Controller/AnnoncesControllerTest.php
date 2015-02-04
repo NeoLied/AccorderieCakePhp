@@ -6,13 +6,13 @@ class UserControllerTest extends ControllerTestCase
 {
 	public $fixtures = array('app.annonce');
 	
-	/*public function test_users_index() 
+	public function test_users_index() 
 	{
-		$result = $this->testAction('/users/index');
+		$result = $this->testAction('/annonces/index');
 		debug($result);
 	}
 	
-	public function test_users_add()
+	/*public function test_users_add()
 	{
 		$result = $this->testAction('/users/add');
 		debug($result);
