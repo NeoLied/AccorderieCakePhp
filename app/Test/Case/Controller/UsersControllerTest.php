@@ -1,6 +1,6 @@
 <?php
 
-App::uses('User', 'Controller');
+App::uses('App', 'Controller');
 
 class UserControllerTest extends ControllerTestCase 
 {
