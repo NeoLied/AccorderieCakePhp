@@ -110,7 +110,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_annonces_delete()
 	{
-		$result = $this->testAction('/annonces/delete/1');
+		$result = $this->testAction('/annonces/delete/1/demande');
 		debug($result);
 	}
 }
