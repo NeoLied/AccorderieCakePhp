@@ -38,8 +38,14 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_users_view_sans_id()
 	{
-		$result = $this->testAction('/users/view/null');
-		//debug($result);
+		try {
+			$result = $this->testAction('/users/view/null');
+			debug($result);
+		}
+		catch (NOTFOUNDEXCEPTION $e)
+		{
+			assert(true);
+		}
 	}
 	
 	public function test_users_logout()
