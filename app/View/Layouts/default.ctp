@@ -54,7 +54,8 @@
       						<a href="#">Mon profil</a>
       						<ul>
         						<li><?php echo $this->Html->link('Editer','/users/edit/'.AuthComponent::user('id')); ?></li>
-        						
+        						<li><a href="#">Historique</a></li>
+        						<li><?php echo $this->Html->link('Déconnexion','/users/logout'); ?></li>
       						</ul>
     					</li>
 				
