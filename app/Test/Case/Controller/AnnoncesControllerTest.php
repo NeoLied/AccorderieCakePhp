@@ -53,4 +53,28 @@ class UserControllerTest extends ControllerTestCase
 		$result = $this->testAction('/annonces/offre');
 		debug($result);
 	}
+	
+	public function test_annonces_validation()
+	{
+		$result = $this->testAction('/annonces/validation');
+		debug($result);
+	}
+	
+	public function test_annonces_view()
+	{
+		$result = $this->testAction('/annonces/view');
+		debug($result);
+	}
+	
+	public function test_annonces_edit_sans_id()
+	{
+		try {
+			$result = $this->testAction('/annonces/view/2');
+			debug($result);
+		}
+		catch (NOTFOUNDEXCEPTION $e)
+		{
+			assert(true);
+		}
+	}
 }
