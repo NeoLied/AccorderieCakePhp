@@ -126,4 +126,12 @@ class UserControllerTest extends ControllerTestCase
 			assert(true);
 		}
 	}
+	
+	public function test_annonces_delete_null()
+	{
+		
+		$result = $this->testAction('/annonces/delete/null/demande');
+		debug($result);
+	
+	}
 }

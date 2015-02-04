@@ -69,14 +69,15 @@ class AnnoncesController extends AppController {
     	}
     }
     
-    public function delete($id,$nameRedirect) {
-    	if ($this->request->is('get')) {
+    public function delete($id,$nameRedirect) 
+    {
+    	if ($this->request->is('get')) 
+    	{
     		throw new MethodNotAllowedException();
     	}
-    	if ($this->Annonce->delete($id)) {
-    		$this->Session->setFlash(
-    				__('L\annonce avec id : %s a été supprimée.', h($id))
-    		);
+    	if ($this->Annonce->delete($id)) 
+    	{
+    		$this->Session->setFlash(__('L\annonce avec id : %s a été supprimée.', h($id)));
     		return $this->redirect(array('action' => $nameRedirect));
     	}
     }
