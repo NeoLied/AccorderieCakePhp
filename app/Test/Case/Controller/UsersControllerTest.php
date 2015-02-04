@@ -68,7 +68,7 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	public function test_users_delete_sans_id()
+	public function test_users_delete()
 	{
 		$result = $this->testAction('/users/delete/1');
 		debug($result);
