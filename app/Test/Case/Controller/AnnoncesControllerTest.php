@@ -66,7 +66,7 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	public function test_annonces_edit_sans_id()
+	public function test_annonces_view_sans_id()
 	{
 		try {
 			$result = $this->testAction('/annonces/view/2');
