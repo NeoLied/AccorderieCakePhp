@@ -7,7 +7,6 @@
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-		
 		echo $this->Html->css('cake.generic');
 		echo $this->Html->css('ourCss');
 		echo $this->fetch('meta');
@@ -16,18 +15,27 @@
 	?>
 </head>
 <body>
+
 	<div id="container">
 		
-			<?php echo $this->Html->image('header-maquette.png', array('alt' => 'Header de bogoss')); ?>
+		<?php echo $this->Html->image('header-maquette.png', array('alt' => 'Header de bogoss')); ?>
+		
+		<nav>
+			<ul>
+				<li><?php echo $this->Html->link('Accueil','/'); ?></li>
+				<li><?php echo $this->Html->link('Inscription','/users/add'); ?></li>
+				<li><?php echo $this->Html->link('Connexion','/users/login'); ?></li>
+				<li><a href="#">Nous contacter</a></li>
+			</ul>
+		</nav>
 		
 		<div id="content">
-
 			<?php echo $this->Session->flash(); ?>
-
 			<?php echo $this->fetch('content'); ?>
 		</div>
-		<div id="footer">
 			
+		<div id="footer">
+			Nous finirons tous dans le Valhalla, pour servir le divin Krom !!!
 		</div>
 	</div>
 	
