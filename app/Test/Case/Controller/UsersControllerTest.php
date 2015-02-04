@@ -24,6 +24,19 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
+	public function test_users_edit_sans_id()
+	{
+		try {
+			$result = $this->testAction('/users/edit/null');
+			debug($result);
+		}
+		catch (NOTFOUNDEXCEPTION $e)
+		{
+			assert(true);
+		}
+		assert(false);
+	}
+	
 	public function test_users_login()
 	{
 		$result = $this->testAction('/users/login');
@@ -46,6 +59,7 @@ class UserControllerTest extends ControllerTestCase
 		{
 			assert(true);
 		}
+		assert(false);
 	}
 	
 	public function test_users_logout()
@@ -54,9 +68,22 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	public function test_users_delete()
+	public function test_users_delete_sans_id()
 	{
 		$result = $this->testAction('/users/delete/1');
 		debug($result);
+	}
+	
+	public function test_users_delete_sans_id()
+	{
+		try {
+			$result = $this->testAction('/users/delete/1');
+			debug($result);
+		}
+		catch (NOTFOUNDEXCEPTION $e)
+		{
+			assert(true);
+		}
+		assert(false);
 	}
 }
