@@ -39,7 +39,7 @@ class UserControllerTest extends ControllerTestCase
 	public function test_users_view_sans_id()
 	{
 		$result = $this->testAction('/users/view/null');
-		debug($result);
+		//debug($result);
 	}
 	
 	public function test_users_logout()
