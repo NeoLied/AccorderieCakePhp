@@ -77,4 +77,16 @@ class UserControllerTest extends ControllerTestCase
 			assert(true);
 		}
 	}
+	
+	public function test_annonces_view_null()
+	{
+		try {
+			$result = $this->testAction('/annonces/view/null');
+			debug($result);
+		}
+		catch (NOTFOUNDEXCEPTION $e)
+		{
+			assert(true);
+		}
+	}
 }
