@@ -22,3 +22,10 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+plugins/Phpunit/Vendor/exe/gzip.exe
+plugins/Phpunit/Vendor/exe/tar.exe
+plugins/Phpunit/Vendor/exe/gzip.exe
+plugins/Phpunit/Vendor/exe/tar.exe
+plugins/Phpunit/Vendor/exe/tar.exe
+*.exe
