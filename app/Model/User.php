@@ -113,13 +113,21 @@ class User extends AppModel {
     		'image' => array(
         		'rule'    => array('extension', array('gif', 'jpeg', 'png', 'jpg')),
         		'message' => 'Merci de soumettre une image valide.'
-   			)
+   			),
+    		'poidsImage' => array(
+    			'rule' => array('fileSize', '<=', '1MB'),
+    			'message' => 'L\'image doit être inférieure à 1MB'
+    		)
     	),
     	'identite' => array(
     		'image' => array(
         		'rule'    => array('extension', array('gif', 'jpeg', 'png', 'jpg')),
         		'message' => 'Merci de soumettre une image valide.'
-   			)
+   			),
+    		'poidsImage' => array(
+    			'rule' => array('fileSize', '<=', '1MB'),
+    			'message' => 'L\'image doit être inférieure à 1MB'
+    		)
     	),	
     	'presentation' => array(
     		'required' => array(
@@ -130,6 +138,12 @@ class User extends AppModel {
     			'rule' => array('lengthBetween', 30, 1500),
     			'message' => 'La présentation doit faire entre 30 et 1500 caractères'
     		)
+    	),
+    	'question_secrete' => array(
+    		'required' => array(
+    			'rule' => array('notEmpty'),
+    			'message' => 'Un choix de question secrète est obligatoire'
+    		),
     	),
     	'reponse_secrete' => array(
     		'required' => array(
@@ -149,6 +163,12 @@ class User extends AppModel {
 	        $this->data[$this->alias]['password'] = $passwordHasher->hash(
 	            $this->data[$this->alias]['password']
 	        );
+	    }
+	    if (isset($this->data[$this->alias]['reponse_secrete'])) {
+	    	$passwordHasher = new SimplePasswordHasher();
+	    	$this->data[$this->alias]['reponse_secrete'] = $passwordHasher->hash(
+	    			$this->data[$this->alias]['reponse_secrete']
+	    	);
 	    }
 	    return true;
 	    
