@@ -10,6 +10,7 @@
 <table>
     <tr>
         <th>Id</th>
+        <th>Id proposant</th>
         <th>Titre</th>
         <th>Description</th>
         <th>Temps de travail</th>
@@ -21,6 +22,7 @@
     <?php foreach ($annonces as $annonce): ?>
     <tr>
         <td><?php echo $annonce['Annonce']['id']; ?></td>
+        <td><?php echo $annonce['Annonce']['id_proposant']; ?></td>
         <td>
             <?php echo $this->Html->link($annonce['Annonce']['titre'],
             array('controller' => 'annonces', 'action' => 'view', $annonce['Annonce']['id'])); ?>
