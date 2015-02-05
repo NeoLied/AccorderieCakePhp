@@ -93,5 +93,14 @@ class AnnoncesController extends AppController {
     			'conditions' => array('Annonce.signalee' => 1)
     	)));
     }
+    
+    public function reservation($id_annonce,$id_personneReservante,$id_personneProprio) {
+    	if( $id_personneReservante != $id_personneProprio)
+    	{
+    		$this->Annonce->id = $id_annonce;
+    		$this->Annonce->saveField('id_accepteur', $id_personne);
+    	}
+    	return $this->redirect(array('action' => 'index'));
+    }
 }
 ?>

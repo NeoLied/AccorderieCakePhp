@@ -39,7 +39,7 @@
          <?php echo $this->Form->postLink(
                 'Signaler cette annonce',
                 array('action' => 'signaler', $annonce['Annonce']['id']));
-            ?>
+         ?>
             
          <?php echo $this->Form->postLink(
                 'Supprimer',
