@@ -1,4 +1,7 @@
 <?php
+App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
+
 class UsersController extends AppController {
 	
 public function beforeFilter() {
@@ -79,7 +82,7 @@ public function beforeFilter() {
 	}
 	
 	public function logout() {
-		return $this->redirect($this->Auth->logout());
+	    return $this->redirect($this->Auth->logout());
 	}
 }
 ?>
