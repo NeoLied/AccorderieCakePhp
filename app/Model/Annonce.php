@@ -20,6 +20,10 @@ class Annonce extends AppModel
      		'rule' => 'notEmpty'
      	)
     );
+     
+    public function isOwnedBy($annonce, $user) {
+    	return $annonce == $user;
+    }
 }
 
 ?>

@@ -146,6 +146,10 @@ class User extends AppModel {
     		)
     	),
     );
+    
+    public function isOwnedBy($userId, $userBdd) {
+    	return $userId == $userBdd;
+    }
 	
 	public function beforeSave($options = array()) {
 	    if (isset($this->data[$this->alias]['password'])) {

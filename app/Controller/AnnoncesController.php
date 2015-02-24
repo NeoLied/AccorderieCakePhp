@@ -129,5 +129,26 @@ class AnnoncesController extends AppController {
     	}
     	$this->Annonce->User->saveField('credit_temps',$tempsFinal);
     }
+    
+    public function isAuthorized($user) {
+    	// Tous les users inscrits peuvent ajouter des anonces
+    	if ($this->action === 'add' || $this->action === 'demande' || $this->action === 'offre') {
+    		return true;
+    	}
+    	// L'utilisateur peut éditer ou supprimer son annonce
+    	if (in_array($this->action, array('edit', 'delete'))) {
+    		$annonceId = (int) $this->request->params['pass'][0];
+    		$usersId = $this->Annonce->find('all', array(
+    				'conditions' => array('Annonce.id' => $annonceId)));
+    		foreach($usersId as $userId){
+    			$annonceUserId = $userId['Annonce']['user_id'];
+    		}
+    		if ($this->Annonce->isOwnedBy($annonceUserId, $user['id'])) {
+    			return true;
+    		}
+    	}
+    
+    	return parent::isAuthorized($user);
+    }
 }
 ?>

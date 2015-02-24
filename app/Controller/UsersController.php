@@ -102,5 +102,22 @@ public function beforeFilter() {
     			'conditions' => array('User.id' => AuthComponent::user('id'))
     	)));
 	}
+	
+	public function isAuthorized($user) {
+		// Tous les users inscrits peuvent ajouter les posts
+		if ($this->action === 'add') {
+			return true;
+		}
+	
+		// L'utilisateur peut éditer son profil
+		if (in_array($this->action, array('edit'))) {
+			$userId = (int) $this->request->params['pass'][0];
+			if ($this->User->isOwnedBy($userId, $user['id'])) {
+				return true;
+			}
+		}
+	
+		return parent::isAuthorized($user);
+	}
 }
 ?>
