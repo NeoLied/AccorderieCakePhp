@@ -116,6 +116,11 @@ public function beforeFilter() {
 				return true;
 			}
 		}
+		
+		// Pas besoin de vérifier pour le crédit temps
+		if (in_array($this->action, array('credit_temps'))) {
+			return true;
+		}
 	
 		return parent::isAuthorized($user);
 	}
