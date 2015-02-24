@@ -37,10 +37,6 @@
         	array('type' => 'file',
         	'label' => 'Avatar'));
         	
- 		echo $this->Form->input('identite',
-        	array('type' => 'file',
-        	'label' => 'Photocopie carte d\'identité'));
-        	
  		echo $this->Form->input('presentation',
         	array('label' => 'Présentation'));
         	

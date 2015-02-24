@@ -119,16 +119,6 @@ class User extends AppModel {
     			'message' => 'L\'image doit être inférieure à 1MB'
     		)
     	),
-    	'identite' => array(
-    		'image' => array(
-        		'rule'    => array('extension', array('gif', 'jpeg', 'png', 'jpg')),
-        		'message' => 'Merci de soumettre une image valide.'
-   			),
-    		'poidsImage' => array(
-    			'rule' => array('fileSize', '<=', '1MB'),
-    			'message' => 'L\'image doit être inférieure à 1MB'
-    		)
-    	),	
     	'presentation' => array(
     		'required' => array(
     			'rule' => array('notEmpty'),

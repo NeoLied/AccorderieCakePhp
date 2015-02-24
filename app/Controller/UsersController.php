@@ -37,18 +37,6 @@ public function beforeFilter() {
         			$this->request->data['User']['avatar'] = time().$file['name'];
         		}
         	}
-        	// Envoi fichier identité
-        	if(!empty($this->data['User']['identite']['name']))
-        	{
-        		$file=$this->data['User']['identite'];
-        		$ary_ext=array('png','jpg','jpeg','gif'); //array of allowed extensions
-        		$ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-        		if(in_array($ext, $ary_ext))
-        		{
-        			move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img'. DS . 'identity' .DS . time().$file['name']);
-        			$this->request->data['User']['identite'] = time().$file['name'];
-        		}
-        	}
             $this->User->create();
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('L\'utilisateur a été sauvegardé'));
