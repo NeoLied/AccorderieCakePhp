@@ -94,13 +94,40 @@ class AnnoncesController extends AppController {
     	)));
     }
     
-    public function reservation($id_annonce,$id_personneReservante,$id_personneProprio) {
-    	if( $id_personneReservante != $id_personneProprio)
+	public function reservation($id_annonce,$id_personneReservante,$id_personneProprio,$temps) {
+	if( $id_personneReservante != $id_personneProprio)
     	{
     		$this->Annonce->id = $id_annonce;
-    		$this->Annonce->saveField('id_accepteur', $id_personne);
+    		$this->Annonce->saveField('id_accepteur', $id_personneReservante);
+   			$this->operationTemps($id_personneReservante, $temps, 'c');
+   			$this->operationTemps($id_personneProprio, $temps, 'd');
     	}
-    	return $this->redirect(array('action' => 'index'));
+    	return $this->redirect('/annonces/view/'.$id_annonce);
+    }
+    
+    public function mes_annonces()
+    {
+    	$this->set('annonces',  $this->Annonce->find('all', array(
+    			'conditions' => array('Annonce.user_id' => AuthComponent::user('id'))
+    	)));
+    }
+    
+    private function operationTemps ($id_personne,$temps,$debitOuCredit){
+    	$this->Annonce->User->id = $id_personne;
+    	$tempsFinal = 0;
+    	$users = $this->Annonce->User->find('all', array(
+    			'conditions' => array('User.id' => $id_personne)
+    	));
+    	foreach ($users as $user){
+    		$tempsFinal = $user['User']['credit_temps'];
+    	}
+    	if ($debitOuCredit == 'd'){
+    		$tempsFinal -= $temps;
+    	}
+    	else {
+    		$tempsFinal += $temps;
+    	}
+    	$this->Annonce->User->saveField('credit_temps',$tempsFinal);
     }
 }
 ?>

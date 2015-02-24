@@ -96,5 +96,11 @@ public function beforeFilter() {
 	public function logout() {
 	    return $this->redirect($this->Auth->logout());
 	}
+	
+	public function credit_temps() {
+      	$this->set('users',  $this->User->find('all', array(
+    			'conditions' => array('User.id' => AuthComponent::user('id'))
+    	)));
+	}
 }
 ?>
