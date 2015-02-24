@@ -12,7 +12,7 @@ class AnnonceFixture extends CakeTestFixture
 			'temps_requis' => array('type' => 'integer'),
 			'demande' => array('type' => 'integer'),
 			'signalee' => array('type' => 'integer'),
-			'id_proposant' => array('type' => 'integer'),
+			'user_id' => array('type' => 'integer'),
 			'id_accepteur' => array('type' => 'integer'),
 	);
 	
@@ -25,7 +25,7 @@ class AnnonceFixture extends CakeTestFixture
 				'temps_requis' => 1,
 				'demande' => 1,
 				'signalee' => 0,
-				'id_proposant' => 2,
+				'user_id' => 2,
 				'id_accepteur' => 3,		
 			)
 	);
