@@ -36,4 +36,12 @@ class UserTestCase extends CakeTestCase
 		$expected = true;
 		$this->assertEquals($expected, $result);
 	}
+	
+	public function test_model_user_beforeSave_password()
+	{
+		$this->User->data['tristan']['password'] = "test";
+		$result = $this->User->beforeSave();
+		$expected = true;
+		$this->assertEquals($expected, $result);
+	}
 }
