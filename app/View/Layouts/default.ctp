@@ -72,7 +72,7 @@
         						<li><?php echo $this->Html->link('Liste annonces','/annonces/'); ?></li>
       						</ul>
     					</li>
-	<?php	} ?>	
+<?php	} ?>	
 					</ul>
 				</nav>
 		
