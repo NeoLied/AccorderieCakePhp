@@ -145,11 +145,9 @@ class AnnoncesController extends AppController {
     	// L'utilisateur peut éditer ou supprimer son annonce
     	if (in_array($this->action, array('edit', 'delete'))) {
     		$annonceId = (int) $this->request->params['pass'][0];
-    		$usersId = $this->Annonce->find('all', array(
+    		$userId = $this->Annonce->find('first', array(
     				'conditions' => array('Annonce.id' => $annonceId)));
-    		foreach($usersId as $userId){
-    			$annonceUserId = $userId['Annonce']['user_id'];
-    		}
+    		$annonceUserId = $userId['Annonce']['user_id'];
     		if ($this->Annonce->isOwnedBy($annonceUserId, $user['id'])) {
     			return true;
     		}
