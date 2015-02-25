@@ -134,9 +134,9 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	/*public function test_users_reservation()
+	public function test_users_reservation_ok()
 	 {
-	 $result = $this->testAction('/users/reservation/1');
-	 debug($result);
-	 }*/
+		$result = $this->testAction('/annonces/reservation/2/2/1/2/1');
+	 	debug($result);
+	 }
 }
