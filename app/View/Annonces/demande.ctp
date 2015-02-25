@@ -2,11 +2,6 @@
 
 <h1>Demandes</h1>
 
-<?php echo $this->Html->link(
-    'Ajouter une annonce',
-    array('controller' => 'annonces', 'action' => 'add')
-); ?>
-
 <table>
     <tr>
         <th>Id</th>
@@ -22,7 +17,7 @@
     <?php foreach ($annonces as $annonce): ?>
     <tr>
         <td><?php echo $annonce['Annonce']['id']; ?></td>
-        <td><?php echo $annonce['User']['nom']; ?></td>
+        <td><?php echo $annonce['User']['username']; ?></td>
         <td>
             <?php echo $this->Html->link($annonce['Annonce']['titre'],
             array('controller' => 'annonces', 'action' => 'view', $annonce['Annonce']['id'])); ?>
