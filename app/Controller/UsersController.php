@@ -40,7 +40,7 @@ public function beforeFilter() {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('L\'utilisateur a été sauvegardé'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect('/');
             } else {
                 $this->Session->setFlash(__('L\'utilisateur n\'a pas été sauvegardé. Merci de réessayer.'));
             }
