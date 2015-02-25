@@ -11,6 +11,7 @@ class UserFixture extends CakeTestFixture
 	);
 	
 	public $records = array(
-			array('id' => 1, 'username' => 'Tristan', 'password' => 'test')
+			array('id' => 1, 'username' => 'Tristan', 'password' => 'test'),
+			array('id' => 2, 'username' => 'aurelien', 'password' => 'aurelien')
 	);
 }

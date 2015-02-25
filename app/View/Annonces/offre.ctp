@@ -11,6 +11,7 @@
 <table>
     <tr>
         <th>Id</th>
+        <th>Pseudo proposant</th>
         <th>Titre</th>
         <th>Description</th>
         <th>Temps de travail</th>

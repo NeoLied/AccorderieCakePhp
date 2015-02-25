@@ -27,6 +27,17 @@ class AnnonceFixture extends CakeTestFixture
 				'signalee' => 0,
 				'user_id' => 2,
 				'id_accepteur' => 3,		
-			)
+			),
+			array(
+					'id' => 2,
+					'titre' => 'test_annonce_2',
+					'description' => 'test_desc_annonce',
+					'date_post' => '22/01/2015',
+					'temps_requis' => 2,
+					'demande' => 1,
+					'signalee' => 0,
+					'user_id' => 1,
+					'id_accepteur' => 0,
+			),
 	);
 }
