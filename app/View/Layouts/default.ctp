@@ -75,7 +75,7 @@
 		</div>
 			
 		<div id="footer">
-			Nous finirons tous dans le Valhalla, pour servir le divin Krom !!!
+			Copyright <?php echo "&copy;".date('Y'); ?> La Marmite. Tous droits réservés.
 		</div>
 	</div>
 	
