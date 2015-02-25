@@ -32,6 +32,13 @@
                 	'Editer',
                 	array('action' => 'edit', $user['User']['id'])
             	);
+            }
+            if(AuthComponent::user('role') == "admin"){
+            	echo " ";
+            	echo $this->Html->link(
+                	'Avertir',
+                	'mailto:'.$user['User']['mail']
+            	);
             } ?>
         </td>
     </tr>
