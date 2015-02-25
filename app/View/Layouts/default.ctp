@@ -62,12 +62,19 @@
     					</li>
 				
 						<li><a href="#">Nous contacter</a></li>
-					</ul>
-				</nav>
 			<?php
 		}
-	?>	
-		
+		if(AuthComponent::user('role') == "admin") { ?>
+						<li>
+      						<a href="#">Administration</a>
+      						<ul>
+        						<li><?php echo $this->Html->link('Liste utilisateurs','/users/'); ?></li>
+        						<li><?php echo $this->Html->link('Liste annonces','/annonces/'); ?></li>
+      						</ul>
+    					</li>
+	<?php	} ?>	
+					</ul>
+				</nav>
 		
 		<div id="content">
 			<?php echo $this->Session->flash(); ?>
