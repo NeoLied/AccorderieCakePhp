@@ -138,7 +138,8 @@ class AnnoncesController extends AppController {
     
     public function isAuthorized($user) {
     	// Tous les users inscrits peuvent ajouter des anonces
-    	if ($this->action === 'add' || $this->action === 'demande' || $this->action === 'offre') {
+    	if ($this->action === 'add' || $this->action === 'demande' || $this->action === 'offre'
+    								|| $this->action === 'mes_annonces') {
     		return true;
     	}
     	// L'utilisateur peut éditer ou supprimer son annonce
