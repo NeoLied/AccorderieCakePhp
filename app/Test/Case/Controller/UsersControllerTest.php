@@ -83,4 +83,10 @@ class UserControllerTest extends ControllerTestCase
 			assert(true);
 		}
 	}
+	
+	public function test_users_credit_temps()
+	{
+		$result = $this->testAction('/users/credit_temps');
+		debug($result);
+	}
 }
