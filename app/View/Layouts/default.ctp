@@ -62,7 +62,6 @@
     					</li>
 				
 						<li><a href="#">Nous contacter</a></li>
-<<<<<<< HEAD
 			<?php
 		}
 		if(AuthComponent::user('role') == "admin") { ?>
@@ -74,14 +73,8 @@
       						</ul>
     					</li>
 <?php	} ?>	
-=======
->>>>>>> parent of 7bb4847... Ajout menu admin
 					</ul>
 				</nav>
-			<?php
-		}
-	?>	
-		
 		
 		<div id="content">
 			<?php echo $this->Session->flash(); ?>
