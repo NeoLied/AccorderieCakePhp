@@ -33,7 +33,7 @@ class UserControllerTest extends ControllerTestCase
 	public function test_annonces_edit_sans_id()
 	{
 		try {
-			$result = $this->testAction('/annonces/edit/2');
+			$result = $this->testAction('/annonces/edit/10');
 			debug($result);
 		}
 		catch (NOTFOUNDEXCEPTION $e)
