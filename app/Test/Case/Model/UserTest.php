@@ -23,7 +23,7 @@ class UserTestCase extends CakeTestCase
 		$this->assertEquals($expected, $result);
 	}
 	
-	public function model_user_isOwnedBy_true()
+	public function model_user_isOwnedBy_false()
 	{
 		$result = $this->User->isOwnedBy(1,2);
 		$expected = false;
