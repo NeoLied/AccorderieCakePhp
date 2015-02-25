@@ -94,13 +94,19 @@ class AnnoncesController extends AppController {
     	)));
     }
     
-	public function reservation($id_annonce,$id_personneReservante,$id_personneProprio,$temps) {
-	if( $id_personneReservante != $id_personneProprio)
+	public function reservation($id_annonce,$id_personneReservante,$id_personneProprio,$temps,$demande) {
+    	if( $id_personneReservante != $id_personneProprio)
     	{
     		$this->Annonce->id = $id_annonce;
     		$this->Annonce->saveField('id_accepteur', $id_personneReservante);
-   			$this->operationTemps($id_personneReservante, $temps, 'c');
-   			$this->operationTemps($id_personneProprio, $temps, 'd');
+    		if ($demande == 1) {
+    			$this->operationTemps($id_personneReservante, $temps, 'c');
+    			$this->operationTemps($id_personneProprio, $temps, 'd');
+    		}
+   			else {
+   				$this->operationTemps($id_personneProprio, $temps, 'c');
+   				$this->operationTemps($id_personneReservante, $temps, 'd');
+   			}
     	}
     	return $this->redirect('/annonces/view/'.$id_annonce);
     }
@@ -112,7 +118,7 @@ class AnnoncesController extends AppController {
     	)));
     }
     
-    private function operationTemps ($id_personne,$temps,$debitOuCredit){
+	private function operationTemps ($id_personne,$temps,$debitOuCredit){
     	$this->Annonce->User->id = $id_personne;
     	$tempsFinal = 0;
     	$users = $this->Annonce->User->find('all', array(
@@ -121,12 +127,12 @@ class AnnoncesController extends AppController {
     	foreach ($users as $user){
     		$tempsFinal = $user['User']['credit_temps'];
     	}
-    	if ($debitOuCredit == 'd'){
-    		$tempsFinal -= $temps;
-    	}
-    	else {
-    		$tempsFinal += $temps;
-    	}
+    	 if ($debitOuCredit == 'd'){
+    	 	$tempsFinal -= $temps;
+    	 }
+    	 else {
+    	 	$tempsFinal += $temps;
+    	 }
     	$this->Annonce->User->saveField('credit_temps',$tempsFinal);
     }
     

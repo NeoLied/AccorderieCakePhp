@@ -10,19 +10,24 @@
 <p><b><?php echo $annonce['User']['prenom']; ?> <?php echo $annonce['User']['nom']; ?></b></p>
 <p>Téléphone : <b><?php echo $annonce['User']['telephone']; ?></b></p> 
 <p>Adresse mail : <b><?php echo $annonce['User']['mail']; ?> </b></p>
+<p><?php 
+$demande = 1;
+if($annonce['Annonce']['demande']) {
+echo 'offre';
+$demande = 0;
+}
+else {
+echo 'demande'; 
+}?> </b></p>
 
 <?php 
 if($annonce['Annonce']['id_accepteur'] == 0)
 {
 	echo $this->Form->postLink('Réserver cette annonce',array('action' => 'reservation', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],
-	$annonce['Annonce']['temps_requis']));
-}
-elseif($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id'))
-{
-	?> Vous avez déja réservé cette annonce. <?php
+	$annonce['Annonce']['temps_requis'],$demande));
 }
 else
 {
-	?> cette annonce a déjà une réservation. <?php
+	?> cette annonce a déjà une réservation <?php
 }
 ?>
