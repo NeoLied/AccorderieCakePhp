@@ -151,4 +151,10 @@ class UserControllerTest extends ControllerTestCase
 	 	$result = $this->testAction('/annonces/mes_annonces');
 	 	debug($result);
 	 }
+	 
+	 public function test_annonces_isAuthorized()
+	 {
+	 	$result = $this->testAction('/annonces/isAuthorized/1');
+	 	debug($result);
+	 }
 }
