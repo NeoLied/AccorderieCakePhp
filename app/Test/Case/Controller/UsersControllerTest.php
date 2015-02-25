@@ -83,10 +83,4 @@ class UserControllerTest extends ControllerTestCase
 			assert(true);
 		}
 	}
-	
-	public function test_users_reservation()
-	{
-		$result = $this->testAction('/users/reservation/1');
-		debug($result);
-	}
 }

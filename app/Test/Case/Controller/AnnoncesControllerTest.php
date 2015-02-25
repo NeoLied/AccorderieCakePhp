@@ -132,6 +132,11 @@ class UserControllerTest extends ControllerTestCase
 		
 		$result = $this->testAction('/annonces/delete/null/demande');
 		debug($result);
-	
 	}
+	
+	/*public function test_users_reservation()
+	 {
+	 $result = $this->testAction('/users/reservation/1');
+	 debug($result);
+	 }*/
 }
