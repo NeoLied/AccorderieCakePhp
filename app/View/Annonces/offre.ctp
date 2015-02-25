@@ -28,16 +28,18 @@
         <td><?php echo $annonce['Annonce']['date_post']; ?></td>
         <td>
         
-         <?php echo $this->Form->postLink(
+         <?php 
+         if($annonce['Annonce']['user_id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
+         	echo $this->Form->postLink(
                 'Supprimer',
                 array('action' => 'delete', $annonce['Annonce']['id'],'offre'),
                 array('confirm' => "Êtes-vous sûr ?"));
-            ?>
-            
-            <?php echo $this->Html->link(
+            echo " ";
+            echo $this->Html->link(
                 'Editer',
                 array('action' => 'edit', $annonce['Annonce']['id'])
-            ); ?>
+            );
+         } ?>
         </td>
     </tr>
     <?php endforeach; ?>

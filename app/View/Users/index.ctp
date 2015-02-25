@@ -27,9 +27,7 @@
 	                'Supprimer',
 	                array('action' => 'delete', $user['User']['id']),
 	                array('confirm' => 'Etes-vous sûr ?'));
-	        } ?>
-	        <?php
-            if($user['User']['id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
+	        	echo " ";
             	echo $this->Html->link(
                 	'Editer',
                 	array('action' => 'edit', $user['User']['id'])

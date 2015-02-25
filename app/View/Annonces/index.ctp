@@ -2,11 +2,6 @@
 
 <h1>Annonces</h1>
 
-<?php echo $this->Html->link(
-    'Ajouter une annonce',
-    array('controller' => 'annonces', 'action' => 'add')
-); ?>
-
 <?php //debug($annonces); ?>
 
 <table>
@@ -41,16 +36,18 @@
                 array('action' => 'signaler', $annonce['Annonce']['id']));
          ?>
             
-         <?php echo $this->Form->postLink(
+         <?php
+         if($annonce['Annonce']['user_id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
+         	echo $this->Form->postLink(
                 'Supprimer',
                 array('action' => 'delete', $annonce['Annonce']['id'],'index'),
                 array('confirm' => "Êtes-vous sûr ?"));
-            ?>
-            
-            <?php echo $this->Html->link(
+         echo " ";
+			echo $this->Html->link(
                 'Editer',
                 array('action' => 'edit', $annonce['Annonce']['id'])
-            ); ?>
+            );
+         } ?>
         </td>
     </tr>
     <?php endforeach; ?>
