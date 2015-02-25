@@ -134,11 +134,17 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	public function test_annonces_reservation_ok()
-	 {
+	public function test_annonces_reservation_demande()
+	{
 		$result = $this->testAction('/annonces/reservation/2/2/1/2/1');
 	 	debug($result);
-	 }
+	}
+	
+	public function test_annonces_reservation_offre()
+	{
+		$result = $this->testAction('/annonces/reservation/2/2/1/2/0');
+		debug($result);
+	}
 	 
 	 public function test_annonces_mes_annonces()
 	 {
