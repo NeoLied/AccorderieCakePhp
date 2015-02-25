@@ -39,7 +39,7 @@ class UserTestCase extends CakeTestCase
 	
 	public function test_model_user_beforeSave_password()
 	{
-		$this->User->data['tristan']['password'] = "test";
+		$this->User->data[$this->User->alias]['password'] = "test";
 		$result = $this->User->beforeSave();
 		$expected = true;
 		$this->assertEquals($expected, $result);
