@@ -1,15 +1,6 @@
 <!-- File: /app/View/Utilisateurs/index.ctp -->
 
 <h1>Utilisateurs</h1>
-<?php echo $this->Html->link(
-    'Ajouter un Utilisateur',
-    array('controller' => 'users', 'action' => 'add')
-); ?>
-<br>
-<?php echo $this->Html->link(
-    'Se déconnecter',
-    array('controller' => 'users', 'action' => 'logout')
-); ?>
 <table>
     <tr>
         <th>Id</th>
@@ -30,15 +21,20 @@
         <td><?php echo $user['User']['prenom']; ?></td>
         <td><?php echo $user['User']['username']; ?></td>
         <td>
-        	<?php echo $this->Form->postLink(
-                'Supprimer',
-                array('action' => 'delete', $user['User']['id']),
-                array('confirm' => 'Etes-vous sûr ?'));
-            ?>
-            <?php echo $this->Html->link(
-                'Editer',
-                array('action' => 'edit', $user['User']['id'])
-            ); ?>
+        	<?php
+        	if($user['User']['id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
+	        	echo $this->Form->postLink(
+	                'Supprimer',
+	                array('action' => 'delete', $user['User']['id']),
+	                array('confirm' => 'Etes-vous sûr ?'));
+	        } ?>
+	        <?php
+            if($user['User']['id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
+            	echo $this->Html->link(
+                	'Editer',
+                	array('action' => 'edit', $user['User']['id'])
+            	);
+            } ?>
         </td>
     </tr>
     <?php endforeach; ?>
