@@ -29,4 +29,11 @@ class UserTestCase extends CakeTestCase
 		$expected = false;
 		$this->assertEquals($expected, $result);
 	}
+	
+	public function test_model_user_beforeSave()
+	{
+		$result = $this->User->beforeSave();
+		$expected = true;
+		$this->assertEquals($expected, $result);
+	}
 }
