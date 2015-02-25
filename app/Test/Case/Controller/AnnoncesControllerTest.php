@@ -81,7 +81,7 @@ class UserControllerTest extends ControllerTestCase
 	public function test_annonces_view_sans_id()
 	{
 		try {
-			$result = $this->testAction('/annonces/view/2');
+			$result = $this->testAction('/annonces/view/10');
 			debug($result);
 		}
 		catch (NOTFOUNDEXCEPTION $e)
@@ -134,9 +134,15 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	/*public function test_users_reservation_ok()
+	public function test_annonces_reservation_ok()
 	 {
 		$result = $this->testAction('/annonces/reservation/2/2/1/2/1');
 	 	debug($result);
-	 }*/
+	 }
+	 
+	 public function test_annonces_mes_annonces()
+	 {
+	 	$result = $this->testAction('/annonces/mes_annonces');
+	 	debug($result);
+	 }
 }
