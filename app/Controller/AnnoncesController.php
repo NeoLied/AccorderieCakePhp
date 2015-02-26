@@ -155,5 +155,17 @@ class AnnoncesController extends AppController {
     
     	return parent::isAuthorized($user);
     }
+    
+    public function mon_historique()
+    {
+    	$this->set('annonces',  $this->Annonce->find('all', array(
+    			'conditions' => array(
+    								'OR' => array(
+    									'Annonce.user_id' => AuthComponent::user('id'),
+    									'Annonce.id_accepteur' => AuthComponent::user('id')
+    								)
+    							)
+    	)));
+    }
 }
 ?>
