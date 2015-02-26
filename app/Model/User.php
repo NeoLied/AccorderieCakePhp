@@ -170,8 +170,6 @@ class User extends AppModel {
 	    			$this->data[$this->alias]['reponse_secrete']
 	    	);
 	    }
-	    var_dump($this->data[$this->alias]['password']);
-	    var_dump($this->data[$this->alias]['passwordconfirm']);
 	    return true;
 	    
 	}
