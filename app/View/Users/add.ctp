@@ -10,6 +10,10 @@
         echo $this->Form->input('password',
         	array('label' => 'Mot de passe'));
         	
+        echo $this->Form->input('passwordconfirm',
+        	array('label' => 'Confirmer mot de passe',
+        		'type' => 'password'));
+        	
         echo $this->Form->input('nom');
         
         echo $this->Form->input('prenom',

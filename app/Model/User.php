@@ -1,6 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
+App::uses('FrValidation', 'Localized.Validation');
 
 class User extends AppModel {	
 	public $name = 'User';
@@ -24,6 +25,10 @@ class User extends AppModel {
     			'rule' => array('lengthBetween', 6, 100),
     			'message' => 'Le mot de passe doit faire entre 6 et 100 caractères'
     		)
+    	),
+    	'passwordconfirm' => array(
+    			'rule' => array('equaltofield','password'),
+    			'message' => 'Les mots de passe ne sont pas identiques',
     	),
     	'nom' => array(
     		'required' => array(
@@ -63,16 +68,8 @@ class User extends AppModel {
     	),
     	'telephone' => array(
     		'required' => array(
-    			'rule' => 'notEmpty',
+    			'rule' => array('phone', null, 'fr'),
     			'message' => 'Un numéro de téléphone valide est requis'
-    		),
-    		'telLongueur' => array(
-    			'rule'    => array('lengthBetween', 10, 10),
-    			'message' => '10 Chiffres uniquement',
-    		),
-    		'telNombre' => array(
-    			'rule'    => 'numeric',
-    			'message' => '10 Chiffres uniquement',
     		)
     	),
     	'adresse' => array(
@@ -87,16 +84,8 @@ class User extends AppModel {
     	),
     	'code_postal' => array(
     		'required' => array(
-    			'rule' => 'notEmpty',
-    			'message' => 'Un code postal est obligatoire'    				
-    		),
-    		'cpLongueur' => array(
-    			'rule'    => array('lengthBetween', 5, 5),
-    			'message' => '5 Chiffres uniquement',
-    		),
-    		'cpNombre' => array(
-    			'rule'    => 'numeric',
-    			'message' => '5 Chiffres uniquement',
+    			'rule' => array('postal', null, 'fr'),
+    			'message' => 'Un code postal valide est obligatoire'    				
     		)
     	),
     	'ville' => array(
@@ -150,6 +139,17 @@ class User extends AppModel {
     public function isOwnedBy($userId, $userBdd) {
     	return $userId == $userBdd;
     }
+    
+ 	public function equaltofield($check,$otherfield)
+    {
+        //get name of field
+        $fname = '';
+        foreach ($check as $key => $value){
+            $fname = $key;
+            break;
+        }
+        return $this->data[$this->name][$otherfield] === $this->data[$this->name][$fname];
+    }
 	
 	public function beforeSave($options = array()) {
 	    if (isset($this->data[$this->alias]['password'])) {
@@ -158,12 +158,20 @@ class User extends AppModel {
 	            $this->data[$this->alias]['password']
 	        );
 	    }
+	    if (isset($this->data[$this->alias]['passwordconfirm'])) {
+	    	$passwordHasher = new SimplePasswordHasher();
+	    	$this->data[$this->alias]['password'] = $passwordHasher->hash(
+	    			$this->data[$this->alias]['passwordconfirm']
+	    	);
+	    }
 	    if (isset($this->data[$this->alias]['reponse_secrete'])) {
 	    	$passwordHasher = new SimplePasswordHasher();
 	    	$this->data[$this->alias]['reponse_secrete'] = $passwordHasher->hash(
 	    			$this->data[$this->alias]['reponse_secrete']
 	    	);
 	    }
+	    var_dump($this->data[$this->alias]['password']);
+	    var_dump($this->data[$this->alias]['passwordconfirm']);
 	    return true;
 	    
 	}
