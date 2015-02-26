@@ -11,11 +11,6 @@ class UserTestCase extends CakeTestCase
 		$this->User = ClassRegistry::init('User');
 	}
 	
-	public function testPHPUNIT()
-	{
-		return true;
-	}
-	
 	public function test_model_user_isOwnedBy_true()
 	{
 		$result = $this->User->isOwnedBy(1,1);
