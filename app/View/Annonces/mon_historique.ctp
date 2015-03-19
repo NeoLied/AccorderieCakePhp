@@ -79,6 +79,8 @@
     	?>
        	
     </tr>
-    <?php endforeach; ?>
+    <?php endforeach;
+   		//echo "Total :".$solde_total[0]['users']['credit_temps'];
+    ?>
     <?php unset($annonce); ?>
 </table>
