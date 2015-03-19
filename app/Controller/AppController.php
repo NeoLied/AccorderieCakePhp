@@ -31,7 +31,8 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-
+	public $uses = array('User');
+	
 	public $components = array(
         'Session',
         'Auth' => array(
@@ -52,5 +53,10 @@ class AppController extends Controller {
 
     public function beforeFilter() {
         $this->Auth->allow('index', 'view', 'display');
+        if(AuthComponent::user('id') != null) {
+       		$query_to_execute = "select credit_temps from users where id = ".AuthComponent::user('id');
+        	$results = $this->User->query($query_to_execute);
+        	$this->set('utilisateur', $results);
+        }
     }
 }

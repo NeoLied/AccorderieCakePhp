@@ -73,7 +73,18 @@
       						</ul>
     					</li>
 <?php	} ?>	
+					<div class="cadre_credit_temps">
+					<?php
+						if(AuthComponent::user('id') != null) {
+							echo "Vous avez ".$utilisateur[0]['users']['credit_temps']." Heures";
+						}
+					?>
+					</div>
 					</ul>
+					
+					
+					
+					
 				</nav>
 		
 		<div id="content">
