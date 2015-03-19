@@ -23,7 +23,7 @@
 
 /** General Style Info **/
 body {
-	background: #003d4c;
+	background: #888888 ;
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:90%;
@@ -35,7 +35,7 @@ a {
 	font-weight: bold;
 }
 a:hover {
-	color: #367889;
+	color: #fead44;
 	text-decoration:none;
 }
 a img {

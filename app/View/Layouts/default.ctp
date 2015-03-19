@@ -56,7 +56,7 @@
       						<ul>
         						<li><?php echo $this->Html->link('Editer','/users/edit/'.AuthComponent::user('id')); ?></li>
         						<li><?php echo $this->Html->link('Crédit temps','/users/credit_temps'); ?></li>
-        						<li><a href="#">Historique</a></li>
+        						<li><?php echo $this->Html->link('Mon Historique','/annonces/mon_historique'); ?></li>
         						<li><?php echo $this->Html->link('Déconnexion','/users/logout'); ?></li>
       						</ul>
     					</li>

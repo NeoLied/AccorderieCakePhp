@@ -6,7 +6,8 @@
     <tr>
         <th>Titre</th>
         <th>Possesseur</th>
-        <th>Temps de travail</th>
+        <th>Services Rendus</th>
+        <th>Services que l'on vous a rendu</th>
         <th>Date de l'annonce</th>
     </tr>
 
@@ -22,6 +23,7 @@
     		?>
     		<td><?php echo $annonce['Annonce']['titre']; ?></td>
        		<td><?php echo $annonce['User']['username']; ?></td>
+       		<td></td>
         	<td style="color:red;"><?php echo "-".$annonce['Annonce']['temps_requis']." Heures"; ?></td>
         	<td><?php echo $annonce['Annonce']['date_post']; ?></td>
     		<?php
@@ -37,6 +39,7 @@
     		?>
     		<td><?php echo $annonce['Annonce']['titre']; ?></td>
        		<td><?php echo $annonce['User']['username']; ?></td>
+       		<td></td>
         	<td style="color:red;"><?php echo "-".$annonce['Annonce']['temps_requis']." Heures"; ?></td>
         	<td><?php echo $annonce['Annonce']['date_post']; ?></td>
     		<?php
@@ -53,6 +56,7 @@
     		<td><?php echo $annonce['Annonce']['titre']; ?></td>
        		<td><?php echo $annonce['User']['username']; ?></td>
         	<td style="color:green;"><?php echo "+".$annonce['Annonce']['temps_requis']." Heures"; ?></td>
+        	<td></td>
         	<td><?php echo $annonce['Annonce']['date_post']; ?></td>
     		<?php
     	}
@@ -68,6 +72,7 @@
     		<td><?php echo $annonce['Annonce']['titre']; ?></td>
        		<td><?php echo $annonce['User']['username']; ?></td>
         	<td style="color:green;"><?php echo "+".$annonce['Annonce']['temps_requis']." Heures"; ?></td>
+        	<td></td>
         	<td><?php echo $annonce['Annonce']['date_post']; ?></td>
     		<?php
     	}
