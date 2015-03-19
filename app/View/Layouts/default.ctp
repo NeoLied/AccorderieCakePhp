@@ -76,7 +76,7 @@
 					<div class="cadre_credit_temps">
 					<?php
 						if(AuthComponent::user('id') != null) {
-							echo "Vous avez ".$utilisateur[0]['users']['credit_temps']." Heures";
+							echo $utilisateur[0]['users']['credit_temps']." Heures";
 						}
 					?>
 					</div>
