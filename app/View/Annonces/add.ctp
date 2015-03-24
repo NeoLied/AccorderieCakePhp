@@ -12,6 +12,11 @@ echo $this->Form->input('temps_requis', array(
       'options' => array(0,1, 2, 3, 4, 5)
   ));
   
+echo $this->Form->input('type', array(
+	'empty' => '(choisissez)',
+    'options' => $type
+  ));
+  
 $options = array('0' => 'Demande', '1' => 'Offre');
 $attributes = array('legend' => false);
 echo $this->Form->radio('demande', $options, $attributes);

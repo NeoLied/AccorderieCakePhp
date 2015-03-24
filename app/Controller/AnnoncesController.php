@@ -35,6 +35,18 @@ class AnnoncesController extends AppController {
     }
     
     public function add() {
+    	
+    	$some_sql = "Select libelle from competences";
+    	$db = ConnectionManager::getDataSource('default');
+    	$result = $db->query($some_sql);
+    	
+    	$type = array();
+    	foreach ($result as $row) {
+    		$type[$row['competences']['libelle']] = $row['competences']['libelle'];
+    	}
+    	
+    	$this->set('type', $type);
+    	
     	if ($this->request->is('post')) {
     		$this->Annonce->create();
     		if ($this->Annonce->save($this->request->data)) {
