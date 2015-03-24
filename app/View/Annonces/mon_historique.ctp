@@ -13,7 +13,7 @@
     
     <tr>
     	<td>Offre de bienvenue</td>
-       	<td>L'administration</td>
+       	<td>L'administration</td> 
        	<td style="color:blue;">+3 Heures</td>
         <td></td>
         <td></td>
