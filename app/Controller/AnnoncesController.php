@@ -137,9 +137,9 @@ class AnnoncesController extends AppController {
     }
     
     public function isAuthorized($user) {
-    	// Tous les users inscrits peuvent ajouter des anonces
+    	// Tous les users inscrits peuvent ajouter des anonces, consulter, et réserver
     	if ($this->action === 'add' || $this->action === 'demande' || $this->action === 'offre'
-    								|| $this->action === 'mes_annonces') {
+    								|| $this->action === 'mes_annonces' || $this->action === 'reservation') {
     		return true;
     	}
     	// L'utilisateur peut éditer ou supprimer son annonce
@@ -154,45 +154,6 @@ class AnnoncesController extends AppController {
     	}
     
     	return parent::isAuthorized($user);
-    }
-    
-    public function mon_historique()
-    {
-    	//récupérer la liste de toutes les annonces
-    	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array(
-    								'OR' => array(
-    									'Annonce.user_id' => AuthComponent::user('id'),
-    									'Annonce.id_accepteur' => AuthComponent::user('id')
-    								)
-    							)
-    	)));
-    	
-    	//récupérer le total horaire de services que l'on a rendu
-    	
-    	//récupérer le total horaire de services que l'on vous a rendu
-    	/*$listeAnnonces = $this->Annonce->find(
-    			'all', 
-    			array(
-    				'conditions' => array (
-    								'OR' => array(
-    									'Annonce.user_id' => AuthComponent::user('id'),
-    									'Annonce.id_accepteur' => AuthComponent::user('id')
-    										)
-    							    )
-    					
-    			)
-    	);
-    	$soldeServiceQueLOnVousARendu = 0;
-    	foreach ($listeAnnonces as $uneAnnonce) {
-    		$soldeServiceQueLOnVousARendu += $uneAnnonce['temps_requis'];
-    	}
-    	$this->set('solde_total_service_que_l_on_vous_a_rendu', $soldeServiceQueLOnVousARendu);
-    	
-    	//récupérer le solde de l'utilisateur
-    	$query_to_execute = "select credit_temps from users where id = ".AuthComponent::user('id');
-    	$results = $this->User->query($query_to_execute);
-    	$this->set('solde_total', $results);*/
     }
 }
 ?>
