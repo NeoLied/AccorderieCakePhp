@@ -10,6 +10,14 @@
         <th>Services que l'on vous a rendu</th>
         <th>Date de l'annonce</th>
     </tr>
+    
+    <tr>
+    	<td>Offre de bienvenue</td>
+       	<td>L'administration</td>
+       	<td style="color:blue;">+3 Heures</td>
+        <td></td>
+        <td></td>
+    </tr>
 
     <?php foreach ($annonces as $annonce): ?>
     <tr>
