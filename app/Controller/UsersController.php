@@ -48,6 +48,17 @@ public function beforeFilter() {
     }
 
     public function edit($id = null) {
+    	
+    	$some_sql = "Select libelle from competences";
+    	$db = ConnectionManager::getDataSource('default');
+    	$result = $db->query($some_sql);
+    	
+    	$type = array();
+    	foreach ($result as $row) {
+    		$type[$row['competences']['libelle']] = $row['competences']['libelle'];
+    	}
+    	$this->set('type', $type);
+    	
         $this->User->id = $id;
         if (!$this->User->exists()) {
             throw new NotFoundException(__('Utilisateur Invalide'));

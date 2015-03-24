@@ -14,6 +14,12 @@ echo $this->Form->input('passwordnewconfirm',
 		'value' => '',
 		'type' => 'password'));
 		
+echo $this->Form->input('type', array(
+	'type' => 'select',
+    'options' => $type,
+    'multiple' => 'checkbox'
+  )); 
+		
 echo $this->Form->input('mail');
 
 echo $this->Form->input('telephone',
