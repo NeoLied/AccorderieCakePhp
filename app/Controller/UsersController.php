@@ -61,7 +61,7 @@ public function beforeFilter() {
             }
         } else {
             $this->request->data = $this->User->read(null, $id);
-            unset($this->request->data['Utilisateur']['password']);
+            unset($this->request->data['User']['password']);
         }
     }
 
