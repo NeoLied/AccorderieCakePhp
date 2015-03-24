@@ -185,7 +185,10 @@ class User extends AppModel {
 	    			$this->data[$this->alias]['reponse_secrete']
 	    	);
 	    }
-	    if (isset($this->data[$this->alias]['passwordnewconfirm'])) {
+	    // BUG LORSQUE UN MOT DE PASSE COMPRIS ENTRE 1 ET 6 CARACTERES EST RENTRE (IL REMPLACE L'ANCIEN ALORS
+	    // QU'IL NE DEVRAIT PAS
+	    if (isset($this->data[$this->alias]['passwordnewconfirm'])
+	    		&& !empty($this->data[$this->alias]['passwordnewconfirm'])) {
 	    	$passwordHasher = new SimplePasswordHasher();
 	    	$this->data[$this->alias]['password'] = $passwordHasher->hash(
 	    			$this->data[$this->alias]['passwordnewconfirm']
