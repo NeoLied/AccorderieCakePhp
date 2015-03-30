@@ -146,12 +146,26 @@ class AnnoncesController extends AppController {
     	 	$tempsFinal += $temps;
     	 }
     	$this->Annonce->User->saveField('credit_temps',$tempsFinal);
+    	return $this->redirect('/annonces/a_valider');
+    }
+    
+    public function valider_annonce ($id_annonce){
+    	$this->Annonce->id = $id_annonce;
+    	$this->Annonce->saveField('annonceValide', 'oui');
+    	return $this->redirect(array('action' => 'annonce_pas_valide'));
+    }
+    
+    public function annonce_pas_valide (){
+    	$this->set('annonces',  $this->Annonce->find('all', array(
+    			'conditions' => array('Annonce.annonceValide' => 'non')
+    	)));
     }
     
     public function isAuthorized($user) {
     	// Tous les users inscrits peuvent ajouter des anonces, consulter, et réserver
     	if ($this->action === 'add' || $this->action === 'demande' || $this->action === 'offre'
-    		|| $this->action === 'mes_annonces' || $this->action === 'reservation' || $this->action === 'mon_historique') {
+    		|| $this->action === 'mes_annonces' || $this->action === 'reservation' || $this->action === 'mon_historique'
+    		|| $this->action === 'annonce_pas_valide') {
     		return true;
     	}
     	// L'utilisateur peut éditer ou supprimer son annonce
