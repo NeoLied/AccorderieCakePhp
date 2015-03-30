@@ -32,6 +32,11 @@
                 	'Editer',
                 	array('action' => 'edit', $user['User']['id'])
             	);
+            	echo " ";
+            	echo $this->Html->link(
+                	'Offre de bienvenue',
+                	array('action' => 'offre_bienvenue', $user['User']['id'])
+            	);
             }
             if(AuthComponent::user('role') == "admin"){
             	echo " ";

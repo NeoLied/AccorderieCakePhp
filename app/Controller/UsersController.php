@@ -135,5 +135,26 @@ public function beforeFilter() {
 	
 		return parent::isAuthorized($user);
 	}
+	
+	public function offre_bienvenue($id_utilisateur)
+	{
+		// vérifier si l'utilisateur n'a pas déjà bénéficié de l'offre de bienvenue
+		// sinon le renvoyer sur l'accueil 
+		$array = $this->User->find('first', array('conditions' => array('User.id' => $id_utilisateur,
+		'User.offre_de_bienvenue' => 'non')));
+		if (count($array) == 0) {
+			$this->Session->setFlash(__('L\'utilisateur a déjà bénéficié de l\'offre de bienvenue !'));
+			return $this->redirect('/users/');
+		}	
+		// mettre à jour le crédit temps et verrouiller l'offre de bienvenue
+		$credit_temps = $array['User']['credit_temps'];
+		$credit_temps += 3;
+		$this->User->id = $array['User']['id'];
+		var_dump($credit_temps);
+		$this->User->saveField('credit_temps', $credit_temps);
+		$this->User->saveField('offre_de_bienvenue', "oui");
+		$this->Session->setFlash(__('Le compte de l\'utilisateur a été crédité de 3 heures.'));
+		return $this->redirect('/users/');
+	}
 }
 ?>
