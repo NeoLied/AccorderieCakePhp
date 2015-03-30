@@ -9,7 +9,7 @@ class AnnoncesController extends AppController {
    
     public function offre() {
     	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.demande' => 1)
+    			'conditions' => array('Annonce.demande' => 1, 'Annonce.annonceValide' => 'oui' )
     	)));
     }
     
@@ -19,7 +19,7 @@ class AnnoncesController extends AppController {
     	 
     public function demande() {
     	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.demande' => 0))));
+    			'conditions' => array('Annonce.demande' => 0, 'Annonce.annonceValide' => 'oui'))));
     }
 
     public function view($id = null) {
@@ -165,7 +165,7 @@ class AnnoncesController extends AppController {
     	// Tous les users inscrits peuvent ajouter des anonces, consulter, et réserver
     	if ($this->action === 'add' || $this->action === 'demande' || $this->action === 'offre'
     		|| $this->action === 'mes_annonces' || $this->action === 'reservation' || $this->action === 'mon_historique'
-    		|| $this->action === 'annonce_pas_valide') {
+    		|| $this->action === 'annonce_pas_valide' || $this->action === 'valider_annonce' ) {
     		return true;
     	}
     	// L'utilisateur peut éditer ou supprimer son annonce
