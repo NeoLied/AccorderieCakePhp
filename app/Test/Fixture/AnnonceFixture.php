@@ -14,6 +14,7 @@ class AnnonceFixture extends CakeTestFixture
 			'signalee' => array('type' => 'integer'),
 			'user_id' => array('type' => 'integer'),
 			'id_accepteur' => array('type' => 'integer'),
+			'annonceValide' => array('type' => 'string', 'length' => '3'),
 	);
 	
 	public $records = array(
@@ -26,7 +27,8 @@ class AnnonceFixture extends CakeTestFixture
 				'demande' => 1,
 				'signalee' => 0,
 				'user_id' => 2,
-				'id_accepteur' => 3,		
+				'id_accepteur' => 3,
+				'annonceValide' => 'oui',
 			),
 			array(
 					'id' => 2,
@@ -38,6 +40,7 @@ class AnnonceFixture extends CakeTestFixture
 					'signalee' => 0,
 					'user_id' => 1,
 					'id_accepteur' => 0,
+					'annonceValide' => 'non',
 			),
 	);
 }
