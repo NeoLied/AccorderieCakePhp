@@ -116,7 +116,12 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	public function test_is_authorized() {
+	public function test_is_authorized_1() {
+		$result = $this->testAction('/users/isAuthorized/1');
+		debug($result);
+	}
+	
+	public function test_is_authorized_2() {
 		$result = $this->testAction('/users/isAuthorized/1');
 		debug($result);
 	}
