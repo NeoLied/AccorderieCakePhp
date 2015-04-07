@@ -50,7 +50,9 @@ class UserTestCase extends CakeTestCase
 	
 	public function test_fucntion_check()
 	{
-		$result = $this->User->equaltofield('test','test');
+		$array = array();
+		array_push($array, "test");
+		$result = $this->User->equaltofield($array,'test');
 		$expected = false;
 		$this->assertEquals($expected, $result);
 	}
