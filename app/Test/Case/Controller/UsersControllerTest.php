@@ -90,9 +90,15 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	public function test_offre_bienvenue()
+	public function test_offre_bienvenue_oui()
 	{
 		$result = $this->testAction('/users/offre_bienvenue/1');
+		debug($result);
+	}
+	
+	public function test_offre_bienvenue_non()
+	{
+		$result = $this->testAction('/users/offre_bienvenue/2');
 		debug($result);
 	}
 }
