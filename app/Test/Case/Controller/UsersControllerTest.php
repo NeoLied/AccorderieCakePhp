@@ -106,7 +106,7 @@ class UserControllerTest extends ControllerTestCase
 		$data = array(
 				'User' => array(
 						'username' => 'tristan',
-						'password' => 'tristan',	
+						'password' => '9ec1b96308ee14c02f2b69b40f323030cdae0dfb',	
 				)
 		);
 		$result = $this->testAction(
