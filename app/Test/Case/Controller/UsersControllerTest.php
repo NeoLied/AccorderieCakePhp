@@ -101,4 +101,18 @@ class UserControllerTest extends ControllerTestCase
 		$result = $this->testAction('/users/offre_bienvenue/2');
 		debug($result);
 	}
+	
+	public function test_login() {
+		$data = array(
+				'User' => array(
+						'username' => 'tristan',
+						'password' => 'tristan',	
+				)
+		);
+		$result = $this->testAction(
+				'//users/login',
+				array('data' => $data, 'method' => 'post')
+		);
+		debug($result);
+	}
 }
