@@ -47,4 +47,11 @@ class UserTestCase extends CakeTestCase
 		$expected = true;
 		$this->assertEquals($expected, $result);
 	}
+	
+	public function test_fucntion_check()
+	{
+		$result = $this->User->equaltofield('test','test');
+		$expected = false;
+		$this->assertEquals($expected, $result);
+	}
 }
