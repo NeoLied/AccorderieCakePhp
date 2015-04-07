@@ -120,7 +120,8 @@ class UserControllerTest extends ControllerTestCase
 		$data = array(
 				'User' => array(
 						'avatar' => array(
-								'name' => 'test.jpg'
+								'name' => 'test.jpg',
+								'tmp_name' => 'toutoupidou'
 						),		
 				)
 		);
