@@ -89,4 +89,10 @@ class UserControllerTest extends ControllerTestCase
 		$result = $this->testAction('/users/credit_temps');
 		debug($result);
 	}
+	
+	public function test_offre_bienvenue()
+	{
+		$result = $this->testAction('/users/offre_bienvenue/1');
+		debug($result);
+	}
 }
