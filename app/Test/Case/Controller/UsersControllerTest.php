@@ -116,19 +116,8 @@ class UserControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	public function test_inscription_avatar() {
-		$data = array(
-				'User' => array(
-						'avatar' => array(
-								'name' => 'test.jpg',
-								'tmp_name' => 'toutoupidou'
-						),		
-				)
-		);
-		$result = $this->testAction(
-				'/users/add',
-				array('data' => $data, 'method' => 'post')
-		);
+	public function test_is_authorized() {
+		$result = $this->testAction('/users/isAuthorized/1');
 		debug($result);
 	}
 }
