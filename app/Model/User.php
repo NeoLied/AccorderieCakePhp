@@ -149,6 +149,8 @@ class User extends AppModel {
     			'message' => 'La réponse secrète doit faire entre 2 et 100 caractères'
     		)
     	),
+    	'offre_de_bienvenue' => array(),
+    	
     );
     
     public function isOwnedBy($userId, $userBdd) {
