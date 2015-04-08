@@ -146,8 +146,7 @@ class AnnoncesController extends AppController {
     	 	$tempsFinal += $temps;
     	 }
     	$this->Annonce->User->saveField('credit_temps',$tempsFinal);
-    	//return $this->redirect('/annonces/a_valider');
-    	return $this->redirect("/");
+    	//return $this->redirect("/");
     }
     
     public function valider_annonce ($id_annonce){
