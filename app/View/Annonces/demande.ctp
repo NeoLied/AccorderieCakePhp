@@ -28,9 +28,9 @@
         <td>
          <?php 
          if($annonce['Annonce']['user_id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
-         	echo $this->Html->link(
+         	echo $this->Form->postLink(
                 'Supprimer',
-                array('action' => 'delete', $annonce['Annonce']['id'],'demande'),
+                array('action' => 'delete', $annonce['Annonce']['id'],'index'),
                 array('confirm' => "Êtes-vous sûr ?"));
 			echo " ";
 			echo $this->Html->link(

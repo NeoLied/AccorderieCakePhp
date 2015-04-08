@@ -2,8 +2,6 @@
 
 <h1>Annonces</h1>
 
-<?php //debug($annonces); ?>
-
 <table>
     <tr>
         <th>Id</th>
