@@ -1,4 +1,5 @@
-<?php echo $this->Form->create('Annonce'); ?>
+<?php echo $this->Form->create('Annonce'); 
+?>
 
 <h1>Mon historique</h1>
 
@@ -11,13 +12,22 @@
         <th>Date de l'annonce</th>
     </tr>
     
-    <tr>
+<?php    
+    if($offre[0]['users']['offre_de_bienvenue'] == "oui") {
+    	?>
+    	<tr>
     	<td>Offre de bienvenue</td>
        	<td>L'administration</td> 
        	<td style="color:blue;">+3 Heures</td>
         <td></td>
         <td></td>
     </tr>
+    <?php
+    }
+   
+?>    
+    
+    
 
     <?php foreach ($annonces as $annonce): ?>
     <tr>
