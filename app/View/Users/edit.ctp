@@ -33,12 +33,12 @@ echo $this->Form->input('passwordnewconfirm',
 		'value' => '',
 		'type' => 'password'));
 		
-echo $this->Form->input('type', array(
+/*echo $this->Form->input('type', array(
 	'type' => 'select',
     'options' => $type,
     'multiple' => 'checkbox'
-  )); 
+  ));*/ 
         	
 echo $this->Form->input('id', array('type' => 'hidden'));
-echo $this->Form->end('Save User');
+echo $this->Form->end('Valider');
 ?>

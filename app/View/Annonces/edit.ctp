@@ -9,5 +9,5 @@ echo $this->Form->input('temps_requis', array(
       'options' => array(0,1, 2, 3, 4, 5)
   ));
 echo $this->Form->input('id', array('type' => 'hidden'));
-echo $this->Form->end('Save Annonce');
+echo $this->Form->end('Valider');
 ?>
