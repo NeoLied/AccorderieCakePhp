@@ -5,6 +5,7 @@ class AllTestsTest extends CakeTestSuite {
 		$suite = new CakeTestSuite('All tests');
 		$suite->addTestDirectoryRecursive(TESTS . 'Case/Model');
 		$suite->addTestFile(TESTS . 'Case/Controller' . '/UsersControllerTest.php');
+		$suite->addTestFile(TESTS . 'Case/Controller' . '/AnnoncesControllerTest.php');
 		return $suite;
 	}
 }
