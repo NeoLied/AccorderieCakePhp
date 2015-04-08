@@ -51,7 +51,7 @@ class AnnoncesController extends AppController {
     		$this->Annonce->create();
     		if ($this->Annonce->save($this->request->data)) {
     			$this->Session->setFlash(__('L\'annonce a été ajoutée.'));
-    			return $this->redirect(array('action' => 'index'));
+    			return $this->redirect("/");
     		}
     		$this->Session->setFlash(__('Impossible d\'ajouter votre annonce.'));
     	}
@@ -71,7 +71,7 @@ class AnnoncesController extends AppController {
     		$this->Annonce->id = $id;
     		if ($this->Annonce->save($this->request->data)) {
     			$this->Session->setFlash(__('Votre annonce a été éditée'));
-    			return $this->redirect(array('action' => 'index'));
+    			return $this->redirect("/");
     		}
     		$this->Session->setFlash(__('Impossible de modifier l\'annonce.'));
     	}
@@ -89,15 +89,15 @@ class AnnoncesController extends AppController {
     	}
     	if ($this->Annonce->delete($id)) 
     	{
-    		$this->Session->setFlash(__('L\annonce avec id : %s a été supprimée.', h($id)));
-    		return $this->redirect(array('action' => $nameRedirect));
+    		$this->Session->setFlash(__('L\'annonce avec id : %s a été supprimée.', h($id)));
+    		return $this->redirect("/");
     	}
     }
     
     public function signaler($id){
     	$this->Annonce->id = $id;
     	$this->Annonce->saveField('signalee', true);
-    	return $this->redirect(array('action' => 'index'));
+    	return $this->redirect("/");
     }
     
     public function annonceSignalee() {
@@ -146,7 +146,8 @@ class AnnoncesController extends AppController {
     	 	$tempsFinal += $temps;
     	 }
     	$this->Annonce->User->saveField('credit_temps',$tempsFinal);
-    	return $this->redirect('/annonces/a_valider');
+    	//return $this->redirect('/annonces/a_valider');
+    	return $this->redirect("/");
     }
     
     public function valider_annonce ($id_annonce){

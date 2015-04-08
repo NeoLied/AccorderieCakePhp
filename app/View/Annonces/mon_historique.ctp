@@ -1,6 +1,6 @@
 <?php echo $this->Form->create('Annonce'); ?>
 
-<h1>Mon historique trop bogoss</h1>
+<h1>Mon historique</h1>
 
 <table>
     <tr>
