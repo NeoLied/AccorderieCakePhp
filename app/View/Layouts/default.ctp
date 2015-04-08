@@ -55,7 +55,6 @@
       						<a href="#">Mon profil</a>
       						<ul>
         						<li><?php echo $this->Html->link('Editer','/users/edit/'.AuthComponent::user('id')); ?></li>
-        						<li><?php echo $this->Html->link('Crédit temps','/users/credit_temps'); ?></li>
         						<li><?php echo $this->Html->link('Mon Historique','/annonces/mon_historique'); ?></li>
         						<li><?php echo $this->Html->link('Déconnexion','/users/logout'); ?></li>
       						</ul>
@@ -70,6 +69,7 @@
       						<ul>
         						<li><?php echo $this->Html->link('Liste utilisateurs','/users/'); ?></li>
         						<li><?php echo $this->Html->link('Liste annonces','/annonces/'); ?></li>
+        						<li><?php echo $this->Html->link('Annonces à valider','/annonces/annonce_pas_valide/'); ?></li>
       						</ul>
     					</li>
 <?php	} ?>	
