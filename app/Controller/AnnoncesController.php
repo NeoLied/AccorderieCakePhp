@@ -193,6 +193,15 @@ class AnnoncesController extends AppController {
     								)
     							)
     	)));
+    	
+    	//récupérer le crédit temps de l'utilisateur
+   	 	$some_sql = "Select offre_de_bienvenue from users where id = ".AuthComponent::user('id');
+    	$db = ConnectionManager::getDataSource('default');
+    	$result = $db->query($some_sql);
+    	
+    	$offre = $result[0];
+    	$this->set('offre',$result);
+    	
     }
 }
 ?>
