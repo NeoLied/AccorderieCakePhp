@@ -4,22 +4,15 @@ class AnnoncesController extends AppController {
  	public $helpers = array('Html', 'Form');
 
     public function index() {
-         $this->set('annonces', $this->Annonce->find('all'));
+         $this->set('annonces', $this->selectAllAnnonces());
     }
    
     public function offre() {
-    	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.demande' => 1, 'Annonce.annonceValide' => 'oui' )
-    	)));
+    	$this->set('annonces', $this->selectAllAnnonces(1));
     }
-    
-    public function validation() {
-    	$this->set('annonces',  $this->Annonce->find('all'));
-    	}
     	 
     public function demande() {
-    	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.demande' => 0, 'Annonce.annonceValide' => 'oui'))));
+    	$this->set('annonces', $this->selectAllAnnonces(0));
     }
 
     public function view($id = null) {
@@ -202,6 +195,20 @@ class AnnoncesController extends AppController {
     	$offre = $result[0];
     	$this->set('offre',$result);
     	
+    }
+    
+    /*
+     * Fonctions privées réutilisables
+     */
+    
+    private function selectAllAnnonces($type = null) {
+    	if($type == null) {
+    		return $this->Annonce->find('all');
+    	} else {
+    		return $this->Annonce->find('all',
+    				array('conditions' => array('Annonce.demande' => $type, 'Annonce.annonceValide' => 'oui' )
+    				));
+    	}
     }
 }
 ?>

@@ -1,7 +1,4 @@
-<!-- File: /app/View/Posts/offre.ctp -->
-
 <h1>Demandes</h1>
-
 <table>
     <tr>
         <th>Id</th>
@@ -11,9 +8,6 @@
         <th>Temps de travail</th>
         <th>Date de l'annonce</th>
     </tr>
-
-    <!-- Here is where we loop through our $posts array, printing out post info -->
-
     <?php foreach ($annonces as $annonce): ?>
     <tr>
         <td><?php echo $annonce['Annonce']['id']; ?></td>

@@ -17,7 +17,6 @@ class User extends AppModel {
     			'message' => 'Le nom d\'utilisateur doit faire entre 4 et 100 caractères'
     		)
     	),
-    	// Password lors de l'ajout
     	'password' => array(
     		'required' => array(
     			'rule' => array('notEmpty'),
