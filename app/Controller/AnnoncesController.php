@@ -31,10 +31,8 @@ class AnnoncesController extends AppController {
      */
     
     public function add() {
-    	
-    	$some_sql = "Select libelle from competences";
-    	$db = ConnectionManager::getDataSource('default');
-    	$result = $db->query($some_sql);
+    	$requete = "Select libelle from competences";
+    	$result = $this->injecterRequete($requete);
     	
     	$type = array();
     	foreach ($result as $row) {
@@ -55,11 +53,8 @@ class AnnoncesController extends AppController {
     
     public function edit($id = null) {
     	$this->testerExistenceAnnonce($id);
-    
     	$annonce = $this->Annonce->findById($id);
-    	if (!$annonce) {
-    		throw new NotFoundException(__('Annonce invalide'));
-    	}
+    	$this->testerExistenceAnnonceParObjet($annonce);
     
     	if ($this->request->is(array('post', 'put'))) {
     		$this->Annonce->id = $id;
@@ -188,10 +183,8 @@ class AnnoncesController extends AppController {
     							)
     	)));
     	
-    	//récupérer le crédit temps de l'utilisateur
-   	 	$some_sql = "Select offre_de_bienvenue from users where id = ".AuthComponent::user('id');
-    	$db = ConnectionManager::getDataSource('default');
-    	$result = $db->query($some_sql);
+   	 	$requete = "Select offre_de_bienvenue from users where id = ".AuthComponent::user('id');
+    	$result = $this->injecterRequete($requete);
     	
     	$offre = $result[0];
     	$this->set('offre',$result);
@@ -222,6 +215,11 @@ class AnnoncesController extends AppController {
     	if (!$annonce) {
             throw new NotFoundException(__('Annonce invalide'));
         }
+    }
+    
+    private function injecterRequete($requete) {
+    	$db = ConnectionManager::getDataSource('default');
+    	return $db->query($requete);
     }
 }
 ?>
