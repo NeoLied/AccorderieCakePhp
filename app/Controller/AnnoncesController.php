@@ -33,19 +33,13 @@ class AnnoncesController extends AppController {
     public function add() {
     	$requete = "Select libelle from competences";
     	$result = $this->injecterRequete($requete);
-    	
-    	$type = array();
-    	foreach ($result as $row) {
-    		$type[$row['competences']['libelle']] = $row['competences']['libelle'];
-    	}
-    	
-    	$this->set('type', $type);
+    	$this->set('type', $this->recupererListeCompetences($result));
     	
     	if ($this->request->is('post')) {
     		$this->Annonce->create();
     		if ($this->Annonce->save($this->request->data)) {
     			$this->Session->setFlash(__('L\'annonce a été ajoutée.'));
-    			return $this->redirect("/");
+    			$this->retourPageAccueil();
     		}
     		$this->Session->setFlash(__('Impossible d\'ajouter votre annonce.'));
     	}
@@ -60,7 +54,7 @@ class AnnoncesController extends AppController {
     		$this->Annonce->id = $id;
     		if ($this->Annonce->save($this->request->data)) {
     			$this->Session->setFlash(__('Votre annonce a été éditée'));
-    			return $this->redirect("/");
+    			$this->retourPageAccueil();
     		}
     		$this->Session->setFlash(__('Impossible de modifier l\'annonce.'));
     	}
@@ -79,14 +73,14 @@ class AnnoncesController extends AppController {
     	if ($this->Annonce->delete($id)) 
     	{
     		$this->Session->setFlash(__('L\'annonce avec id : %s a été supprimée.', h($id)));
-    		return $this->redirect("/");
+    		$this->retourPageAccueil();
     	}
     }
     
     public function signaler($id){
     	$this->Annonce->id = $id;
     	$this->Annonce->saveField('signalee', true);
-    	return $this->redirect("/");
+    	$this->retourPageAccueil();
     }
     
     public function annonceSignalee() {
@@ -135,7 +129,6 @@ class AnnoncesController extends AppController {
     	 	$tempsFinal += $temps;
     	 }
     	$this->Annonce->User->saveField('credit_temps',$tempsFinal);
-    	//return $this->redirect("/");
     }
     
     public function valider_annonce ($id_annonce){
@@ -220,6 +213,18 @@ class AnnoncesController extends AppController {
     private function injecterRequete($requete) {
     	$db = ConnectionManager::getDataSource('default');
     	return $db->query($requete);
+    }
+    
+    private function recupererListeCompetences($tableau) {
+    	$type = array();
+    	foreach ($tableau as $row) {
+    		$type[$row['competences']['libelle']] = $row['competences']['libelle'];
+    	}
+    	return $type;
+    }
+    
+    private function retourPageAccueil() {
+    	return $this->redirect("/");
     }
 }
 ?>
