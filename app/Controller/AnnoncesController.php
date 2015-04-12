@@ -3,6 +3,10 @@ class AnnoncesController extends AppController {
     
  	public $helpers = array('Html', 'Form');
 
+ 	/*
+ 	 * Fonctions refactorées
+ 	 */
+ 	
     public function index() {
          $this->set('annonces', $this->selectAllAnnonces());
     }
@@ -14,18 +18,17 @@ class AnnoncesController extends AppController {
     public function demande() {
     	$this->set('annonces', $this->selectAllAnnonces(0));
     }
-
+    
     public function view($id = null) {
-        if (!$id) {
-            throw new NotFoundException(__('Annonce invalide'));
-        }
-
-        $annonce = $this->Annonce->findById($id);
-        if (!$annonce) {
-            throw new NotFoundException(__('Annonce invalide'));
-        }
-        $this->set('annonce', $annonce);
+    	$this->testerExistenceAnnonceParID($id);
+    	$annonce = $this->Annonce->findById($id);
+    	$this->testerExistenceAnnonceParObjet($annonce);
+    	$this->set('annonce', $annonce);
     }
+    
+    /*
+     * Fonctions à refactorer
+     */
     
     public function add() {
     	
@@ -51,9 +54,7 @@ class AnnoncesController extends AppController {
     }
     
     public function edit($id = null) {
-    	if (!$id) {
-    		throw new NotFoundException(__('Annonce invalide'));
-    	}
+    	$this->testerExistenceAnnonce($id);
     
     	$annonce = $this->Annonce->findById($id);
     	if (!$annonce) {
@@ -209,6 +210,18 @@ class AnnoncesController extends AppController {
     				array('conditions' => array('Annonce.demande' => $type, 'Annonce.annonceValide' => 'oui' )
     				));
     	}
+    }
+    
+    private function testerExistenceAnnonceParID($id) {
+    	if (!$id) {
+    		throw new NotFoundException(__('Annonce invalide'));
+    	}
+    }
+    
+    private function testerExistenceAnnonceParObjet($annonce) {
+    	if (!$annonce) {
+            throw new NotFoundException(__('Annonce invalide'));
+        }
     }
 }
 ?>
