@@ -3,6 +3,8 @@ App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 
 class UsersController extends AppController {
+
+	public $helpers = array('Html', 'Form');
 	
 public function beforeFilter() {
 	    parent::beforeFilter();
@@ -24,6 +26,9 @@ public function beforeFilter() {
     }
 
     public function add() {
+
+		$this->User->validator()->remove('avatar');
+
         if ($this->request->is('post')) {
         	// Envoi fichier avatar
         	if(!empty($this->data['User']['avatar']['name']))
@@ -36,9 +41,12 @@ public function beforeFilter() {
         			move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img'. DS . 'uploads' .DS . time().$file['name']);
         			$this->request->data['User']['avatar'] = time().$file['name'];
         		}
-        	}
+        	}else{
+				$this->request->data['User']['avatar'] = WWW_ROOT . 'img'. DS . 'uploads' .DS . 'avatar.png';
+			}
             $this->User->create();
             if ($this->User->save($this->request->data)) {
+				debug($this->request->data);
                 $this->Session->setFlash(__('L\'utilisateur a été sauvegardé'));
                 return $this->redirect('/');
             } else {
