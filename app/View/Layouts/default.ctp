@@ -18,7 +18,7 @@
 
 	<div id="container">
 		
-		<?php echo $this->Html->image('header-maquette.png', array('alt' => 'Header de bogoss')); ?>
+		<?php echo $this->Html->image('header-maquette.png', array('alt' => 'Header')); ?>
 		
 		<?php	if(AuthComponent::user('id') == null)
 		{
