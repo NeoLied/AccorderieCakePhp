@@ -8,14 +8,21 @@ class User extends AppModel {
 	public $name = 'User';
     public $validate = array(
     	'username' => array(
-    		'required' => array(
-    			'rule' => array('notEmpty'),
-    			'message' => 'Un nom d\'utilisateur est requis'
+			array(
+				'rule' => 'alphanumeric',
+    		'required' => true,
+    			'allowEmpty' => false,
+    			'message' => 'Votre pseudo n\'est pas valide'
     		),
+			array(
+				'rule' => 'isUnique',
+				'message' => 'Ce pseudo est déjà pris'
+			),
+
     		'CaracLongueur' => array(
     			'rule' => array('lengthBetween', 4, 100),
     			'message' => 'Le nom d\'utilisateur doit faire entre 4 et 100 caractères'
-    		)
+			)
     	),
     	'password' => array(
     		'required' => array(
@@ -149,7 +156,7 @@ class User extends AppModel {
     		)
     	),
     	'offre_de_bienvenue' => array(),
-    	
+
     );
     
     public function isOwnedBy($userId, $userBdd) {
