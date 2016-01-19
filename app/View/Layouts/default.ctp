@@ -28,7 +28,8 @@
 						<li><?php echo $this->Html->link('Accueil','/'); ?></li>
 						<li><?php echo $this->Html->link('Inscription','/users/add'); ?></li>
 						<li><?php echo $this->Html->link('Connexion','/users/login'); ?></li>
-						<li><a href="#">Nous contacter</a></li>
+						<li><?php echo $this->Html->link('Nous contacter','/contacts/index'); ?></li>
+						<!--<li><a href="#">Nous contacter</a></li>-->
 					</ul>
 				</nav>
 			<?php
@@ -59,8 +60,9 @@
         						<li><?php echo $this->Html->link('Déconnexion','/users/logout'); ?></li>
       						</ul>
     					</li>
-				
-						<li><a href="#">Nous contacter</a></li>
+
+						<!--<li><a href="#">Nous contacter</a></li>-->
+						<li><?php echo $this->Html->link('Nous contacter','/contacts/index'); ?></li>
 			<?php
 		}
 		if(AuthComponent::user('role') == "admin") { ?>
