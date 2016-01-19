@@ -16,7 +16,12 @@ class AnnoncesController extends AppController {
     }
     	 
     public function demande() {
-    	$this->set('annonces', $this->selectAllAnnonces(0));
+    	$this->set('annonces', $this->Annonce->find('all',array(
+			//tableau de conditions
+				'conditions' => array('Annonce.demande' => 0,
+										'Annonce.annonceValide'=>'oui'),
+				'recursive' => 1, //int
+		)));
     }
     
     public function view($id = null) {
@@ -34,7 +39,7 @@ class AnnoncesController extends AppController {
     	$requete = "Select libelle from competences";
     	$result = $this->injecterRequete($requete);
     	$this->set('type', $this->recupererListeCompetences($result));
-    	
+
     	if ($this->request->is('post')) {
     		$this->Annonce->create();
     		if ($this->Annonce->save($this->request->data)) {
@@ -45,13 +50,14 @@ class AnnoncesController extends AppController {
     	}
     }
     
-    public function edit($id = null) {
-    	$this->testerExistenceAnnonce($id);
+    public function edit($id) {
+    	//$this->testerExistenceAnnonce($id);
+		//$this->testerExistenceAnnonceParObjet($annonce);
+
     	$annonce = $this->Annonce->findById($id);
-    	$this->testerExistenceAnnonceParObjet($annonce);
-    
-    	if ($this->request->is(array('post', 'put'))) {
-    		$this->Annonce->id = $id;
+
+    	if ($this->request->is( 'put')) {
+    		//$this->Annonce->id = $id;
     		if ($this->Annonce->save($this->request->data)) {
     			$this->Session->setFlash(__('Votre annonce a été éditée'));
     			$this->retourPageAccueil();

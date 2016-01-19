@@ -9,7 +9,7 @@ echo $this->Form->input('description', array('rows' => '3'));
 
 echo $this->Form->input('temps_requis', array(
 		'empty' => '(choisissez)',
-      'options' => array(0,1, 2, 3, 4, 5 , 6 , 7)
+      'options' => array(1, 2, 3, 4, 5 , 6 , 7)
   ));
   
 echo $this->Form->input('type', array(
