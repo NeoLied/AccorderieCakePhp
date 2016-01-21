@@ -42,7 +42,7 @@ public function beforeFilter() {
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('L\'utilisateur a été sauvegardé'));
 
-				$this->User->send($this->request->data['User'], '81antoine@gmail.com', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'contact');
+				$this->User->send($this->request->data['User'], '', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'contact');
 
                 return $this->redirect('/');
             } else {
