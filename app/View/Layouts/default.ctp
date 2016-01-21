@@ -72,6 +72,7 @@
         						<li><?php echo $this->Html->link('Liste utilisateurs','/users/'); ?></li>
         						<li><?php echo $this->Html->link('Liste annonces','/annonces/'); ?></li>
         						<li><?php echo $this->Html->link('Annonces à valider','/annonces/annonce_pas_valide/'); ?></li>
+								<li><?php echo $this->Html->link('Utilisateurs à valider','/users/utilisateur_pas_valide/'); ?></li>
       						</ul>
     					</li>
 <?php	} ?>	

@@ -6,7 +6,14 @@ class AnnoncesController extends AppController {
  	/*
  	 * Fonctions refactorées
  	 */
- 	
+
+
+
+
+	public function utilisateur_pas_valide() {
+
+	}
+
     public function index() {
          $this->set('annonces', $this->selectAllAnnonces());
     }

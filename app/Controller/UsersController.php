@@ -172,5 +172,12 @@ public function beforeFilter() {
 
 		return $this->redirect('/users/');
 	}
+	public function utilisateur_pas_valide() {
+
+		$this->set('users', $this->User->find("all",
+			array(
+				'conditions' => array('User.offre_de_bienvenue' => "non")
+			)));
+	}
 }
 ?>
