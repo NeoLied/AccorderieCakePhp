@@ -10,7 +10,7 @@ class User extends AppModel {
     	'username' => array(
 			array(
 				'rule' => 'alphanumeric',
-    		'required' => true,
+    		     'required' => true,
     			'allowEmpty' => false,
     			'message' => 'Votre pseudo n\'est pas valide'
     		),
@@ -78,15 +78,17 @@ class User extends AppModel {
     		)
     	),
     	'mail' => array(
-    		'required' => array(
-    			'rule' => array('notEmpty'),
-    			'message' => 'Un mail valide est requis'
-    		),
-    		'mailVerif' => array(
-    			'rule' => 'email',
-    			'message' => 'Mail invalide'
-    		)
-    	),
+			array(
+				'rule' => 'email',
+				'required' => true,
+				'allowEmpty' => false,
+				'message' => 'Votre mail n\'est pas valide'
+			),
+			array(
+				'rule' => 'isUnique',
+				'message' => 'Ce mail est déjà pris'
+			),
+		),
     	'telephone' => array(
     		'required' => array(
     			'rule' => array('phone', null, 'fr'),
