@@ -1,4 +1,4 @@
-/app/Config/database.php
+
 # User specific & automatically generated files #
 #################################################
 /app/tmp
@@ -30,3 +30,4 @@ plugins/Phpunit/Vendor/exe/gzip.exe
 plugins/Phpunit/Vendor/exe/tar.exe
 plugins/Phpunit/Vendor/exe/tar.exe
 *.exe
+app/Config/database.php

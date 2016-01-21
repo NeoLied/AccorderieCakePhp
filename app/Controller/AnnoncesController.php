@@ -1,6 +1,6 @@
 <?php
 class AnnoncesController extends AppController {
-    
+
  	public $helpers = array('Html', 'Form');
 
  	/*
@@ -16,12 +16,14 @@ class AnnoncesController extends AppController {
     }
     	 
     public function demande() {
+		$this->loadModel('Type');
     	$this->set('annonces', $this->Annonce->find('all',array(
 			//tableau de conditions
 				'conditions' => array('Annonce.demande' => 0,
-										'Annonce.annonceValide'=>'oui'),
-				'recursive' => 1, //int
+										'Annonce.annonceValide'=>'oui')
 		)));
+
+		$this->set('types', $this->Type->find('all'));
     }
     
     public function view($id = null) {
@@ -36,35 +38,44 @@ class AnnoncesController extends AppController {
      */
     
     public function add() {
-    	$requete = "Select libelle from competences";
-    	$result = $this->injecterRequete($requete);
-    	$this->set('type', $this->recupererListeCompetences($result));
+		$this->loadModel('Type');
+    	//$requete = "Select libelle from types";
+    	//$result = $this->injecterRequete($requete);
+		$this->set('type',$this->Type->find('list',array(
+			'fields' => 'Type.libelle'
+		)));
 
     	if ($this->request->is('post')) {
     		$this->Annonce->create();
+
     		if ($this->Annonce->save($this->request->data)) {
     			$this->Session->setFlash(__('L\'annonce a été ajoutée.'));
     			$this->retourPageAccueil();
     		}
     		$this->Session->setFlash(__('Impossible d\'ajouter votre annonce.'));
-    	}
+		}
     }
     
     public function edit($id) {
     	//$this->testerExistenceAnnonce($id);
 		//$this->testerExistenceAnnonceParObjet($annonce);
 
-    	$annonce = $this->Annonce->findById($id);
+		$this->loadModel('Type');
+		//$requete = "Select libelle from types";
+		//$result = $this->injecterRequete($requete);
 
+
+    	$annonce = $this->Annonce->findById($id);
+		$this->set('type',$this->Type->find('list',array(
+				'fields' => 'Type.libelle'
+		)));
     	if ($this->request->is( 'put')) {
-    		//$this->Annonce->id = $id;
-    		if ($this->Annonce->save($this->request->data)) {
-    			$this->Session->setFlash(__('Votre annonce a été éditée'));
-    			$this->retourPageAccueil();
-    		}
-    		$this->Session->setFlash(__('Impossible de modifier l\'annonce.'));
-    	}
-    
+			if ($this->Annonce->save($this->request->data)) {
+				$this->Session->setFlash(__('Votre annonce a été éditée'));
+				$this->retourPageAccueil();
+			}
+			$this->Session->setFlash(__('Impossible de modifier l\'annonce.'));
+		}
     	if (!$this->request->data) {
     		$this->request->data = $annonce;
     	}
@@ -150,7 +161,7 @@ class AnnoncesController extends AppController {
     }
     
     public function isAuthorized($user) {
-    	// Tous les users inscrits peuvent ajouter des anonces, consulter, et réserver
+    	// Tous les users inscrits peuvent ajouter des annonces, consulter, et réserver
     	if ($this->action === 'add' || $this->action === 'demande' || $this->action === 'offre'
     		|| $this->action === 'mes_annonces' || $this->action === 'reservation' || $this->action === 'mon_historique'
     		|| $this->action === 'annonce_pas_valide' || $this->action === 'valider_annonce' ) {
@@ -220,15 +231,7 @@ class AnnoncesController extends AppController {
     	$db = ConnectionManager::getDataSource('default');
     	return $db->query($requete);
     }
-    
-    private function recupererListeCompetences($tableau) {
-    	$type = array();
-    	foreach ($tableau as $row) {
-    		$type[$row['competences']['libelle']] = $row['competences']['libelle'];
-    	}
-    	return $type;
-    }
-    
+
     private function retourPageAccueil() {
     	return $this->redirect("/");
     }

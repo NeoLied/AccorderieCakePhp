@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `annonces` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `titre` varchar(50) NOT NULL,
   `description` varchar(1000) NOT NULL,
-  `type` varchar(32) NOT NULL,
+  `type_id` int(11) NOT NULL,
   `date_post` date NOT NULL,
   `temps_requis` int(100) NOT NULL,
   `demande` tinyint(1) NOT NULL,
@@ -39,23 +39,15 @@ CREATE TABLE IF NOT EXISTS `annonces` (
   `user_id` bigint(20) NOT NULL,
   `id_accepteur` bigint(20) NOT NULL,
   `annonceValide` varchar(3) NOT NULL DEFAULT 'non',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `type_id` (`type_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
--- Contenu de la table `annonces`
+-- Contraintes pour la table `annonces`
 --
-
-INSERT INTO `annonces` (`id`, `titre`, `description`, `type`, `date_post`, `temps_requis`, `demande`, `libelle_categorie`, `signalee`, `user_id`, `id_accepteur`, `annonceValide`) VALUES
-(16, 'soutien scolaire', 'toutes matières primaire', '', '2015-04-07', 2, 1, '', 0, 15, 16, 'oui'),
-(17, 'Poom Poom tchak faisons de la musique', 'Je suis membre honorifique de l''orchestre national de claquette turque du Capitole et je vous offre d''apprendre cet art ancestrale !', '', '2015-04-08', 5, 1, '', 0, 16, 15, 'oui'),
-(19, 'Besoin réparation voiture', 'Bonjour,\r\nJe recherche une personne pour fermer ma portière svp.\r\nMerci ! ', 'Accompagnement comptabilité', '2015-04-08', 1, 0, '', 0, 18, 11, 'oui'),
-(20, 'Test validation', 'Nous testons la validation', 'Accompagnement comptabilité', '2015-04-08', 2, 1, '', 0, 18, 0, 'oui'),
-(23, 'annonce-demo', 'lorem ipsum', 'Accompagnement comptabilité', '2015-04-08', 1, 0, '', 0, 20, 11, 'oui'),
-(24, 'test-validation', 'lorem ipsum', 'Accompagnement comptabilité', '2015-04-08', 2, 1, '', 0, 11, 0, 'oui'),
-(25, 'Test-annonce-demo', 'Nous faisons un test', 'Accompagnement comptabilité', '2015-04-08', 3, 1, '', 0, 20, 11, 'oui');
-
--- --------------------------------------------------------
+ALTER TABLE `annonces`
+  ADD CONSTRAINT `fk_type_id` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`);
 
 --
 -- Structure de la table `categories`
@@ -151,6 +143,21 @@ INSERT INTO `users` (`id`, `username`, `password`, `nom`, `prenom`, `date_naissa
 (15, 'Auriane L', '45f9a2e49084297278228580e5434f721cbbb44a', 'Linarès', 'Auriane', '1984-01-14', 'auriane.linares@hotmail.fr', '61 rue du 10 avril', 31500, 'Paris', 0619162757, '14283871371504032_10152483308964128_702928015_n.jpg', '', 'Toulouse, Petits Débrouillards, Fifigrot, Ile Légale, Galline, Oeil dans le Bazart, Marmite !', '1', '96d2aa089abdbc3cb4058d39021958152fc1896e', 3, '', 'oui'),
 (16, 'tariq', 'ecf7cc6b348bd51e28969c06d7571bed456053c5', 'Demmou', 'Tariq', '1990-02-16', 't.demmou@debrouillards.org', '27 rue pouzonville', 31000, 'Toulouse', 0699553514, '14284883491507686_10203526406304827_1276848174_n.jpg', '', '*biip* *baap* *beep* *boop* blablablablablablablablablablablablablabla', '0', '7d57da2148769c59540848cf5913208ab674bfee', 11, '', 'oui'),
 (20, 'demonstration', '191b93a43b60da0a51da666bc4b8248eb5c20bac', 'demonstration', 'demonstration', '1996-04-08', 'demonstration@demo.fr', '8 rue de la demo', 98745, 'demonstration land', 0657894563, '1428511605handshake.png', '', 'demonstration demonstration demonstration demonstration', '0', '64c12bda52790a4c0228506e88fbb53e1dd61fd2', 5, '', 'oui');
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `types`
+--
+CREATE TABLE IF NOT EXISTS `types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

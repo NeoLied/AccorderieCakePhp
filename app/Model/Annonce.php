@@ -1,7 +1,15 @@
 <?php
 
 class Annonce extends AppModel
+
 {
+	public $name = 'Annonce';
+	public $hasOne = array('Type'=>
+			array(
+			'className' => 'Type',
+			'foreignKey' =>'id'
+
+	));
 	public $belongsTo = array(
 			'User' => array(
 					'className' => 'User',
@@ -25,5 +33,4 @@ class Annonce extends AppModel
     	return $annonce == $user;
     }
 }
-
 ?>
