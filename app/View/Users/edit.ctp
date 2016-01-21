@@ -3,7 +3,7 @@
 <h1>Editer l'utilisateur</h1>
 <?php
 echo $this->Form->create('User');
-		
+
 echo $this->Form->input('mail');
 
 echo $this->Form->input('telephone',
@@ -37,8 +37,13 @@ echo $this->Form->input('passwordnewconfirm',
 	'type' => 'select',
     'options' => $type,
     'multiple' => 'checkbox'
-  ));*/ 
-        	
+  ));*/
+//Ajout d'un champs role admin ou user
+echo $this->Form->input('role',
+    array('label' => 'Role',
+		'type' => 'radio',
+		'options' => array('admin'=>'admin','utilisateur'=>'utilisateur')
+	));
 echo $this->Form->input('id', array('type' => 'hidden'));
 echo $this->Form->end('Valider');
 ?>

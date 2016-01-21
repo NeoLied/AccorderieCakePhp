@@ -33,7 +33,9 @@
         echo $this->Form->input('adresse');
         
         echo $this->Form->input('code_postal',
-        	array('label' => 'Code Postal'));
+        	array('label' => 'Code Postal',
+				 'size' => 5,
+				'type' => 'text'));
         	
         echo $this->Form->input('ville');
         

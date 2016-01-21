@@ -1,4 +1,6 @@
 <h1>Demandes</h1>
+
+
 <table>
     <tr>
         <th>Id</th>
@@ -13,7 +15,9 @@
     <tr>
 
         <td><?php echo $annonce['Annonce']['id']; ?></td>
-        <td><?php echo $annonce['User']['username']; ?></td>
+
+        <td> <?php echo $this->Html->link($annonce['User']['username'],
+                array('controller' => 'users', 'action' => 'view', $annonce['Annonce']['user_id'])); ?></td>
         <td>
             <?php echo $this->Html->link($annonce['Annonce']['titre'],
             array('controller' => 'annonces', 'action' => 'view', $annonce['Annonce']['id'])); ?>

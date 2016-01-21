@@ -45,7 +45,7 @@ public function beforeFilter() {
 			}
             $this->User->create();
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('L\'utilisateur a été sauvegardé'));
+                $this->Session->setFlash(__('L\'utilisateur a été sauvegardé, le compe va être prochainement validé par un administrateur'));
 
 				$this->User->send($this->request->data['User'], '', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'contact');
 
@@ -57,6 +57,7 @@ public function beforeFilter() {
     }
 
     public function edit($id = null) {
+		$this->User->validator()->remove('avatar');
     	
     	$some_sql = "Select libelle from competences";
     	$db = ConnectionManager::getDataSource('default');

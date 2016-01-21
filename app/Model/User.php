@@ -107,8 +107,8 @@ class User extends AppModel {
     	),
     	'code_postal' => array(
     		'required' => array(
-    			'rule' => array('postal', null, 'fr'),
-    			'message' => 'Un code postal valide est obligatoire'    				
+    			'rule' => array('maxLength', 5),
+    			'message' => 'Un code postal valide est obligatoire'
     		)
     	),
     	'ville' => array(
