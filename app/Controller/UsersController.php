@@ -156,7 +156,7 @@ public function beforeFilter() {
 		$this->User->id = $array['User']['id'];
 		var_dump($credit_temps);
 		$this->User->saveField('credit_temps', $credit_temps);
-		$this->User->saveField('offre_de_bienvenue', "non");
+		$this->User->saveField('offre_de_bienvenue', "oui");
 		$this->Session->setFlash(__('Le compte de l\'utilisateur a été crédité de 3 heures.'));
 
 		// On récupére les informations de l'utilisateur
