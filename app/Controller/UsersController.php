@@ -1,6 +1,7 @@
 <?php
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
+App::uses('CakeEmail', 'Network/Email');
 
 class UsersController extends AppController {
 	
@@ -40,6 +41,9 @@ public function beforeFilter() {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('L\'utilisateur a été sauvegardé'));
+
+				$this->User->send($this->request->data['User'], '81antoine@gmail.com', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'contact');
+
                 return $this->redirect('/');
             } else {
                 $this->Session->setFlash(__('L\'utilisateur n\'a pas été sauvegardé. Merci de réessayer.'));
@@ -152,8 +156,15 @@ public function beforeFilter() {
 		$this->User->id = $array['User']['id'];
 		var_dump($credit_temps);
 		$this->User->saveField('credit_temps', $credit_temps);
-		$this->User->saveField('offre_de_bienvenue', "oui");
+		$this->User->saveField('offre_de_bienvenue', "non");
 		$this->Session->setFlash(__('Le compte de l\'utilisateur a été crédité de 3 heures.'));
+
+		// On récupére les informations de l'utilisateur
+		$mail = $this->User->find('first', array('conditions' => array('User.id' => $id_utilisateur)));
+
+		// Envoie du mail
+		$this->User->send($mail, $mail['User']['mail'], 'Votre compte sur La Marmite a été validé', 'validation');
+
 		return $this->redirect('/users/');
 	}
 }

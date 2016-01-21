@@ -207,5 +207,40 @@ class User extends AppModel {
 	    return true;
 	    
 	}
+
+    /*
+     * Envoie un mail à un destinataire
+     *
+     * @Params : $d - Données de l'utilsateur
+     *           $to - Adresse du destinataire
+     *           $subject - Sujet du mail
+     *           $template - Nom du template du mail (APP/View/Emails/)
+     */
+	public function send($d, $to, $subject, $template)
+	{
+		$this->set($d);
+		if ($d && $to && $subject && $template) {
+			App::uses('CakeEmail', 'Network/Email');
+
+			$Email = new CakeEmail(array(
+				'transport' => 'Smtp',
+				'from' => array('accorderie31@gmail.com' => 'La Marmite'),
+				'host' => 'smtp.gmail.com',
+				'port' => 587,
+				'timeout' => 30,
+				'username' => 'accorderie31@gmail.com',
+				'password' => 'administrateur',
+				'client' => null,
+				'log' => false,
+				'tls' => true,
+				'to' => $to,
+				'subject' => $subject,
+                'emailFormat' => 'both',
+			));
+			$Email -> template($template)->viewVars($d);
+
+			return $Email->send();
+		}
+	}
 }
 ?>
