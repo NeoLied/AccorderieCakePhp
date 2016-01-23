@@ -69,25 +69,26 @@
 class DATABASE_CONFIG {
 
 	public $default = array(
-			'datasource' => 'Database/Mysql',
-			'persistent' => false,
-			'host' => 'localhost',
-			'login' => 'root',
-			'password' => 'root',
-			'database' => 'accorderie',
-			'prefix' => '',
-			'encoding' => 'utf8',
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
+		'host' => 'varlamoff.ovh',
+		'port' => '3306',
+		'login' => 'root2',
+		'password' => 'projet',
+		'database' => 'accorderieTest',
+		'prefix' => '',
+		'encoding' => 'utf8',
 	);
-	
+
 	public $test = array(
-			'datasource' => 'Database/Mysql',
-			'persistent' => false,
-			'host' => 'localhost',
-			'login' => 'root',
-			'password' => 'root',
-			'database' => 'accorderietest',
-			'prefix' => '',
-			'encoding' => 'utf8',
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
+		'host' => 'localhost',
+		'login' => 'root',
+		'password' => '',
+		'database' => 'accorderie',
+		'prefix' => '',
+		'encoding' => 'utf8',
 	);
 	
 
