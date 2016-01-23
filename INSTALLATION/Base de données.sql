@@ -23,33 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `annonces`
---
-
-CREATE TABLE IF NOT EXISTS `annonces` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `titre` varchar(50) NOT NULL,
-  `description` varchar(1000) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `date_post` date NOT NULL,
-  `temps_requis` int(100) NOT NULL,
-  `demande` tinyint(1) NOT NULL,
-  `libelle_categorie` varchar(200) NOT NULL,
-  `signalee` tinyint(4) NOT NULL DEFAULT '0',
-  `user_id` bigint(20) NOT NULL,
-  `id_accepteur` bigint(20) NOT NULL,
-  `annonceValide` varchar(3) NOT NULL DEFAULT 'non',
-  PRIMARY KEY (`id`),
-  KEY `type_id` (`type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
-
---
--- Contraintes pour la table `annonces`
---
-ALTER TABLE `annonces`
-  ADD CONSTRAINT `fk_type_id` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`);
-
---
 -- Structure de la table `categories`
 --
 
@@ -157,6 +130,33 @@ CREATE TABLE IF NOT EXISTS `types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
+
+--
+-- Structure de la table `annonces`
+--
+
+CREATE TABLE IF NOT EXISTS `annonces` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `titre` varchar(50) NOT NULL,
+  `description` varchar(1000) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `date_post` date NOT NULL,
+  `temps_requis` int(100) NOT NULL,
+  `demande` tinyint(1) NOT NULL,
+  `libelle_categorie` varchar(200) NOT NULL,
+  `signalee` tinyint(4) NOT NULL DEFAULT '0',
+  `user_id` bigint(20) NOT NULL,
+  `id_accepteur` bigint(20) NOT NULL,
+  `annonceValide` varchar(3) NOT NULL DEFAULT 'non',
+  PRIMARY KEY (`id`),
+  KEY `type_id` (`type_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+
+--
+-- Contraintes pour la table `annonces`
+--
+ALTER TABLE `annonces`
+  ADD CONSTRAINT `fk_type_id` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`);
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
