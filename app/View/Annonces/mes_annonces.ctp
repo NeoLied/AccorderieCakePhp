@@ -2,7 +2,7 @@
 
 <h1>Mes annonces</h1>
 
-<table>
+<table class="table table-hover">
     <tr>
         <th>Titre</th>
         <th>Temps de travail</th>

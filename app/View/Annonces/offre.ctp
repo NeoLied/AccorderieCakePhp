@@ -3,7 +3,7 @@
 
 <h1>Offres</h1>
 
-<table>
+<table class="table table-hover">
     <tr>
         <th>Id</th>
         <th>Pseudo proposant</th>

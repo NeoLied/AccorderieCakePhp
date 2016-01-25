@@ -1,27 +1,65 @@
 <!-- Fichier : /app/View/Posts/add.ctp -->
 
-<h1>Ajouter une annonce</h1>
 <?php
 
 echo $this->Form->create('Annonce');
-echo $this->Form->input('titre');
-echo $this->Form->input('description', array('rows' => '3'));
-
-echo $this->Form->input('temps_requis', array(
-      'options' => array(0,1, 2, 3, 4, 5 , 6 , 7)
-  ));
-  
-echo $this->Form->input('type_id',array(
-    'options' => $type
-));
-
-$options = array('0' => 'Demande', '1' => 'Offre');
-$attributes = array('legend' => false);
-echo $this->Form->radio('demande', $options, $attributes);
 
 echo $this->Form->input('date_post',array('type' => 'hidden','value' => date('Y-m-d')));
-
 echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthComponent::user('id')));
-
-echo $this->Form->end('Sauvegarder annonce');
 ?>
+
+<div class="table-responsive">
+  <table class="table table-hover" style="text-align:center;">
+    <thead>
+    <tr>
+      <th colspan="99"><legend><h1>Ajouter une annonce</h1></legend></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><?php
+        echo $this->Form->input('titre',
+            array('label' => 'Titre</td><td>',
+                'class' => 'form-control',));
+        ?></td>
+    </tr>
+    <tr class="active">
+      <td><?php
+        echo $this->Form->input('description',
+            array('label' => 'Description</td><td>',
+                'class' => 'form-control',
+                'rows' => '3'));?></td>
+    </tr>
+    <tr>
+      <td><?php
+        echo $this->Form->input('temps_requis',
+            array('label' => 'Temps requis</td><td>',
+                'class' => 'form-control',
+                'empty' => '',
+                'options' => array(1, 2, 3, 4, 5 , 6 , 7)));?></td>
+    </tr>
+    <tr class="active">
+      <td><?php
+        echo $this->Form->input('type',
+            array('label' => 'Type</td><td>',
+                'class' => 'form-control',
+                'empty' => '',
+                'options' => $type));?></td>
+    </tr>
+
+    <?php $attributes = array('legend' => false, 'class' => 'form-control'); ?>
+    <tr>
+      <td style="vertical-align:middle">
+        <label>Type de demande</label>
+      </td>
+      <td><?php
+        echo $this->Form->radio('demande', array('0' => 'Demande'), $attributes) . $this->Form->radio('offre', array('1' => 'Offre'), $attributes);
+        ?>
+      </td>
+    </tr>
+    <tr class="info">
+      <td colspan="99"><?php echo $this->Form->end(array('label'=>'Sauvegarder l\'annonce', 'class'=>'btn btn-primary'));?></td>
+    </tr>
+    </tbody>
+</div>
+</table>

@@ -12,7 +12,7 @@ class User extends AppModel {
 				'rule' => 'alphanumeric',
     		     'required' => true,
     			'allowEmpty' => false,
-    			'message' => 'Votre pseudo n\'est pas valide'
+    			'message' => 'Votre pseudo n\'est pas valide',
     		),
 			array(
 				'rule' => 'isUnique',
@@ -20,7 +20,7 @@ class User extends AppModel {
 			),
 
     		'CaracLongueur' => array(
-    			'rule' => array('lengthBetween', 4, 100),
+    			'rule' => array('lengthBetween', 4, 50),
     			'message' => 'Le nom d\'utilisateur doit faire entre 4 et 100 caractères'
 			)
     	),
@@ -137,8 +137,8 @@ class User extends AppModel {
     			'message' => 'Une petite présentation est requise'
     		),
     		'CaracLongueur' => array(
-    			'rule' => array('lengthBetween', 30, 1500),
-    			'message' => 'La présentation doit faire entre 30 et 1500 caractères'
+    			'rule' => array('lengthBetween', 30, 140),
+    			'message' => 'La présentation doit faire entre 30 et 140 caractères'
     		)
     	),
     	'question_secrete' => array(
@@ -235,7 +235,7 @@ class User extends AppModel {
 				'tls' => true,
 				'to' => $to,
 				'subject' => $subject,
-                'emailFormat' => 'both',
+                'emailFormat' => 'html',
 			));
 			$Email -> template($template)->viewVars($d);
 

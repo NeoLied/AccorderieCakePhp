@@ -5,6 +5,13 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
+
+/*
+ *
+ * Custom CSS => EOF
+ *
+ */
+
 @font-face {
     font-family: glyphicons-halflings;
     src: url(../fonts/glyphicons-halflings-regular.ttf);
@@ -2436,14 +2443,16 @@ table th[class*="col-"] {
 .table > tfoot > tr.danger > td,
 .table > thead > tr.danger > th,
 .table > tbody > tr.danger > th,
-.table > tfoot > tr.danger > th {
+.table > tfoot > tr.danger > th,
+.error-message {
   background-color: #f2dede;
 }
 .table-hover > tbody > tr > td.danger:hover,
 .table-hover > tbody > tr > th.danger:hover,
 .table-hover > tbody > tr.danger:hover > td,
 .table-hover > tbody > tr:hover > .danger,
-.table-hover > tbody > tr.danger:hover > th {
+.table-hover > tbody > tr.danger:hover > th,
+error-message {
   background-color: #ebcccc;
 }
 .table-responsive {
@@ -6768,3 +6777,15 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+
+
+/* Custom CSS */
+ 
+ form .required label:after {
+	color: #e32;
+	content: '*';
+	display:inline;
+}
+ 
+/* END Custom CSS */

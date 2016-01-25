@@ -1,7 +1,7 @@
 <!-- File: /app/View/Utilisateurs/index.ctp -->
 
 <h1>Utilisateurs</h1>
-<table>
+<table class="table table-hover">
 	<tr>
 		<th>Id</th>
 		<th>Nom</th>

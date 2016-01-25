@@ -5,10 +5,11 @@ App::uses('CakeEmail', 'Network/Email');
 
 class UsersController extends AppController {
 	
-public function beforeFilter() {
+    public function beforeFilter() {
 	    parent::beforeFilter();
-	    // Permet aux utilisateurs de s'enregistrer et de se déconnecter
+	    // Permet aux utilisateurs de s'enregistrer, de se déconnecter et de reset le mot de passe
 	    $this->Auth->allow('add', 'logout');
+        $this->Auth->allow('add', 'reset');
 	}
 
     public function index() {
@@ -45,13 +46,13 @@ public function beforeFilter() {
 			}
             $this->User->create();
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('L\'utilisateur a été sauvegardé, le compe va être prochainement validé par un administrateur'));
+                $this->Session->setFlash('L\'utilisateur a été sauvegardé, le compe va être prochainement validé par un administrateur','default', array('class' => 'alert alert-success'));
 
 				$this->User->send($this->request->data['User'], '', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'contact');
 
                 return $this->redirect('/');
             } else {
-                $this->Session->setFlash(__('L\'utilisateur n\'a pas été sauvegardé. Merci de réessayer.'));
+				$this->Session->setFlash('L\'utilisateur n\'a pas été sauvegardé. Merci de réessayer.','default', array('class' => 'alert alert-danger'));
             }
         }
     }
@@ -75,10 +76,10 @@ public function beforeFilter() {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('L\'utilisateur a été édité'));
+				$this->Session->setFlash('L\'utilisateur a été édité','default', array('class' => 'alert alert-success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('L\'utilisateur n\'a pas été édité. Merci de réessayer.'));
+				$this->Session->setFlash('L\'utilisateur n\'a pas été édité. Merci de réessayer.','default', array('class' => 'alert alert-danger'));
             }
         } else {
             $this->request->data = $this->User->read(null, $id);
@@ -97,10 +98,10 @@ public function beforeFilter() {
             throw new NotFoundException(__('Utilisateur invalide'));
         }
         if ($this->User->delete()) {
-            $this->Session->setFlash(__('Utilisateur supprimé'));
+			$this->Session->setFlash('Utilisateur supprimé','default', array('class' => 'alert alert-warning'));
             return $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('L\'utilisateur n\'a pas été supprimé'));
+		$this->Session->setFlash('L\'utilisateur n\'a pas été supprimé','default', array('class' => 'alert alert-danger'));
         return $this->redirect(array('action' => 'index'));
     }
 	
@@ -109,7 +110,17 @@ public function beforeFilter() {
 	        if ($this->Auth->login()) {
 	            return $this->redirect($this->Auth->redirectUrl("/"));
 	        } else {
-	            $this->Session->setFlash(__("Nom d'user ou mot de passe invalide, réessayez"));
+				$d = $this->User->find('first', array('conditions' => array('username' => $this->request->data['User']['username'])));
+                App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
+
+                $passwordHasher = new SimplePasswordHasher();
+                $passwordHasher= $passwordHasher->hash($this->request->data['User']['password']);
+
+				if($d['User']['offre_de_bienvenue'] == 'non' && $d['User']['password'] == $passwordHasher){
+					$this->Session->setFlash("Votre compte n'a pas encore été validé",'default', array('class' => 'alert alert-warning'));
+				}else{
+					$this->Session->setFlash("Nom d'utilisateur ou mot de passe invalide, merci de réessayez",'default', array('class' => 'alert alert-danger'));
+				}
 	        }
 	    }
 	}
@@ -153,17 +164,17 @@ public function beforeFilter() {
 		$array = $this->User->find('first', array('conditions' => array('User.id' => $id_utilisateur,
 		'User.offre_de_bienvenue' => 'non')));
 		if (count($array) == 0) {
-			$this->Session->setFlash(__('L\'utilisateur a déjà bénéficié de l\'offre de bienvenue !'));
+			$this->Session->setFlash('L\'utilisateur a déjà bénéficié de l\'offre de bienvenue !','default', array('class' => 'alert alert-warning'));
 			return $this->redirect('/users/');
 		}	
 		// mettre à jour le crédit temps et verrouiller l'offre de bienvenue
 		$credit_temps = $array['User']['credit_temps'];
 		$credit_temps += 3;
 		$this->User->id = $array['User']['id'];
-		var_dump($credit_temps);
+		//var_dump($credit_temps);
 		$this->User->saveField('credit_temps', $credit_temps);
 		$this->User->saveField('offre_de_bienvenue', "oui");
-		$this->Session->setFlash(__('Le compte de l\'utilisateur a été crédité de 3 heures.'));
+		$this->Session->setFlash('Le compte de l\'utilisateur a été crédité de 3 heures.','default', array('class' => 'alert alert-success'));
 
 		// On récupére les informations de l'utilisateur
 		$mail = $this->User->find('first', array('conditions' => array('User.id' => $id_utilisateur)));
@@ -173,6 +184,7 @@ public function beforeFilter() {
 
 		return $this->redirect('/users/');
 	}
+
 	public function utilisateur_pas_valide() {
 
 		$this->set('users', $this->User->find("all",
@@ -180,5 +192,41 @@ public function beforeFilter() {
 				'conditions' => array('User.offre_de_bienvenue' => "non")
 			)));
 	}
+
+    public function reset(){
+        if(!empty($this->request->params['pass'])){
+            $token = $this->request->params['pass'][0];
+            $token = explode("-", $token);
+
+            $user = $this->User->find('first', array('conditions' => array('id' => $token[0],'MD5(password)' => $token[1], 'offre_de_bienvenue' => "oui")));
+
+			if($user){
+				$this->User->id = $user['User']['id'];
+				$pwd = substr(md5(uniqid(rand(), true)), 2, 10);
+
+				$this->User->saveField('password', $pwd);
+
+				$this->User->send($pwd, $user['User']['mail'], 'Nouveau mot de passe', 'reset_pwd');
+
+				$this->redirect("/users/login/", null, false);
+				$this->Session->setFlash("Votre mot de passe à été réinisialisé, votre nouveau mot de passe vous a été envoyé par mail",'default', array('class' => 'alert alert-success'));
+			}else{
+                $this->Session->setFlash("Le lien n'est pas valide",'default', array('class' => 'alert alert-danger'));
+            }
+        }
+
+        if($this->request->is('post')){
+            $v = current($this->request->data);
+            $user = $this->User->find('first', array('conditions' => array('mail' => $v['mail'], 'offre_de_bienvenue' => "oui")));
+            if(empty($user)){
+                $this->Session->setFlash("Aucun utilisateur ne correspond à ce mail",'default', array('class' => 'alert alert-danger'));
+            }else{
+                //$this->Session->setFlash("Pour continuer, merci de cliquer sur le lien qui vous a été envoyé par mail",'default', array('class' => 'alert alert-success'));
+				$this->redirect("/users/reset/". $user['User']['id'] ."-". md5($user['User']['password']));
+                //$this->User->send($user['User'], $v['mail'], 'Mot de passe oublié', 'reset');
+            }
+        }
+
+    }
 }
 ?>

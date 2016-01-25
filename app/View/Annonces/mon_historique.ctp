@@ -3,7 +3,7 @@
 
 <h1>Mon historique</h1>
 
-<table>
+<table class="table table-hover">
     <tr>
         <th>Titre</th>
         <th>Possesseur</th>

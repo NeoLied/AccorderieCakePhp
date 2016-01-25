@@ -1,8 +1,17 @@
 <!-- File: /app/View/Posts/index.ctp -->
 
 <h1>Annonces</h1>
+<?php echo $this->Html->link(
+    'Acceder aux Demandes',
+    '/annonces/demande/',
+    array('class' => 'btn btn-default')); ?>
 
-<table>
+<?php echo $this->Html->link(
+    'Acceder aux Offres',
+    '/annonces/offre/',
+    array('class' => 'btn btn-default')); ?>
+
+<table class="table table-hover">
     <tr>
         <th>Id</th>
         
@@ -51,14 +60,3 @@
     <?php endforeach; ?>
     <?php unset($annonce); ?>
 </table>
-
-<?php echo $this->Html->link(
-                'Acceder aux Demandes',
-                array('action' => 'demande')
-            ); ?>
-<br>
-
-<?php echo $this->Html->link(
-                'Acceder aux Offres',
-                array('action' => 'offre')
-            ); ?>

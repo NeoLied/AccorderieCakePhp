@@ -4,7 +4,7 @@
 
 <h1>Validation annonces</h1>
 
-<table>
+<table class="table table-hover">
     <tr>
         <th>Id</th>
         <th>Titre</th>

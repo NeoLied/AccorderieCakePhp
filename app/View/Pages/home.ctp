@@ -1,4 +1,4 @@
-<div id="home" style="width:60%; text-align:justify;">
+<div id="home" style="width:60%; text-align:justify;" class="container-fluid">
 
     <div id="static" style="width:60%; text-align:justify;" class="<?php if(AuthComponent::user('id') != null) echo 'hide'; ?>">
 

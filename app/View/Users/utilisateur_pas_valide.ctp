@@ -2,7 +2,7 @@
 
 <h1>Utilisateurs non validées</h1>
 
-<table>
+<table class="table table-hover">
     <tr>
         <th>Id</th>
         <th>Nom</th>
@@ -21,10 +21,11 @@
         <td><?php echo $user['User']['prenom']; ?></td>
         <td><?php echo $user['User']['username']; ?></td>
 
-       <td> <?php echo $this->Html->link(
-            'Offre de bienvenue',
-            array('action' => 'offre_bienvenue', $user['User']['id'])
-        ); ?>
+       <td>
+           <?php echo $this->Html->link(
+                   'Valider le compte',
+                   array('action' => 'offre_bienvenue', $user['User']['id'])
+               ); ?>
        </td>
 
         <?php endforeach; ?>

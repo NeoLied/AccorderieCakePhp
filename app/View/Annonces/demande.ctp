@@ -1,7 +1,7 @@
 <h1>Demandes</h1>
 
 
-<table>
+<table class="table table-hover">
     <tr>
         <th>Id</th>
         <th>Pseudo proposant</th>
