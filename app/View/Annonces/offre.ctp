@@ -25,7 +25,7 @@
             <?php echo $this->Html->link($annonce['Annonce']['titre'],
             array('controller' => 'annonces', 'action' => 'view', $annonce['Annonce']['id'])); ?>
         </td>
-        <td><?php echo $types[$annonce['Annonce']['type_id'] -1 ]['Type']['libelle'];?>
+        <td><?php echo $annonce['Type']['libelle']?>
         </td>
         <td><?php echo $annonce['Annonce']['description']; ?></td>
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>

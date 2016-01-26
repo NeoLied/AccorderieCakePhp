@@ -47,7 +47,7 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
     </tr>
     <tr class="active">
       <td><?php
-        echo $this->Form->input('type',
+        echo $this->Form->input('Type',
             array('label' => 'Type</td><td>',
                 'class' => 'form-control',
                 'empty' => '',
