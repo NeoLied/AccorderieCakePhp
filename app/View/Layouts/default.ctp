@@ -67,6 +67,8 @@
 				<?php echo $this->Html->link('Accueil','/', 'class="navbar-brand"'); ?>
 			</div>
 
+
+
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
 

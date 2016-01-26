@@ -39,7 +39,8 @@ class AppController extends Controller {
             'loginRedirect' => array('controller' => 'users', 'action' => 'login'),
             'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home'),
         	'authorize' => array('Controller')
-        )
+        ),
+			'DebugKit.Toolbar'
     );
 	
 	public function isAuthorized($user) {
