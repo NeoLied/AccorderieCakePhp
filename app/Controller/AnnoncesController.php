@@ -23,7 +23,7 @@ class AnnoncesController extends AppController {
 		$this->loadModel('Type');
 		$annonces = null;
 
-		if($this->request->is('post')){
+		if($this->request->is('post') && !empty( $this->request->data['Annonce']['Type'])){
 			$annonces =$this->Annonce->find('all',array(
 				//tableau de conditions
 					'conditions' => array('Annonce.demande' => 1,

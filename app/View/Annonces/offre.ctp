@@ -5,6 +5,7 @@ echo $this->Form->create(null,array('class' => 'form-group'));
 echo $this->Form->input('Type',array(
     'label' => 'Filtrer par types :',
     'class' => 'form-controller select input ',
+    'empty' => 'Tous',
     'type' => 'select'
 ));
 echo $this->Form->end('Ok');
