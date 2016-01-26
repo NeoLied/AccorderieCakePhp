@@ -10,6 +10,7 @@
         <th>Description</th>
         <th>Temps de travail</th>
         <th>Date de l'annonce</th>
+        <th>Date limite</th>
     </tr>
     <?php foreach ($annonces as $annonce): ?>
     <tr>
@@ -28,6 +29,7 @@
         <td><?php echo $annonce['Annonce']['description']; ?></td>
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
         <td><?php echo $annonce['Annonce']['date_post']; ?></td>
+        <td><?php echo $annonce['Annonce']['date_limite']; ?></td>
         <td>
          <?php 
          if($annonce['Annonce']['user_id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){

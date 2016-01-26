@@ -7,6 +7,7 @@
         <th>Titre</th>
         <th>Temps de travail</th>
         <th>Date de l'annonce</th>
+        <th>Date Limite</th>
     </tr>
 
     <?php foreach ($annonces as $annonce): ?>
@@ -17,6 +18,7 @@
         </td>
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
         <td><?php echo $annonce['Annonce']['date_post']; ?></td>
+        <td><?php echo $annonce['Annonce']['date_limite']; ?></td>
     </tr>
     <?php endforeach; ?>
     <?php unset($annonce); ?>
