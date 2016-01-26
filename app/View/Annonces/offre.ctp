@@ -8,7 +8,6 @@ echo $this->Form->input('Type',array(
     'empty' => 'Tous',
     'type' => 'select'
 ));
-echo $this->Form->end('Ok');
 ?>
 
 

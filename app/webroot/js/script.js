@@ -3,7 +3,10 @@ $(function() {
 });
 
 $(document).ready(function(){
-    $('#AnnonceType').on('change',function(){
+    $('#AnnonceType').change(function(){
         $('#AnnonceDemandeForm').submit();
+    });
+    $('#AnnonceType').change(function(){
+        $('#AnnonceOffreForm').submit();
     });
 });
