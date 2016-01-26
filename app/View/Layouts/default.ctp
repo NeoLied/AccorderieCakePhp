@@ -12,7 +12,9 @@
 	echo $this->Html->css('bootstrap');
 	echo $this->Html->css('bootstrap-theme');
 	echo $this->Html->script('jquery-2.2.0.min');
+	echo $this->Html->script('jquery-ui.1.11.4');
 	echo $this->Html->script('bootstrap');
+	echo $this->Html->script('script');
 	echo $this->fetch('meta');
 	echo $this->fetch('css');
 	echo $this->fetch('script');
