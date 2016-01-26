@@ -38,6 +38,13 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
                 'empty' => '',
                 'options' => array(1, 2, 3, 4, 5 , 6 , 7)));?></td>
     </tr>
+    <tr>
+      <td><?php
+        echo $this->Form->input('Date_Limite',
+            array('label' => 'Date limite</td><td>',
+                'class' => 'form-control',
+                'empty' => '' ));?></td>
+    </tr>
     <tr class="active">
       <td><?php
         echo $this->Form->input('type',
