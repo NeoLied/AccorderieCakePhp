@@ -1,7 +1,15 @@
 <!-- File: /app/View/Posts/offre.ctp -->
+<h1>Consulter les Offres de services</h1>
+<?php
+echo $this->Form->create(null,array('class' => 'form-group'));
+echo $this->Form->input('Type',array(
+    'label' => 'Filtrer par types :',
+    'class' => 'form-controller select input ',
+    'type' => 'select'
+));
+echo $this->Form->end('Ok');
+?>
 
-
-<h1>Offres</h1>
 
 <table class="table table-hover">
     <tr>

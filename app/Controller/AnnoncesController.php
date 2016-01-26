@@ -19,18 +19,59 @@ class AnnoncesController extends AppController {
     }
    
     public function offre() {
-    	$this->set('annonces', $this->selectAllAnnonces(1));
+
+		$this->loadModel('Type');
+		$annonces = null;
+
+		if($this->request->is('post')){
+			$annonces =$this->Annonce->find('all',array(
+				//tableau de conditions
+					'conditions' => array('Annonce.demande' => 1,
+							'Annonce.annonceValide'=>'oui',
+							'Annonce.type_id' => $this->request->data['Annonce']['Type'])
+			));
+		}else{
+			$annonces =$this->Annonce->find('all',array(
+				//tableau de conditions
+					'conditions' => array('Annonce.demande' => 1,
+							'Annonce.annonceValide'=>'oui'
+					)));
+		}
+
+
+		$this->set('annonces', $annonces);
+
+		$this->set('types', $this->Type->find('list',array(
+				'fields' => 'Type.libelle'
+		)));
+
+    //	$this->set('annonces', $this->selectAllAnnonces(1));
     }
     	 
     public function demande() {
 		$this->loadModel('Type');
-    	$this->set('annonces', $this->Annonce->find('all',array(
-			//tableau de conditions
-				'conditions' => array('Annonce.demande' => 0,
-										'Annonce.annonceValide'=>'oui')
-		)));
+		$annonces = null;
+		if($this->request->is('post') && !empty( $this->request->data['Annonce']['Type']) ){
+			$annonces =$this->Annonce->find('all',array(
+				//tableau de conditions
+					'conditions' => array('Annonce.demande' => 0,
+							'Annonce.annonceValide'=>'oui',
+							'Annonce.type_id' => $this->request->data['Annonce']['Type'])
+			));
+		}else{
+			$annonces =$this->Annonce->find('all',array(
+				//tableau de conditions
+					'conditions' => array('Annonce.demande' => 0,
+							'Annonce.annonceValide'=>'oui'
+			)));
+		}
 
-		$this->set('types', $this->Type->find('all'));
+
+    	$this->set('annonces', $annonces);
+
+		$this->set('types', $this->Type->find('list',array(
+				'fields' => 'Type.libelle'
+		)));
     }
     
     public function view($id = null) {

@@ -60,7 +60,7 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
         <label>Type de demande</label>
       </td>
       <td><?php
-        echo $this->Form->radio('demande', array('0' => 'Demande'), $attributes) . $this->Form->radio('offre', array('1' => 'Offre'), $attributes);
+        echo $this->Form->radio('demande', array('0' => 'Demande'), $attributes) . $this->Form->radio('demande', array('1' => 'Offre'), $attributes);
         ?>
       </td>
     </tr>

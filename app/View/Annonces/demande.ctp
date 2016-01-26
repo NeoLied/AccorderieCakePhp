@@ -1,4 +1,15 @@
-<h1>Demandes</h1>
+<h1>Consulter les demandes de services</h1>
+
+<?php
+echo $this->Form->create(null,array('class' => 'form-group'));
+echo $this->Form->input('Type',array(
+    'label' => 'Filtrer par types :',
+    'class' => 'form-controller select input ',
+    'empty' => 'Tous',
+    'type' => 'select'
+));
+echo $this->Form->end();
+?>
 
 
 <table class="table table-hover">
