@@ -39,13 +39,14 @@
             <td><strong>Présentation : </strong></td><td><?php echo h($user['User']['presentation']); ?></td>
         </tr>
         <tr class="active">
+            <td><strong>Credit temps : </strong></td><td><?php echo h($user['User']['credit_temps']); ?></td>
+        </tr
+        <?php if(AuthComponent::user('role') == "admin"){ ?>
+        <tr class="">
             <td><strong>Rôle : </strong></td><td><?php echo strtoupper($user['User']['role']); ?></td>
         </tr>
-        <?php if(AuthComponent::user('role') == "admin"){ ?>
-        <tr>
-            <td><strong>Credit temps : </strong></td><td><?php echo h($user['User']['credit_temps']); ?></td>
-        </tr>
-        <tr class="<?php if($user['User']['offre_de_bienvenue'] == "oui"){echo 'success';}else{echo 'danger';} ?>">
+
+        <tr class="active <?php if($user['User']['offre_de_bienvenue'] == "oui"){echo 'success';}else{echo 'danger';} ?>">
             <td><strong>Compte validé : </strong></td><td><?php echo h($user['User']['offre_de_bienvenue']); ?></td>
         </tr>
         <?php } ?>

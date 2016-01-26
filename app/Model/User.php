@@ -10,7 +10,7 @@ class User extends AppModel {
     	'username' => array(
 			array(
 				'rule' => 'alphanumeric',
-    		     'required' => true,
+    		     'required' => 'create',
     			'allowEmpty' => false,
     			'message' => 'Votre pseudo n\'est pas valide',
     		),
@@ -62,25 +62,24 @@ class User extends AppModel {
     		)
     	),
     	'prenom' => array(
-    		'required' => array(
-    			'rule' => array('notEmpty'),
-    			'message' => 'Un prénom est requis'
-    		),
+    		'required' =>'create',
+			'rule' => array('notEmpty'),
+			'message' => 'Un prénom est requis',
+
     		'CaracLongueur' => array(
     			'rule' => array('lengthBetween', 2, 100),
     			'message' => 'Le prénom doit faire entre 2 et 100 caractères'
     		)
     	),
     	'date_naissance' => array(
-    		'required' => array(
-    			'rule' => array('notEmpty'),
-    			'message' => 'Une date de naissance est requise'
-    		)
+    		'required' => 'create',
+			'rule' => array('notEmpty'),
+			'message' => 'Une date de naissance est requise'
     	),
     	'mail' => array(
 			array(
 				'rule' => 'email',
-				'required' => true,
+				'required' => 'create',
 				'allowEmpty' => false,
 				'message' => 'Votre mail n\'est pas valide'
 			),
@@ -90,16 +89,15 @@ class User extends AppModel {
 			),
 		),
     	'telephone' => array(
-    		'required' => array(
-    			'rule' => array('phone', null, 'fr'),
-    			'message' => 'Un numéro de téléphone valide est requis'
-    		)
+    		'required' => 'create',
+			'rule' => array('phone', null, 'fr'),
+			'message' => 'Un numéro de téléphone valide est requis'
     	),
     	'adresse' => array(
-    		'required' => array(
-    			'rule' => array('notEmpty'),
-    			'message' => 'Un adresse valide est requise'
-    		),
+    		'required' => 'create',
+			'rule' => array('notEmpty'),
+			'message' => 'Un adresse valide est requise',
+
     		'CaracLongueur' => array(
     			'rule' => array('lengthBetween', 2, 100),
     			'message' => 'L\'adresse doit faire entre 2 et 100 caractères'

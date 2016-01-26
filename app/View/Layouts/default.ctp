@@ -106,10 +106,11 @@
 							</ul>
 						</li>
 
-						<li><?php echo $this->Html->link('Nous Contacter','/contacts/index'); ?></li>
 
 					<?php }
 					if(AuthComponent::user('id') != null) {?>
+					<li><?php echo $this->Html->link('Nous Contacter','/contacts/index'); ?></li>
+
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="alert-danger"><?php echo $this->Html->link('Déconnexion','/users/logout'); ?></li>

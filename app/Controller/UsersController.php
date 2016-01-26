@@ -57,10 +57,12 @@ class UsersController extends AppController {
         }
     }
 
-    public function edit($id = null) {
+    public function edit($id) {
 		$this->User->validator()->remove('avatar');
-    	
-    	$some_sql = "Select libelle from competences";
+
+
+    	//######### AJOUTER UNE COMPETENCE ##########//
+    	/*$some_sql = "Select libelle from competences";
     	$db = ConnectionManager::getDataSource('default');
     	$result = $db->query($some_sql);
     	
@@ -68,21 +70,24 @@ class UsersController extends AppController {
     	foreach ($result as $row) {
     		$type[$row['competences']['libelle']] = $row['competences']['libelle'];
     	}
-    	$this->set('type', $type);
+    	$this->set('type', $type);*/
     	
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
+        //$this->User->id = $id;
+
+        if (! $user = $this->User->findById($id)) {
             throw new NotFoundException(__('Utilisateur Invalide'));
         }
-        if ($this->request->is('post') || $this->request->is('put')) {
+        if ( $this->request->is('put')) {
+
             if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash('L\'utilisateur a été édité','default', array('class' => 'alert alert-success'));
+             if($this->Auth->user('id') == $id)  $this->Auth->login($this->request->data['User']);
                 return $this->redirect(array('action' => 'index'));
             } else {
 				$this->Session->setFlash('L\'utilisateur n\'a pas été édité. Merci de réessayer.','default', array('class' => 'alert alert-danger'));
             }
         } else {
-            $this->request->data = $this->User->read(null, $id);
+            $this->request->data = $user;
             unset($this->request->data['User']['password']);
         }
     }

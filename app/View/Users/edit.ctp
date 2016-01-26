@@ -86,7 +86,14 @@ echo $this->Form->input('id', array('type' => 'hidden'));
 			</td>
 			<td><?php
 				$attributes = array('legend' => false, 'class' => 'form-control');
-				echo $this->Form->radio('admin', array('admin' => 'Admin'), $attributes) . $this->Form->radio('utilisateur', array('utilisateur' => 'Utilisateur'), $attributes);
+				echo $this->Form->radio('role',
+								array(
+										'admin' => 'Admin',
+										'utilisateur' => 'Utilisateur')
+								, $attributes)
+//						.
+//						$this->Form->radio('role',
+//								array('utilisateur' => 'Utilisateur'), $attributes);
 				?></td>
 		</tr>
 		<?php } ?>
