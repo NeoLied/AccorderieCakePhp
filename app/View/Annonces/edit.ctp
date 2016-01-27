@@ -1,16 +1,49 @@
 <!-- Fichier: /app/View/Posts/edit.ctp -->
-
-<h1>Editer l'annonce</h1>
 <?php
 echo $this->Form->create('Annonce');
-echo $this->Form->input('titre');
-echo $this->Form->input('description', array('rows' => '3'));
-echo $this->Form->input('temps_requis', array(
-      'options' => array(0,1, 2, 3, 4, 5)
-  ));
-echo $this->Form->input('type_id',array(
-    'options' => $type
-));
+
 echo $this->Form->input('id', array('type' => 'hidden'));
-echo $this->Form->end('Valider');
+
 ?>
+
+<div class="table-responsive">
+  <table class="table table-hover" style="text-align:center;">
+    <thead>
+    <tr>
+      <th colspan="99"><legend>Editer l'annonce</legend></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><?php
+        echo $this->Form->input('titre',
+            array('label' => 'Titre</td><td>',
+                'class' => 'form-control',));
+        ?></td>
+    </tr>
+    <tr class="active">
+      <td><?php
+        echo $this->Form->input('description',
+            array('label' => 'Description</td><td>',
+                'class' => 'form-control',
+                'rows' => '3'));?></td>
+    </tr>
+    <tr>
+      <td><?php
+        echo $this->Form->input('temps_requis',
+            array('label' => 'Confirmer mot de passe</td><td>',
+                'options' => array(0,1, 2, 3, 4, 5),
+                'class' => 'form-control'));?></td>
+    </tr>
+    <tr>
+      <td><?php
+        echo $this->Form->input('type_id',array(
+            'label' => 'Type de l\'annonce</td><td>',
+            'options' => $type,
+            'class' => 'form-control' ));?></td>
+    </tr>
+    <tr class="info">
+      <td colspan="99"><?php echo $this->Form->end(array('label'=>'Valider', 'class'=>'btn btn-primary'));?></td>
+    </tr>
+</div>
+</table>
