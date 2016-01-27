@@ -23,6 +23,7 @@
         <tr class="active">
             <td><strong>Prénom : </strong></td><td><?php echo h($user['User']['prenom']); ?></td>
         </tr>
+        <?php if(AuthComponent::user('role') == "admin"){ ?>
         <tr>
             <td><strong>Mail : </strong></td><td><?php echo h($user['User']['mail']); ?></td>
         </tr>
@@ -35,6 +36,7 @@
         <tr class="active">
             <td><strong>Code Postal : </strong></td><td><?php echo h($user['User']['code_postal']); ?></td>
         </tr>
+        <?php } ?>
         <tr>
             <td><strong>Présentation : </strong></td><td><?php echo h($user['User']['presentation']); ?></td>
         </tr>

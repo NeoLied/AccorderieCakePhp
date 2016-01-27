@@ -1,4 +1,9 @@
 <!-- Fichier : /app/View/Posts/add.ctp -->
+<script type="text/javascript">
+  $(function() {
+    $( "#datepicker" ).datepicker({ minDate: 0, altField: "#alternate", dateFormat: "dd/mm/yy"});
+  });
+</script>
 
 <?php
 
@@ -40,9 +45,10 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
     </tr>
     <tr>
       <td><?php
-        echo $this->Form->input('Date_Limite',
+        echo $this->Form->input('text',
             array('label' => 'Date limite</td><td>',
                 'class' => 'form-control',
+                'id' => "datepicker",
                 'empty' => '' ));?></td>
     </tr>
     <tr class="active">
@@ -60,7 +66,7 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
         <label>Type de demande</label>
       </td>
       <td><?php
-        echo $this->Form->radio('demande', array('0' => 'Demande'), $attributes) . $this->Form->radio('demande', array('1' => 'Offre'), $attributes);
+        echo $this->Form->radio('radio', array('0' => 'Demande'), $attributes) . $this->Form->radio('radio', array('1' => 'Offre'), $attributes);
         ?>
       </td>
     </tr>
