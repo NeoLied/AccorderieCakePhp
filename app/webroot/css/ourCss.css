@@ -75,3 +75,9 @@ nav ul li ul li a {
 .hide{
 	display: none;
 }
+
+#gestion_annonce{
+	width: 400px;
+	margin-left: 9%;
+	margin-top: 9%;
+}

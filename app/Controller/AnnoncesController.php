@@ -18,6 +18,16 @@ class AnnoncesController extends AppController {
          $this->set('annonces', $this->selectAllAnnonces());
     }
    
+    private function selectAllAnnonces($type = null) {
+    	if($type == null) {
+    		return $this->Annonce->find('all');
+    	} else {
+    		return $this->Annonce->find('all',
+    				array('conditions' => array('Annonce.demande' => $type, 'Annonce.annonceValide' => 'oui' )
+    				));
+    	}
+    }
+    	 
     public function offre() {
 
 		$this->loadModel('Type');
@@ -47,7 +57,7 @@ class AnnoncesController extends AppController {
 
     //	$this->set('annonces', $this->selectAllAnnonces(1));
     }
-    	 
+    
     public function demande() {
 		$this->loadModel('Type');
 		$annonces = null;
@@ -74,6 +84,10 @@ class AnnoncesController extends AppController {
 		)));
     }
     
+    /*
+     * Fonctions à refactorer
+     */
+    
     public function view($id = null) {
     	$this->testerExistenceAnnonceParID($id);
     	$annonce = $this->Annonce->findById($id);
@@ -81,9 +95,17 @@ class AnnoncesController extends AppController {
     	$this->set('annonce', $annonce);
     }
     
-    /*
-     * Fonctions à refactorer
-     */
+    private function testerExistenceAnnonceParID($id) {
+    	if (!$id) {
+    		throw new NotFoundException(__('Annonce invalide'));
+    	}
+    }
+    
+    private function testerExistenceAnnonceParObjet($annonce) {
+    	if (!$annonce) {
+            throw new NotFoundException(__('Annonce invalide'));
+        }
+    }
     
     public function add() {
 		$this->loadModel('Type');
@@ -101,6 +123,10 @@ class AnnoncesController extends AppController {
     		}
     		$this->Session->setFlash(__('Impossible d\'ajouter votre annonce.'));
 		}
+    }
+    
+    private function retourPageAccueil() {
+    	return $this->redirect("/");
     }
     
     public function edit($id) {
@@ -128,13 +154,13 @@ class AnnoncesController extends AppController {
     	}
     }
     
-    public function delete($id,$nameRedirect) 
+    public function delete($id,$nameRedirect)
     {
-    	if ($this->request->is('get')) 
+    	if ($this->request->is('get'))
     	{
     		throw new MethodNotAllowedException();
     	}
-    	if ($this->Annonce->delete($id)) 
+    	if ($this->Annonce->delete($id))
     	{
     		$this->Session->setFlash(__('L\'annonce avec id : %s a été supprimée.', h($id)));
     		$this->retourPageAccueil();
@@ -170,13 +196,6 @@ class AnnoncesController extends AppController {
     	return $this->redirect('/annonces/view/'.$id_annonce);
     }
     
-    public function mes_annonces()
-    {
-    	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.user_id' => AuthComponent::user('id'))
-    	)));
-    }
-    
 	private function operationTemps ($id_personne,$temps,$debitOuCredit){
     	$this->Annonce->User->id = $id_personne;
     	$tempsFinal = 0;
@@ -194,6 +213,17 @@ class AnnoncesController extends AppController {
     	 }
     	$this->Annonce->User->saveField('credit_temps',$tempsFinal);
     }
+    
+    public function mes_annonces()
+    {
+    	$this->set('annonces',  $this->Annonce->find('all', array(
+    			'conditions' => array('Annonce.user_id' => AuthComponent::user('id'))
+    	)));
+    }
+    
+    /*
+     * Fonctions privées réutilisables
+     */
     
     public function valider_annonce ($id_annonce){
     	$this->Annonce->id = $id_annonce;
@@ -224,7 +254,7 @@ class AnnoncesController extends AppController {
     			return true;
     		}
     	}
-    
+
     	return parent::isAuthorized($user);
     }
     
@@ -239,48 +269,37 @@ class AnnoncesController extends AppController {
     								)
     							)
     	)));
-    	
+
    	 	$requete = "Select offre_de_bienvenue from users where id = ".AuthComponent::user('id');
     	$result = $this->injecterRequete($requete);
-    	
+
     	$offre = $result[0];
     	$this->set('offre',$result);
-    	
+
     }
-    
-    /*
-     * Fonctions privées réutilisables
-     */
-    
-    private function selectAllAnnonces($type = null) {
-    	if($type == null) {
-    		return $this->Annonce->find('all');
-    	} else {
-    		return $this->Annonce->find('all',
-    				array('conditions' => array('Annonce.demande' => $type, 'Annonce.annonceValide' => 'oui' )
-    				));
-    	}
-    }
-    
-    private function testerExistenceAnnonceParID($id) {
-    	if (!$id) {
-    		throw new NotFoundException(__('Annonce invalide'));
-    	}
-    }
-    
-    private function testerExistenceAnnonceParObjet($annonce) {
-    	if (!$annonce) {
-            throw new NotFoundException(__('Annonce invalide'));
-        }
-    }
-    
+
     private function injecterRequete($requete) {
     	$db = ConnectionManager::getDataSource('default');
     	return $db->query($requete);
     }
 
-    private function retourPageAccueil() {
-    	return $this->redirect("/");
-    }
+	public function manage() {
+		$this->loadModel('Type');
+		$this->set('types',$this->Type->find('all'));
+
+
+		if($this->request->is('post')){
+			$type = $this->request->data;
+			if ($this->Type->save($this->request->data)) {
+				$this->Session->setFlash(__('Le type de service %s a bien été crée',$type['Type']['libelle']));
+				$this->redirect($this->request->here);
+			}else{
+				$this->Session->setFlash(__('Impossible de créer le type de service'));
+			}
+
+
+
+		}
+	}
 }
 ?>

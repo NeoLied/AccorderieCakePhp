@@ -12,6 +12,7 @@
 	echo $this->Html->css('bootstrap');
 	echo $this->Html->css('bootstrap-theme');
 	echo $this->Html->css('jquery-ui');
+	echo $this->Html->css('customStyle');
 	echo $this->Html->script('jquery-2.2.0.min');
 	echo $this->Html->script('jquery-ui.1.11.4');
 	echo $this->Html->script('bootstrap');
@@ -104,6 +105,7 @@
 								<li><?php echo $this->Html->link('Liste annonces','/annonces/'); ?></li>
 								<li><?php echo $this->Html->link('Annonces à valider','/annonces/annonce_pas_valide/'); ?></li>
 								<li><?php echo $this->Html->link('Utilisateurs à valider','/users/utilisateur_pas_valide/'); ?></li>
+								<li><?php echo $this->Html->link('Gestion des annonces ','/annonces/manage'); ?></li>
 							</ul>
 						</li>
 
