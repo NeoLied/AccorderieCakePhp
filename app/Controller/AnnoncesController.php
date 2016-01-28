@@ -331,6 +331,6 @@ class AnnoncesController extends AppController {
 		 return (date_diff(new DateTime($annonce['Annonce']['date_limite']), new DateTime('now'))->format("%a") < 4 )? true : false;
 
 		}
-	}
+
 }
 ?>
