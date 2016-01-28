@@ -193,6 +193,12 @@ class AnnoncesController extends AppController {
    				$this->operationTemps($id_personneReservante, $temps, 'd');
    			}
     	}
+
+		$infoP = $this->Annonce->find('first', array('condition' => array('users.id' => $id_personneReservante)));
+		$info = $this->Annonce->find('first', array('condition' => array('users.id' => $id_personneProprio)));
+
+		$this->User->send($infoP, $info['User']['mail'], 'Un utilisateur vous à fait une demande de réservation sur La Marmite', 'reservation');
+
     	return $this->redirect('/annonces/view/'.$id_annonce);
     }
     
@@ -296,9 +302,6 @@ class AnnoncesController extends AppController {
 			}else{
 				$this->Session->setFlash(__('Impossible de créer le type de service'));
 			}
-
-
-
 		}
 	}
 }
