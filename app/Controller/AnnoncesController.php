@@ -131,8 +131,6 @@ class AnnoncesController extends AppController {
     
     public function add() {
 		$this->loadModel('Type');
-    	//$requete = "Select libelle from types";
-    	//$result = $this->injecterRequete($requete);
 		$this->set('type',$this->Type->find('list',array(
 			'fields' => 'Type.libelle'
 		)));
@@ -140,7 +138,7 @@ class AnnoncesController extends AppController {
     	if ($this->request->is('post')) {
     		$this->Annonce->create();
     		if ($this->Annonce->save($this->request->data)) {
-    			$this->Session->setFlash(__('L\'annonce a été ajoutée.'));
+				$this->Session->setFlash(__('L\'annonce a été ajoutée.'));
     			$this->retourPageAccueil();
     		}
     		$this->Session->setFlash(__('Impossible d\'ajouter votre annonce.'));

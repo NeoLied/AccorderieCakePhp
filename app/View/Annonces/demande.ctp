@@ -20,7 +20,7 @@
     </tr>
 
     <tr>
-        <th>Demandeur</th>
+        <th>Auteur de la demande</th>
         <th>Titre</th>
         <th>Type d'annonce</th>
         <th>Description</th>
@@ -33,7 +33,7 @@
 
     <?php foreach ($annoncesUrgentes as $annonce): ?>
     <tr class="ligneAnnonce">
-        <td><?php echo $annonce['Annonce']['id']; ?></td>
+
 
         <td> <?php echo $this->Html->link($annonce['User']['username'],
                 array('controller' => 'users', 'action' => 'view', $annonce['Annonce']['user_id'])); ?></td>
@@ -47,14 +47,13 @@
         </td>
         <td><?php echo $annonce['Annonce']['description']; ?></td>
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
-        <td><?php echo $annonce['Annonce']['date_post']; ?></td>
-        <td><?php echo $annonce['Annonce']['date_limite']; ?></td>
+        <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_post'])); ?></td>
+        <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_limite'])); ?></td>
         <td><?php echo $annonce['Annonce']['statut']; ?></td>
 
 
 
-        <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_post'])); ?></td>
-        <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_limite'])); ?></td>
+
         <td>
          <?php
          // BOUTONS SUPPRIMER - EDITER
@@ -76,7 +75,7 @@
 
         <?php foreach ($annoncesNormales as $annonce): ?>
     <tr class="ligneAnnonce">
-            <td><?php echo $annonce['Annonce']['id']; ?></td>
+
 
             <td> <?php echo $this->Html->link($annonce['User']['username'],
                     array('controller' => 'users', 'action' => 'view', $annonce['Annonce']['user_id'])); ?></td>
@@ -90,8 +89,8 @@
             </td>
             <td><?php echo $annonce['Annonce']['description']; ?></td>
             <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
-            <td><?php echo $annonce['Annonce']['date_post']; ?></td>
-            <td><?php echo $annonce['Annonce']['date_limite']; ?></td>
+        <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_post'])); ?></td>
+        <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_limite'])); ?></td>
             <td><?php echo $annonce['Annonce']['statut']; ?></td>
 
 
@@ -117,7 +116,7 @@
 
         <?php foreach ($annoncesExpires as $annonce): ?>
             <tr class="ligneAnnonce">
-            <td><?php echo $annonce['Annonce']['id']; ?></td>
+
 
             <td> <?php echo $this->Html->link($annonce['User']['username'],
                     array('controller' => 'users', 'action' => 'view', $annonce['Annonce']['user_id'])); ?></td>
@@ -131,8 +130,8 @@
             </td>
             <td><?php echo $annonce['Annonce']['description']; ?></td>
             <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
-            <td><?php echo $annonce['Annonce']['date_post']; ?></td>
-            <td><?php echo $annonce['Annonce']['date_limite']; ?></td>
+                <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_post'])); ?></td>
+                <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_limite'])); ?></td>
             <td><?php echo $annonce['Annonce']['statut']; ?></td>
 
 
