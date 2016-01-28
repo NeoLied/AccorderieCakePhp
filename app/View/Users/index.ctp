@@ -7,6 +7,7 @@
 		<th>Nom</th>
 		<th>Prénom</th>
 		<th>Username</th>
+		<th>Crédit Temps</th>
 	</tr>
 
 	<!-- Here is where we loop through our $posts array, printing out post info -->
@@ -20,6 +21,7 @@
 			</td>
 			<td><?php echo $user['User']['prenom']; ?></td>
 			<td><?php echo $user['User']['username']; ?></td>
+			<td><?php echo $user['User']['credit_temps']; ?></td>
 			<td>
 				<?php
 				if($user['User']['id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
