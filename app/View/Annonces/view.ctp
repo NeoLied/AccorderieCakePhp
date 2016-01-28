@@ -1,8 +1,6 @@
 <!-- Fichier : /app/View/Posts/view.ctp -->
 <?php
-
     $demande = 1;
-
 ?>
 
 <div class="table-responsive">
@@ -13,17 +11,13 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr>
-			<td><label>Créée le : </label></td>
-            <td><?php echo $annonce['Annonce']['date_post']; ?></td>
-		</tr>
 		<tr class="active">
-            <td><label>Par : </label></td>
-            <td><?php echo $annonce['User']['username']; ?></td>
+			<td><label>Créée le : </label></td>
+            <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_post'])); ?></td>
 		</tr>
 		<tr>
             <td><label>Par : </label></td>
-            <td><?php echo $annonce['User']['username']; ?></td>
+            <td><?php echo "<a href='". $this->Html->url('/users/view/'. $annonce['Annonce']['user_id'], true) ."'>". $annonce['User']['username'] ."</a>"; ?></td>
 		</tr>
 		<tr class="active">
             <td><label>Description :</label></td>
@@ -31,8 +25,9 @@
 		</tr>
 		<tr>
             <td><label>Temps estimé : </label></td>
-            <td><?php echo $annonce['Annonce']['temps_requis']; ?>H</td>
+            <td><?php echo $annonce['Annonce']['temps_requis']; ?> Heures</td>
 		</tr>
+        <?php if( (AuthComponent::user('role') == "admin") || ($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')) ){ ?>
 		<tr class="active">
             <td><label>Coordonnées de la personne :</label></td>
             <td><?php echo $annonce['User']['prenom']; ?> <?php echo $annonce['User']['nom']; ?></td>
@@ -45,26 +40,39 @@
             <td><label>Adresse mail : </label></td>
             <td><?php echo $annonce['User']['mail']; ?></td>
         </tr>
-        <tr class="active">
+        <?php } ?>
+                <tr class="active">
             <td><label>Type : </label></td>
+            <td><?php echo $annonce['Type']['libelle']; ?></td>
+        </tr>
+        <tr>
+            <td><label>Nature de l'annonce : </label></td>
             <td><?php if($annonce['Annonce']['demande']) {
-                    echo 'offre';
+                    echo 'OFFRE';
                     $demande = 0;
                 }
                 else {
-                    echo 'demande';
+                    echo 'DEMANDE';
                 } ?></td>
         </tr>
 		<tr class="info">
             <?php
             if($annonce['Annonce']['id_accepteur'] == 0)
             {
-                echo "<div class='btn btn-default'>".$this->Form->postLink('Réserver cette annonce',array('class'=>'btn btn-default', 'action' => 'reservation', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],
-                    $annonce['Annonce']['temps_requis'],$demande))."</div>";
+                if($annonce['User']['id'] == AuthComponent::user('id')) {
+                    echo "<div class='btn btn-default'>".$this->Form->postLink('Valider cette annonce',array('class'=>'btn btn-default', 'action' => 'valideAnnonce', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],$demande))."</div>";
+                }else{
+                    echo "<div class='btn btn-default'>".$this->Form->postLink('Réserver cette annonce',array('class'=>'btn btn-default', 'action' => 'reservation', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],
+                            $annonce['Annonce']['temps_requis'],$demande))."</div>";
+                }
             }
             else
             {
-                ?> cette annonce a déjà une réservation <?php
+                if( (AuthComponent::user('role') == "admin") || ($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')) ) {
+                    ?> <div class="alert alert-info">Vous avez déjà réservez cette annonce</div> <?php
+                }else{
+                    ?> <div class="alert alert-warning">Cette annonce a déjà une réservation</div> <?php
+                }
             }
             ?>
 		</tr>

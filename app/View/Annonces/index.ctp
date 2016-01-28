@@ -13,7 +13,7 @@
 
 <table class="table table-hover">
     <tr>
-        <th>Id</th>
+        <!--<th>Id</th>-->
         
         <th>Nom</th>
         
@@ -28,7 +28,7 @@
 
     <?php foreach ($annonces as $annonce): ?>
     <tr>
-        <td><?php echo $annonce['Annonce']['id']; ?></td>
+        <!--<td><?php echo $annonce['Annonce']['id']; ?></td>-->
         <td><?php echo $annonce['User']['prenom']; ?></td>
         <td>
             <?php echo $this->Html->link($annonce['Annonce']['titre'],
@@ -36,8 +36,8 @@
         </td>
         <td><?php echo $annonce['Annonce']['description']; ?></td>
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
-        <td><?php echo $annonce['Annonce']['date_post']; ?></td>
-        <td><?php echo $annonce['Annonce']['date_limite']; ?></td>
+        <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_post'])); ?></td>
+        <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_limite'])); ?></td>
         <td>
         
          <?php echo $this->Form->postLink(

@@ -89,7 +89,7 @@ echo $this->Form->input('id', array('type' => 'hidden'));
 				echo $this->Form->radio('role',
 								array(
 										'admin' => 'Admin',
-										'utilisateur' => 'Utilisateur')
+										'' => 'Utilisateur')
 								, $attributes)
 //						.
 //						$this->Form->radio('role',

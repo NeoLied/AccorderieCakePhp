@@ -1,21 +1,26 @@
 <h1>Consulter les demandes de services</h1>
 
-<?php
-echo $this->Form->create(null,array('class' => 'form-group'));
-echo $this->Form->input('Type',array(
-    'label' => 'Filtrer par types :',
-    'class' => 'form-controller select input ',
-    'empty' => 'Tous',
-    'type' => 'select'
-));
-echo $this->Form->end();
-?>
-
+<?php echo $this->Html->link(
+    'Acceder aux Offres',
+    '/annonces/offre/',
+    array('class' => 'btn btn-default')); ?>
 
 <table class="table table-hover">
     <tr>
-        <th>Id</th>
-        <th>Pseudo proposant</th>
+        <td colspan="4" class="info"><?php
+            echo $this->Form->create(null,array('class' => 'form-group'));
+            echo "<span class='col-xs-4'>".$this->Form->input('Type',array(
+                    'label' => 'Filtrer par types :</td><td colspan="4" class="info">',
+                    'class' => 'form-controller select input form-control',
+                    'empty' => 'Tous',
+                    'type' => 'select'
+                ))."</span>";
+            echo $this->Form->end();
+            ?></td colspan="4">
+    </tr>
+
+    <tr>
+        <th>Demandeur</th>
         <th>Titre</th>
         <th>Type d'annonce</th>
         <th>Description</th>
@@ -24,9 +29,8 @@ echo $this->Form->end();
         <th>Date limite</th>
     </tr>
     <?php foreach ($annonces as $annonce): ?>
-    <tr>
 
-        <td><?php echo $annonce['Annonce']['id']; ?></td>
+    <tr>
 
         <td> <?php echo $this->Html->link($annonce['User']['username'],
                 array('controller' => 'users', 'action' => 'view', $annonce['Annonce']['user_id'])); ?></td>
@@ -39,8 +43,8 @@ echo $this->Form->end();
         </td>
         <td><?php echo $annonce['Annonce']['description']; ?></td>
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
-        <td><?php echo $annonce['Annonce']['date_post']; ?></td>
-        <td><?php echo $annonce['Annonce']['date_limite']; ?></td>
+        <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_post'])); ?></td>
+        <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_limite'])); ?></td>
         <td>
          <?php 
          if($annonce['Annonce']['user_id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){

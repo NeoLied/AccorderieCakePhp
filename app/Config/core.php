@@ -355,7 +355,7 @@ $engine = 'File';
 // In development mode, caches should expire quickly.
 $duration = '+999 days';
 if (Configure::read('debug') > 0) {
-	$duration = '+10 seconds';
+	$duration = '+1 seconds';
 }
 
 // Prefix each application on the same server with a different string, to avoid Memcache and APC conflicts.
