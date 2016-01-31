@@ -1,5 +1,10 @@
 $(function() {
-    $( "#AnnonceDateLimite" ).datepicker();
+
+    $( "#AnnonceDateLimite" ).datepicker(
+        "option",
+        $.datepicker.regional[ 'fr' ]
+    );
+
 });
 
 $(document).ready(function(){

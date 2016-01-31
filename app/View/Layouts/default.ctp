@@ -16,6 +16,7 @@
 	echo $this->Html->css('customStyle');
 	echo $this->Html->script('jquery-2.2.0.min');
 	echo $this->Html->script('jquery-ui.1.11.4');
+	echo $this->Html->script('http://jqueryui.com/resources/demos/datepicker/datepicker-fr.js');
 	echo $this->Html->script('bootstrap');
 	echo $this->Html->script('script');
 	echo $this->fetch('meta');
