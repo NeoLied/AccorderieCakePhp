@@ -61,6 +61,7 @@
             {
                 if($annonce['User']['id'] == AuthComponent::user('id')) {
                     echo "<div class='btn btn-default'>".$this->Form->postLink('Valider cette annonce',array('class'=>'btn btn-default', 'action' => 'valideAnnonce', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],$demande))."</div>";
+                    echo "<div class='btn btn-default'>".$this->Form->postLink('Supprimer cette annonce',array('class'=>'btn btn-default', 'action' => 'delete', $annonce['Annonce']['id']))."</div>";
                 }else{
                     echo "<div class='btn btn-default'>".$this->Form->postLink('Réserver cette annonce',array('class'=>'btn btn-default', 'action' => 'reservation', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],
                             $annonce['Annonce']['temps_requis'],$demande))."</div>";

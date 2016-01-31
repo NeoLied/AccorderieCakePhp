@@ -9,6 +9,7 @@
         <th>Temps de travail</th>
         <th>Date de l'annonce</th>
         <th>Date Limite</th>
+
     </tr>
 
     <?php foreach ($annonces as $annonce): ?>

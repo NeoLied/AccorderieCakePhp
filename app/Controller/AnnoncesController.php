@@ -174,7 +174,7 @@ class AnnoncesController extends AppController {
     	}
     }
     
-    public function delete($id,$nameRedirect)
+    public function delete($id)
     {
     	if ($this->request->is('get'))
     	{
