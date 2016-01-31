@@ -1,9 +1,10 @@
 $(function() {
 
-    $( "#AnnonceDateLimite" ).datepicker(
-        "option",
-        $.datepicker.regional[ 'fr' ]
-    );
+    $( "#datepicker" ).datepicker({
+        minDate :0,
+        dateFormat :"yy-mm-dd",
+        regional :"fr"
+    });
 
 });
 

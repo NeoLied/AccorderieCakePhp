@@ -139,7 +139,8 @@ class AnnoncesController extends AppController {
     		$this->Annonce->create();
     		if ($this->Annonce->save($this->request->data)) {
 				$this->Session->setFlash(__('L\'annonce a été ajoutée.'));
-    			$this->retourPageAccueil();
+
+				$this->retourPageAccueil();
     		}
     		$this->Session->setFlash(__('Impossible d\'ajouter votre annonce.'));
 		}

@@ -1,9 +1,13 @@
 <!-- Fichier : /app/View/Posts/add.ctp -->
+
+<!--
+
+Tout les SCRIPTS JS dans le fichier script.js !!
 <script type="text/javascript">
   $(function() {
     $( "#datepicker" ).datepicker({ minDate: 0, altField: "#alternate", dateFormat: "dd/mm/yy"});
   });
-</script>
+</script>-->
 
 <?php
 
@@ -45,7 +49,7 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
     </tr>
     <tr>
       <td><?php
-        echo $this->Form->input('text',
+        echo $this->Form->input('date_limite',
             array('label' => 'Date limite</td><td>',
                 'class' => 'form-control',
                 'id' => "datepicker",

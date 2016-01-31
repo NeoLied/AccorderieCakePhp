@@ -28,11 +28,24 @@
         <td><?php echo $annonce['Annonce']['date_post']; ?></td>
         <td><?php echo $annonce['Annonce']['date_limite']; ?></td>
         <td>
-          <?php echo $this->Html->link(
-                	'Valider',
-                	array('action' => 'valider_annonce', $annonce['Annonce']['id'])
-            	); ?>
-          </td> 
+
+            <?php
+            echo $this->Form->postLink(
+                'Valider',
+                array('action' => 'valider_annonce', $annonce['Annonce']['id'])
+            );
+             echo" ";
+
+            echo $this->Form->postLink(
+                'Supprimer',
+                array('action' => 'delete', $annonce['Annonce']['id']),
+                array('confirm' => "Êtes-vous sûr ?"));
+
+            ?>
+          </td>
+        <td>
+
+          </td>
     </tr>
     <?php endforeach; ?>
     <?php unset($annonce); ?>
