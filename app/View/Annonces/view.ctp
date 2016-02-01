@@ -57,19 +57,22 @@
         </tr>
 		<tr class="info">
             <?php
-            if($annonce['Annonce']['id_accepteur'] == 0)
-            {
+            if($annonce['Annonce']['id_accepteur'] == 0) {
                 if($annonce['User']['id'] == AuthComponent::user('id')) {
-                    echo "<div class='btn btn-default'>".$this->Form->postLink('Valider cette annonce',array('class'=>'btn btn-default', 'action' => 'valideAnnonce', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],$demande))."</div>";
                     echo "<div class='btn btn-default'>".$this->Form->postLink('Supprimer cette annonce',array('class'=>'btn btn-default', 'action' => 'delete', $annonce['Annonce']['id']))."</div>";
                 }else{
+
+                    if(AuthComponent::user('role') == "admin" && ($annonce['Annonce']['annonceValide'] == "non")){
+                        echo "<div class='btn btn-default'>".$this->Form->postLink('Valider cette annonce',array('class'=>'btn btn-default', 'action' => 'valideAnnonce', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],$demande))."</div>";
+                    }
+
                     echo "<div class='btn btn-default'>".$this->Form->postLink('Réserver cette annonce',array('class'=>'btn btn-default', 'action' => 'reservation', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],
                             $annonce['Annonce']['temps_requis'],$demande))."</div>";
                 }
             }
             else
             {
-                if( (AuthComponent::user('role') == "admin") || ($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')) ) {
+                if( ($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')) ) {
                     ?> <div class="alert alert-info">Vous avez déjà réservez cette annonce</div> <?php
                 }else{
                     ?> <div class="alert alert-warning">Cette annonce a déjà une réservation</div> <?php

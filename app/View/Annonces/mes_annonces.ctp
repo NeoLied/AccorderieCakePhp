@@ -24,11 +24,23 @@
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
         <td><?php echo $annonce['Annonce']['date_post']; ?></td>
         <td><?php echo $annonce['Annonce']['date_limite']; ?></td>
-        <td><?php echo $this->Html->link(
-            'Valider le service',
-            array('action' => 'valider_service', $annonce['Annonce']['id'])
-            );
-            ?></td>
+
+        <?php
+
+        if($annonce['Annonce']['id_accepteur'] != 0){
+            if($annonce['Annonce']['archive'] == 1){
+                ?><td><?php echo "<span class='text-info'>Cette annonce à été cloturée</span>";
+                ?></td><?php
+            }else{
+                ?><td><?php echo $this->Html->link(
+                    'Valider le service',
+                    array('action' => 'valider_service', $annonce['Annonce']['id'])
+                );
+                ?></td><?php
+            }
+        }
+        ?>
+
     </tr>
     <?php endforeach; ?>
     <?php unset($annonce); ?>

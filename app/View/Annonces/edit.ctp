@@ -31,7 +31,7 @@ echo $this->Form->input('id', array('type' => 'hidden'));
     <tr>
       <td><?php
         echo $this->Form->input('temps_requis',
-            array('label' => 'Confirmer mot de passe</td><td>',
+            array('label' => 'Temps estimé</td><td>',
                 'options' => array(0,1, 2, 3, 4, 5 , 6 , 7),
                 'class' => 'form-control'));?></td>
     </tr>

@@ -19,17 +19,21 @@ class AnnoncesController extends AppController
 	{
 		$this->loadModel('User');
 		$annonce = $this->Annonce->findById($id);
-		debug($annonce);
+		//debug($annonce);
 		$user = $this->Annonce->User->findById( $annonce['Annonce']['id_accepteur']);
 
 		$this->User->id = $annonce['Annonce']['id_accepteur'];
 		$tempsFinal = $annonce['Annonce']['temps_requis'] + $user['User']['credit_temps'];
 
-		$this->User->saveField('User.credit_temps', $tempsFinal);
+		$this->operationTemps($annonce['Annonce']['user_id'], $tempsFinal, 'd');
+		$this->operationTemps($annonce['Annonce']['id_accepteur'], $tempsFinal, 'c');
 
+		$this->Annonce->id = $annonce['Annonce']['id'];
+		$this->Annonce->saveField('archive',1);
 
 		$this->Session->setFlash(__('La demande a bien été cloturer'));
 		$this->retourPageAccueil();
+
 
 	}
 	public function valider_service($id) {
@@ -57,28 +61,47 @@ class AnnoncesController extends AppController
     public function offre() {
 
 		$this->loadModel('Type');
+		App::uses('CakeTime', 'Utility');
 		$annonces = null;
+		$annoncesUrgentes=null;
+		$annoncesExpires=null;
+		$annoncesNormales=null;
 
-		if($this->request->is('post') && !empty( $this->request->data['Annonce']['Type'])){
-			$annonces =$this->Annonce->find('all',array(
-				//tableau de conditions
+		if($this->request->is('post')) {
+			if (($this->request->data['Annonce']['type_id']) > 0) {
+				$annonces = $this->Annonce->find('all', array(
+					//tableau de conditions
 					'conditions' => array('Annonce.demande' => 1,
-							'Annonce.annonceValide'=>'oui',
-							'Annonce.type_id' => $this->request->data['Annonce']['Type'])
-			));
-		}else{
-			$annonces =$this->Annonce->find('all',array(
-				//tableau de conditions
+						'Annonce.annonceValide' => 'oui',
+						'Annonce.type_id' => $this->request->data['Annonce']['type_id'])
+				));
+			} else {
+				$annonces = $this->Annonce->find('all', array(
+					//tableau de conditions
 					'conditions' => array('Annonce.demande' => 1,
-							'Annonce.annonceValide'=>'oui'
+						'Annonce.annonceValide' => 'oui'
 					)));
+			}
+
+			list($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales) = $this->setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
+
+		}else{
+			$annonces = $this->Annonce->find('all', array(
+				//tableau de conditions
+				'conditions' => array('Annonce.demande' => 1,
+					'Annonce.annonceValide' => 'oui'
+				)));
+
+			list($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales) = $this->setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
 		}
 
-
 		$this->set('annonces', $annonces);
+		$this->set('annoncesUrgentes', $annoncesUrgentes);
+		$this->set('annoncesExpires', $annoncesExpires);
+		$this->set('annoncesNormales', $annoncesNormales);
 
 		$this->set('types', $this->Type->find('list',array(
-				'fields' => 'Type.libelle'
+			'fields' => 'Type.libelle'
 		)));
 
     //	$this->set('annonces', $this->selectAllAnnonces(1));
@@ -88,39 +111,37 @@ class AnnoncesController extends AppController
 		$this->loadModel('Type');
 		App::uses('CakeTime', 'Utility');
 		$annonces = null;
-		if($this->request->is('post') && !empty( $this->request->data['Annonce']['Type']) ){
-			$annonces =$this->Annonce->find('all',array(
-				//tableau de conditions
+		$annoncesUrgentes=null;
+		$annoncesExpires=null;
+		$annoncesNormales=null;
+
+		if($this->request->is('post')) {
+			if (($this->request->data['Annonce']['type_id']) > 0) {
+				$annonces = $this->Annonce->find('all', array(
+					//tableau de conditions
 					'conditions' => array('Annonce.demande' => 0,
-							'Annonce.annonceValide'=>'oui',
-							'Annonce.type_id' => $this->request->data['Annonce']['Type'])
-			));
-		}else{
-			$annonces =$this->Annonce->find('all',array(
-				//tableau de conditions
+						'Annonce.annonceValide' => 'oui',
+						'Annonce.type_id' => $this->request->data['Annonce']['type_id'])
+				));
+			} else {
+				$annonces = $this->Annonce->find('all', array(
+					//tableau de conditions
 					'conditions' => array('Annonce.demande' => 0,
-							'Annonce.annonceValide'=>'oui'
-			)));
-
-			$annoncesUrgentes=null;
-			$annoncesExpires=null;
-			$annoncesNormales=null;
-
-			for($i =0; $i < sizeof($annonces); $i++){
-
-				if( CakeTime::isPast($annonces[$i]['Annonce']['date_limite']) ){
-					$annonces[$i]['Annonce']['statut'] ="Expiré";
-					$annoncesExpires[$i]= $annonces[$i];
-				}else if($this->isUrgente($annonces[$i])){
-					$annonces[$i]['Annonce']['statut'] ="Urgent";
-					$annoncesUrgentes[$i]= $annonces[$i];
-				}else{
-					$annonces[$i]['Annonce']['statut'] ="   ";
-					$annoncesNormales[$i]= $annonces[$i];
-				}
+						'Annonce.annonceValide' => 'oui'
+					)));
 			}
-		}
 
+			list($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales) = $this->setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
+
+		}else{
+			$annonces = $this->Annonce->find('all', array(
+				//tableau de conditions
+				'conditions' => array('Annonce.demande' => 0,
+					'Annonce.annonceValide' => 'oui'
+				)));
+
+			list($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales) = $this->setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
+		}
 
     	$this->set('annonces', $annonces);
     	$this->set('annoncesUrgentes', $annoncesUrgentes);
@@ -231,14 +252,14 @@ class AnnoncesController extends AppController
     	{
     		$this->Annonce->id = $id_annonce;
     		$this->Annonce->saveField('id_accepteur', $id_personneReservante);
-    		if ($demande == 1) {
+    		/*if ($demande == 1) {
     			$this->operationTemps($id_personneReservante, $temps, 'c');
     			$this->operationTemps($id_personneProprio, $temps, 'd');
     		}
    			else {
    				$this->operationTemps($id_personneProprio, $temps, 'c');
    				$this->operationTemps($id_personneReservante, $temps, 'd');
-   			}
+   			}*/
     	}
 
 		$infoP = $this->Annonce->find('first', array('condition' => array('users.id' => $id_personneReservante)));
@@ -248,7 +269,32 @@ class AnnoncesController extends AppController
 
     	return $this->redirect('/annonces/view/'.$id_annonce);
     }
-    
+
+	/**
+	 * @param $annonces
+	 * @param $annoncesExpires
+	 * @param $annoncesUrgentes
+	 * @param $annoncesNormales
+	 * @return array
+	 */
+	public function setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales)
+	{
+		for ($i = 0; $i < sizeof($annonces); $i++) {
+
+			if (CakeTime::isPast($annonces[$i]['Annonce']['date_limite'])) {
+				$annonces[$i]['Annonce']['statut'] = "Expiré";
+				$annoncesExpires[$i] = $annonces[$i];
+			} else if ($this->isUrgente($annonces[$i])) {
+				$annonces[$i]['Annonce']['statut'] = "Urgent";
+				$annoncesUrgentes[$i] = $annonces[$i];
+			} else {
+				$annonces[$i]['Annonce']['statut'] = "   ";
+				$annoncesNormales[$i] = $annonces[$i];
+			}
+		}
+		return array($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
+	}
+
 	private function operationTemps ($id_personne,$temps,$debitOuCredit){
     	$this->Annonce->User->id = $id_personne;
     	$tempsFinal = 0;
