@@ -1,9 +1,13 @@
 <!-- Fichier : /app/View/Posts/add.ctp -->
+
+<!--
+
+Tout les SCRIPTS JS dans le fichier script.js !!
 <script type="text/javascript">
   $(function() {
     $( "#datepicker" ).datepicker({ minDate: 0, altField: "#alternate", dateFormat: "dd/mm/yy"});
   });
-</script>
+</script>-->
 
 <?php
 
@@ -41,11 +45,11 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
             array('label' => 'Temps requis</td><td>',
                 'class' => 'form-control',
                 'empty' => '',
-                'options' => array(1, 2, 3, 4, 5 , 6 , 7)));?></td>
+                'options' => array(0,1, 2, 3, 4, 5 , 6 , 7)));?></td>
     </tr>
     <tr>
       <td><?php
-        echo $this->Form->input('text',
+        echo $this->Form->input('date_limite',
             array('label' => 'Date limite</td><td>',
                 'class' => 'form-control',
                 'id' => "datepicker",
@@ -53,7 +57,7 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
     </tr>
     <tr class="active">
       <td><?php
-        echo $this->Form->input('Type',
+        echo $this->Form->input('type_id',
             array('label' => 'Type</td><td>',
                 'class' => 'form-control',
                 'empty' => '',
@@ -63,7 +67,7 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
     <?php $attributes = array('legend' => false, 'class' => 'form-control'); ?>
     <tr>
       <td style="vertical-align:middle">
-        <label>Type de demande</label>
+        <label>Type d'annonce</label>
       </td>
       <td><?php
         echo $this->Form->radio('radio', array('0' => 'Demande'), $attributes) . $this->Form->radio('radio', array('1' => 'Offre'), $attributes);

@@ -64,4 +64,5 @@
     </tr>
     <?php endforeach; ?>
     <?php unset($annonce); ?>
+
 </table>

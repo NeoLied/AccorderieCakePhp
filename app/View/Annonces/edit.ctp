@@ -32,7 +32,7 @@ echo $this->Form->input('id', array('type' => 'hidden'));
       <td><?php
         echo $this->Form->input('temps_requis',
             array('label' => 'Confirmer mot de passe</td><td>',
-                'options' => array(0,1, 2, 3, 4, 5),
+                'options' => array(0,1, 2, 3, 4, 5 , 6 , 7),
                 'class' => 'form-control'));?></td>
     </tr>
     <tr>

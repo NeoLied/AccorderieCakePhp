@@ -60,6 +60,7 @@ class AnnoncesController extends AppController {
     
     public function demande() {
 		$this->loadModel('Type');
+		App::uses('CakeTime', 'Utility');
 		$annonces = null;
 		if($this->request->is('post') && !empty( $this->request->data['Annonce']['Type']) ){
 			$annonces =$this->Annonce->find('all',array(
@@ -74,10 +75,31 @@ class AnnoncesController extends AppController {
 					'conditions' => array('Annonce.demande' => 0,
 							'Annonce.annonceValide'=>'oui'
 			)));
+
+			$annoncesUrgentes=null;
+			$annoncesExpires=null;
+			$annoncesNormales=null;
+
+			for($i =0; $i < sizeof($annonces); $i++){
+
+				if( CakeTime::isPast($annonces[$i]['Annonce']['date_limite']) ){
+					$annonces[$i]['Annonce']['statut'] ="Expiré";
+					$annoncesExpires[$i]= $annonces[$i];
+				}else if($this->isUrgente($annonces[$i])){
+					$annonces[$i]['Annonce']['statut'] ="Urgent";
+					$annoncesUrgentes[$i]= $annonces[$i];
+				}else{
+					$annonces[$i]['Annonce']['statut'] ="   ";
+					$annoncesNormales[$i]= $annonces[$i];
+				}
+			}
 		}
 
 
     	$this->set('annonces', $annonces);
+    	$this->set('annoncesUrgentes', $annoncesUrgentes);
+    	$this->set('annoncesExpires', $annoncesExpires);
+    	$this->set('annoncesNormales', $annoncesNormales);
 
 		$this->set('types', $this->Type->find('list',array(
 				'fields' => 'Type.libelle'
@@ -109,8 +131,6 @@ class AnnoncesController extends AppController {
     
     public function add() {
 		$this->loadModel('Type');
-    	//$requete = "Select libelle from types";
-    	//$result = $this->injecterRequete($requete);
 		$this->set('type',$this->Type->find('list',array(
 			'fields' => 'Type.libelle'
 		)));
@@ -118,8 +138,9 @@ class AnnoncesController extends AppController {
     	if ($this->request->is('post')) {
     		$this->Annonce->create();
     		if ($this->Annonce->save($this->request->data)) {
-    			$this->Session->setFlash(__('L\'annonce a été ajoutée.'));
-    			$this->retourPageAccueil();
+				$this->Session->setFlash(__('L\'annonce a été ajoutée.'));
+
+				$this->retourPageAccueil();
     		}
     		$this->Session->setFlash(__('Impossible d\'ajouter votre annonce.'));
 		}
@@ -154,7 +175,7 @@ class AnnoncesController extends AppController {
     	}
     }
     
-    public function delete($id,$nameRedirect)
+    public function delete($id)
     {
     	if ($this->request->is('get'))
     	{
@@ -193,6 +214,12 @@ class AnnoncesController extends AppController {
    				$this->operationTemps($id_personneReservante, $temps, 'd');
    			}
     	}
+
+		$infoP = $this->Annonce->find('first', array('condition' => array('users.id' => $id_personneReservante)));
+		$info = $this->Annonce->find('first', array('condition' => array('users.id' => $id_personneProprio)));
+
+		$this->User->send($infoP, $info['User']['mail'], 'Un utilisateur vous à fait une demande de réservation sur La Marmite', 'reservation');
+
     	return $this->redirect('/annonces/view/'.$id_annonce);
     }
     
@@ -292,14 +319,17 @@ class AnnoncesController extends AppController {
 			$type = $this->request->data;
 			if ($this->Type->save($this->request->data)) {
 				$this->Session->setFlash(__('Le type de service %s a bien été crée',$type['Type']['libelle']));
-				$this->redirect($this->request->here);
+				$this->redirect(array("action" => "manage"));
 			}else{
 				$this->Session->setFlash(__('Impossible de créer le type de service'));
 			}
-
-
-
 		}
 	}
+	public function isUrgente($annonce){
+
+		 return (date_diff(new DateTime($annonce['Annonce']['date_limite']), new DateTime('now'))->format("%a") < 4 )? true : false;
+
+		}
+
 }
 ?>

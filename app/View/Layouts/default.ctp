@@ -11,10 +11,12 @@
     //echo $this->Html->css('ourCss');
 	echo $this->Html->css('bootstrap');
 	echo $this->Html->css('bootstrap-theme');
-	echo $this->Html->css('jquery-ui');
+	echo $this->Html->css('http://code.jquery.com/ui/1.11.4/jquery-ui.min.js');
+	echo $this->Html->css('http://code.jquery.com/ui/1.11.4/themes/black-tie/jquery-ui.css');
 	echo $this->Html->css('customStyle');
 	echo $this->Html->script('jquery-2.2.0.min');
 	echo $this->Html->script('jquery-ui.1.11.4');
+	echo $this->Html->script('http://jqueryui.com/resources/demos/datepicker/datepicker-fr.js');
 	echo $this->Html->script('bootstrap');
 	echo $this->Html->script('script');
 	echo $this->fetch('meta');

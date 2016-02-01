@@ -23,7 +23,7 @@
         <tr class="active">
             <td><strong>Prénom : </strong></td><td><?php echo h($user['User']['prenom']); ?></td>
         </tr>
-        <?php if(AuthComponent::user('role') == "admin"){ ?>
+        <?php if(AuthComponent::user('role') == "admin" || AuthComponent::user('id')==$user['User']['id'] ){ ?>
         <tr>
             <td><strong>Mail : </strong></td><td><?php echo h($user['User']['mail']); ?></td>
         </tr>
