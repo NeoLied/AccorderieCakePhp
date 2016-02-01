@@ -24,6 +24,11 @@
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
         <td><?php echo $annonce['Annonce']['date_post']; ?></td>
         <td><?php echo $annonce['Annonce']['date_limite']; ?></td>
+        <td><?php echo $this->Html->link(
+            'Valider le service',
+            array('action' => 'valider_service', $annonce['Annonce']['id'])
+            );
+            ?></td>
     </tr>
     <?php endforeach; ?>
     <?php unset($annonce); ?>

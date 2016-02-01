@@ -10,7 +10,6 @@ class UsersController extends AppController {
 	    // Permet aux utilisateurs de s'enregistrer, de se déconnecter et de reset le mot de passe
 	    $this->Auth->allow('add', 'logout');
         $this->Auth->allow('add', 'reset');
-		$this->Auth->allow('*');
 	}
 
     public function index() {

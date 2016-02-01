@@ -30,7 +30,7 @@
         <td>
 
             <?php
-            echo $this->Form->postLink(
+            echo $this->Html->link(
                 'Valider',
                 array('action' => 'valider_annonce', $annonce['Annonce']['id'])
             );

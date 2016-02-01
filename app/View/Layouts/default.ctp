@@ -24,7 +24,7 @@
 	echo $this->fetch('script');
 	?>
 
-	<meta name="viewport" content="initial-scale=1">
+	<meta name="viewport" content="initial-scale=1" maximum-scale="1.0">
 
 </head>
 <body>
@@ -128,7 +128,7 @@
 			</div>
 		</nav>
 
-		<div id="content">
+		<div id="content" class="container-fluid" style="overflow-x: scroll;">
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
