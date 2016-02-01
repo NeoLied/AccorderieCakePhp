@@ -1,14 +1,5 @@
 <!-- Fichier : /app/View/Posts/add.ctp -->
 
-<!--
-
-Tout les SCRIPTS JS dans le fichier script.js !!
-<script type="text/javascript">
-  $(function() {
-    $( "#datepicker" ).datepicker({ minDate: 0, altField: "#alternate", dateFormat: "dd/mm/yy"});
-  });
-</script>-->
-
 <?php
 
 echo $this->Form->create('Annonce');
