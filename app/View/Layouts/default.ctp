@@ -128,7 +128,7 @@
 			</div>
 		</nav>
 
-		<div id="content" class="container-fluid" style="overflow: scroll;">
+		<div id="content" class="container-fluid" style="overflow-x: scroll;">
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
