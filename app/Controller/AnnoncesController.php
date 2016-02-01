@@ -1,16 +1,42 @@
 <?php
-class AnnoncesController extends AppController {
+class AnnoncesController extends AppController
+{
 
- 	public $helpers = array('Html', 'Form');
+	public $helpers = array('Html', 'Form');
 
- 	/*
- 	 * Fonctions refactorées
- 	 */
-
-
+	/*
+     * Fonctions refactorées
+     */
 
 
-	public function utilisateur_pas_valide() {
+	public function utilisateur_pas_valide()
+	{
+
+
+	}
+
+	public function cloturer_annonce($id)
+	{
+		$this->loadModel('User');
+		$annonce = $this->Annonce->findById($id);
+		debug($annonce);
+		$user = $this->Annonce->User->findById( $annonce['Annonce']['id_accepteur']);
+
+		$this->User->id = $annonce['Annonce']['id_accepteur'];
+		$tempsFinal = $annonce['Annonce']['temps_requis'] + $user['User']['credit_temps'];
+
+		$this->User->saveField('User.credit_temps', $tempsFinal);
+
+
+		$this->Session->setFlash(__('La demande a bien été cloturer'));
+		$this->retourPageAccueil();
+
+	}
+	public function valider_service($id) {
+		$this->loadModel('User');
+		$annonce =  $this->Annonce->findById($id);
+		$this->set('annonce',$annonce);
+		$this->set('offreur',$this->User->findById($annonce['Annonce']['id_accepteur']));
 
 	}
 
