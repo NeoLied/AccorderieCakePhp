@@ -51,6 +51,7 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
       <td><?php
         echo $this->Form->input('date_limite',
             array('label' => 'Date limite</td><td>',
+                'type' => 'text',
                 'class' => 'form-control',
                 'id' => "datepicker",
                 'empty' => '' ));?></td>
