@@ -71,6 +71,7 @@
 
                 }
             }else{
+
                 echo "<div class='btn btn-default'>".$this->Form->postLink('Se désister de cette annonce',
                         array( 'action' => 'desisterAnnonce', $annonce['Annonce']['id']))."</div>";
 

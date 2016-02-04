@@ -328,8 +328,9 @@ class AnnoncesController extends AppController
     /*
      * Fonctions privées réutilisables
      */
-    
-    public function valider_annonce ($id_annonce){
+
+
+	public function valider_annonce ($id_annonce){
     	$this->Annonce->id = $id_annonce;
     	$this->Annonce->saveField('annonceValide', 'oui');
     	return $this->redirect(array('action' => 'annonce_pas_valide'));
