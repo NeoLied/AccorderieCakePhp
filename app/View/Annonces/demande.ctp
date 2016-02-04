@@ -56,6 +56,7 @@
                 <?php
                 // BOUTONS SUPPRIMER - EDITER
                 if ($annonce['Annonce']['user_id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin") {
+
                     echo $this->Form->postLink(
                         'Supprimer',
                         array('action' => 'delete', $annonce['Annonce']['id'], 'index'),
