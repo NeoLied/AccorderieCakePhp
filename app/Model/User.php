@@ -222,10 +222,10 @@ class User extends AppModel {
      *           $subject - Sujet du mail
      *           $template - Nom du template du mail (APP/View/Emails/)
      */
-	public function send($d, $to, $subject, $template)
+	public function send($mail, $to, $subject, $template)
 	{
-		$this->set($d);
-		if ($d && $to && $subject && $template) {
+		$this->set($mail);
+		if ($mail && $to && $subject && $template) {
 			App::uses('CakeEmail', 'Network/Email');
 
 			$Email = new CakeEmail(array(
@@ -243,7 +243,7 @@ class User extends AppModel {
 				'subject' => $subject,
                 'emailFormat' => 'html',
 			));
-			$Email -> template($template)->viewVars($d);
+			$Email -> template($template)->viewVars($mail);
 
 			return $Email->send();
 		}
