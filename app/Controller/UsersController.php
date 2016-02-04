@@ -48,7 +48,7 @@ class UsersController extends AppController {
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash('L\'utilisateur a été sauvegardé, le compte va être prochainement validé par un administrateur','default', array('class' => 'alert alert-success'));
 
-				$this->User->send($this->request->data['User'], '', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'contact');
+				$this->User->send($this->request->data['User'], 'navarro.linda66@gmail.com', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'notification_nouvel_utilisateur');
 
                 return $this->redirect('/');
             } else {
@@ -147,10 +147,47 @@ class UsersController extends AppController {
 	    return $this->redirect($this->Auth->logout());
 	}
 	
-	public function credit_temps() {
-      	$this->set('users',  $this->User->find('all', array(
-    			'conditions' => array('User.id' => AuthComponent::user('id'))
-    	)));
+	public function getCredit($id_user) {
+
+		$this->loadModel('Annonce');
+        $this->User->id = $id_user;
+		$user = $this->User->findById($id_user);
+
+		$temps_demandes=0;
+		$temps_offres=0;
+
+		$user_demandes = $this->Annonce->find('all',array(
+			'conditions' => array(
+				'Annonce.demande' => 0,
+				'Annonce.user_id' => $id_user
+			)
+		));
+
+		$user_offres = $this->Annonce->find('all',array(
+			'conditions' => array(
+				'Annonce.demande' => 1,
+				'Annonce.user_id' => $id_user
+			)
+		));
+
+		foreach($user_demandes as $demande){
+			$temps_demandes += $demande['Annonce']['temps_requis'];
+		}
+		foreach($user_offres as $offre){
+			$temps_offres += $offre['Annonce']['temps_requis'];
+		}
+		if($user['User']['offre_de_bienvenue']== 'oui'){
+			$temps_offres += 3;
+		}
+
+		$user['User']['credit_temps'] = $temps_offres - $temps_demandes;
+
+		if($this->User->saveField('credit_temps',$user['User']['credit_temps'] )){
+            $this->redirect("/");
+        }
+            $this->Session->setFlash('Votre crédit a été actualisé.','default', array('class' => 'alert alert-success'));
+
+
 	}
 	
 	public function isAuthorized($user) {
@@ -186,12 +223,14 @@ class UsersController extends AppController {
 			return $this->redirect('/users/');
 		}	
 		// mettre à jour le crédit temps et verrouiller l'offre de bienvenue
-		$credit_temps = $array['User']['credit_temps'];
+		/*$credit_temps = $array['User']['credit_temps'];
 		$credit_temps += 3;
-		$this->User->id = $array['User']['id'];
+		$this->User->id = $array['User']['id'];*/
+
 		//var_dump($credit_temps);
-		$this->User->saveField('credit_temps', $credit_temps);
+		//$this->User->saveField('credit_temps', $credit_temps);
 		$this->User->saveField('offre_de_bienvenue', "oui");
+		$this->getCredit($id_utilisateur);
 		$this->Session->setFlash('Le compte de l\'utilisateur a été crédité de 3 heures.','default', array('class' => 'alert alert-success'));
 
 		// On récupére les informations de l'utilisateur

@@ -374,6 +374,15 @@ class AnnoncesController extends AppController
     							)
     	)));
 
+	/*	$this->set('annonces',  $this->Annonce->find('all', array(
+			'conditions' => array(
+				'OR' => array(
+					'Annonce.user_id' => AuthComponent::user('id'),
+					'Annonce.id_accepteur' => AuthComponent::user('id')
+				)
+			)
+		)));*/
+
    	 	$requete = "Select offre_de_bienvenue from users where id = ".AuthComponent::user('id');
     	$result = $this->injecterRequete($requete);
 
