@@ -32,5 +32,13 @@ class Annonce extends AppModel
     public function isOwnedBy($annonce, $user) {
     	return $annonce == $user;
     }
+
+	public function beforeSave($options = array()){
+		if($this->data[$this->alias]['id_accepteur'] == '0'){
+			$this->data[$this->alias]['id_accepteur'] = '0';
+		}
+
+		return true;
+	}
 }
 ?>
