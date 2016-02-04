@@ -9,10 +9,11 @@ class AnnoncesController extends AppController
      */
 
 
-	public function utilisateur_pas_valide()
-	{
-
-
+	public function desisterAnnonce($idAnnonce){
+		$this->Annonce->id = $idAnnonce;
+		$this->Annonce->saveField('id_accepteur', '0');
+		$this->Session->setFlash('Vous avez bien été désisté de cette annonce','default', array('class' => 'alert alert-warning'));
+		return $this->redirect("/");
 	}
 
 	public function cloturer_annonce($id)

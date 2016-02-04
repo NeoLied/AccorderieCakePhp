@@ -18,3 +18,10 @@
     display: inline-block;
     width: 5%;
 }
+
+.ui-widget-content .ui-icon {
+    background-image: url(../img/ui-icons_222222_256x240.png);
+}
+.ui-widget-header .ui-icon {
+    background-image: url(../img/ui-icons_222222_256x240.png);
+}
