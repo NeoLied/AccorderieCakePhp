@@ -11,8 +11,8 @@
     <tr>
         <td colspan="4" class="info"><?php
             echo $this->Form->create(null,array('class' => 'form-group'));
-            echo "<span class='col-xs-4'>".$this->Form->input('Type',array(
-                    'label' => 'Filtrer par types :</td><td colspan="4" class="info">',
+            echo "<span class='col-xs-4'>".$this->Form->input('type_id',array(
+                    'label' => 'Filtrer par types :</td><td colspan="99" class="info">',
                     'class' => 'form-controller select input form-control',
                     'empty' => 'Tous',
                     'type' => 'select'

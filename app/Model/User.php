@@ -120,13 +120,20 @@ class User extends AppModel {
     		)
     	),
     	'avatar' => array(
+
+			'required' => 'update',
+			'allowEmpty' => true,
     		'image' => array(
         		'rule'    => array('extension', array('gif', 'jpeg', 'png', 'jpg')),
-        		'message' => 'Merci de soumettre une image valide.'
+        		'message' => 'Merci de soumettre une image valide.',
+				'allowEmpty' => true,
+				'required' => false
    			),
     		'poidsImage' => array(
     			'rule' => array('fileSize', '<=', '1MB'),
-    			'message' => 'L\'image doit être inférieure à 1MB'
+    			'message' => 'L\'image doit être inférieure à 1MB',
+				'allowEmpty' => true,
+				'required' => false
     		)
     	),
     	'presentation' => array(
@@ -158,7 +165,8 @@ class User extends AppModel {
     	'offre_de_bienvenue' => array(),
 
     );
-    
+
+
     public function isOwnedBy($userId, $userBdd) {
     	return $userId == $userBdd;
     }

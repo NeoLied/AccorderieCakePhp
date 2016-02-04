@@ -9,10 +9,10 @@ $(function() {
 });
 
 $(document).ready(function(){
-    $('#AnnonceType').change(function(){
+    $('#AnnonceTypeId').change(function(){
         $('#AnnonceDemandeForm').submit();
     });
-    $('#AnnonceType').change(function(){
+    $('#AnnonceTypeId').change(function(){
         $('#AnnonceOffreForm').submit();
     });
 
