@@ -88,10 +88,13 @@
 								'class' => 'form-control',
 								'maxLength' => '100'));?></td>
 				</tr>
+
+				<?php echo $this->Form->create('User',array('type'=>'file')); ?>
 				<tr class="active">
 					<td><?php
 						echo $this->Form->input('avatar',
 							array('type' => 'file',
+								'required' => ' ',
 								'label' => 'Avatar</td><td>'));?></td>
 				</tr>
 				<tr>

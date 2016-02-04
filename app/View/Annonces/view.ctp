@@ -68,11 +68,13 @@
 
                     echo "<div class='btn btn-default'>".$this->Form->postLink('Réserver cette annonce',array('class'=>'btn btn-default', 'action' => 'reservation', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],
                             $annonce['Annonce']['temps_requis'],$demande))."</div>";
+
                 }
-            }
-            else
-            {
-                if( ($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')) ) {
+            }else{
+                echo "<div class='btn btn-default'>".$this->Form->postLink('Se désister de cette annonce',
+                        array( 'action' => 'view'))."</div>";
+
+                if( (AuthComponent::user('role') == "admin") || ($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')) ) {
                     ?> <div class="alert alert-info">Vous avez déjà réservez cette annonce</div> <?php
                 }else{
                     ?> <div class="alert alert-warning">Cette annonce a déjà une réservation</div> <?php

@@ -26,12 +26,12 @@ class UsersController extends AppController {
     }
 
     public function add() {
-
+        //S'il n'y a pas d'avatar supprimer sinon ajouter le nouvel avatar
 		$this->User->validator()->remove('avatar');
-
         if ($this->request->is('post')) {
-        	// Envoi fichier avatar
-        	if(!empty($this->data['User']['avatar']['name']))
+
+			// Envoi fichier avatar
+			if(!empty($this->data['User']['avatar']['name']))
         	{
         		$file=$this->data['User']['avatar'];
         		$ary_ext=array('png','jpg','jpeg','gif'); //array of allowed extensions
@@ -46,7 +46,7 @@ class UsersController extends AppController {
 			}
             $this->User->create();
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash('L\'utilisateur a été sauvegardé, le compe va être prochainement validé par un administrateur','default', array('class' => 'alert alert-success'));
+                $this->Session->setFlash('L\'utilisateur a été sauvegardé, le compte va être prochainement validé par un administrateur','default', array('class' => 'alert alert-success'));
 
 				$this->User->send($this->request->data['User'], '', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'contact');
 
@@ -59,7 +59,20 @@ class UsersController extends AppController {
 
     public function edit($id) {
 		$this->User->validator()->remove('avatar');
-
+		// Envoi fichier avatar
+		/*if(!empty($this->data['User']['avatar']['name']))
+		{
+			$file=$this->data['User']['avatar'];
+			$ary_ext=array('png','jpg','jpeg','gif'); //array of allowed extensions
+			$ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
+			if(in_array($ext, $ary_ext))
+			{
+				move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img'. DS . 'uploads' .DS . time().$file['name']);
+				$this->request->data['User']['avatar'] = time().$file['name'];
+			}
+		}else{
+			$this->request->data['User']['avatar'] = WWW_ROOT . 'img'. DS . 'uploads' .DS . 'avatar.png';
+		}*/
 
     	//######### AJOUTER UNE COMPETENCE ##########//
     	/*$some_sql = "Select libelle from competences";
