@@ -70,10 +70,10 @@
                             $annonce['Annonce']['temps_requis'],$demande))."</div>";
 
                 }
-            }else{
-
+            }else {
+              if($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')){
                 echo "<div class='btn btn-default'>".$this->Form->postLink('Se désister de cette annonce',
-                        array( 'action' => 'desisterAnnonce', $annonce['Annonce']['id']))."</div>";
+                        array( 'action' => 'desisterAnnonce', $annonce['Annonce']['id']))."</div>";}
 
                 if( (AuthComponent::user('role') == "admin") || ($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')) ) {
                     ?> <div class="alert alert-info">Vous avez déjà réservez cette annonce</div> <?php
