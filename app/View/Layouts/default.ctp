@@ -83,7 +83,6 @@
 							<li><?php echo $this->Html->link('Ajouter','/annonces/add'); ?></li>
 							<li><?php echo $this->Html->link('Demandes','/annonces/demande'); ?></li>
 							<li><?php echo $this->Html->link('Offres','/annonces/offre'); ?></li>
-							<li><?php echo $this->Html->link('Mes annonces','/annonces/mes_annonces'); ?></li>
 							<li><?php echo $this->Html->link('Rechercher','/annonces/'); ?></li>
 						</ul>
 					</li>
@@ -93,6 +92,7 @@
 						<ul class="dropdown-menu">
 							<li><?php echo $this->Html->link('Voir mon profil','/users/view/'.AuthComponent::user('id')); ?></li>
 							<li><?php echo $this->Html->link('Editer','/users/edit/'.AuthComponent::user('id')); ?></li>
+							<li><?php echo $this->Html->link('Mes annonces','/annonces/mes_annonces'); ?></li>
 							<li><?php echo $this->Html->link('Mon Historique','/annonces/mon_historique'); ?></li>
 						</ul>
 					</li>

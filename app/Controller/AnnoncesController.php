@@ -121,13 +121,16 @@ class AnnoncesController extends AppController
 					//tableau de conditions
 					'conditions' => array('Annonce.demande' => 0,
 						'Annonce.annonceValide' => 'oui',
+						'Annonce.archive' => false,
 						'Annonce.type_id' => $this->request->data['Annonce']['type_id'])
+
 				));
 			} else {
 				$annonces = $this->Annonce->find('all', array(
 					//tableau de conditions
 					'conditions' => array('Annonce.demande' => 0,
-						'Annonce.annonceValide' => 'oui'
+						'Annonce.annonceValide' => 'oui',
+						'Annonce.archive' => false
 					)));
 			}
 
@@ -137,7 +140,8 @@ class AnnoncesController extends AppController
 			$annonces = $this->Annonce->find('all', array(
 				//tableau de conditions
 				'conditions' => array('Annonce.demande' => 0,
-					'Annonce.annonceValide' => 'oui'
+					'Annonce.annonceValide' => 'oui',
+					'Annonce.archive' => false
 				)));
 
 			list($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales) = $this->setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
