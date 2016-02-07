@@ -4,13 +4,13 @@
 	<?php echo $this->Form->create('User', array('type' => 'post', 'class'=>'form-inline'));?>
 	<fieldset>
 
-		<div class="alert-warning" style="text-align: center; color: #404040"><span style="color: #e32; display:inline;">*</span> : Champ obligatoire</div>
+		<div class="alert-warning" style="text-align: center; color: #404040">Champ obligatoire<span style="color: #e32; display:inline;">*</span> </div>
 
 		<div class="table-responsive">
 			<table class="table table-hover" style="text-align:center;">
 				<thead>
 				<tr>
-					<th colspan="99"><legend><?php echo __('Ajouter Utilisateur'); ?></legend></th>
+					<th colspan="99"><legend><?php echo __('INSCRIPTION'); ?></legend></th>
 				</tr>
 				</thead>
 				<tbody>
