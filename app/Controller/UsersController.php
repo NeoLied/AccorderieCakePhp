@@ -220,8 +220,8 @@ $temps_demandes += $demande['Annonce']['temps_requis'];
 
 
 		if($this->User->saveField('credit_temps',$user['User']['credit_temps'] )){
-			$this->Session->setFlash('Votre crédit a été actualisé('.$user['User']['credit_temps'].').','default', array('class' => 'alert alert-success'));
-			//$this->redirect("/");
+			$this->Session->setFlash('Votre crédit a été actualisé.','default', array('class' => 'alert alert-success'));
+			//$this->redirect($this->referer());
 
         }
 // Variable pour debuger GetCredit en utilisant sa vue
