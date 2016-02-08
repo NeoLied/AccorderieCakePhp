@@ -10,7 +10,18 @@ class UsersController extends AppController {
 	    // Permet aux utilisateurs de s'enregistrer, de se déconnecter et de reset le mot de passe
 	    $this->Auth->allow('add', 'logout');
         $this->Auth->allow('add', 'reset');
+
+
 	}
+	public function afterFilter() {
+	    parent::afterFilter();
+	    // Permet aux utilisateurs de s'enregistrer, de se déconnecter et de reset le mot de passe
+
+
+
+	}
+
+
 
     public function index() {
         $this->User->recursive = 0;
@@ -146,45 +157,80 @@ class UsersController extends AppController {
 	public function logout() {
 	    return $this->redirect($this->Auth->logout());
 	}
-	
-	public function getCredit($id_user) {
 
+	public function getOffreBienvenue($user){
+		return ($user['User']['offre_de_bienvenue'] == "oui")? 3 : 0 ;
+	}
+	public function getTempsDemande($user){
 		$this->loadModel('Annonce');
-        $this->User->id = $id_user;
-		$user = $this->User->findById($id_user);
 		$temps_demandes=0;
+
+		$user_demandes =  $this->Annonce->findAllByDemandeAndUserId(
+			0,
+			$user['User']['id']
+		);
+		foreach($user_demandes as $demande){
+$temps_demandes += $demande['Annonce']['temps_requis'];
+		}
+
+		$user_demandes =  $this->Annonce->findAllByDemandeAndArchiveAndIdAccepteur(
+			1,
+			1,
+			$user['User']['id']
+		);
+		foreach($user_demandes as $demande){
+$temps_demandes += $demande['Annonce']['temps_requis'];
+		}
+//debug
+		return $temps_demandes;
+
+	}
+	public function getTempsOffre($user){
+		$this->loadModel('Annonce');
 		$temps_offres=0;
 
-		$user_demandes = $this->Annonce->find('all',array(
-			'conditions' => array(
-				'Annonce.demande' => 0,
-				'Annonce.user_id' => $id_user
-			)
-		));
-
-		$user_offres = $this->Annonce->find('all',array(
-			'conditions' => array(
-				'Annonce.demande' => 1,
-				'Annonce.user_id' => $id_user
-			)
-		));
-
-		foreach($user_demandes as $demande){
-			$temps_demandes += $demande['Annonce']['temps_requis'];
-		}
+		$user_offres = $this->Annonce->findAllByDemandeAndArchiveAndIdAccepteur(
+				 0,
+				 1,
+				 $user['User']['id']
+		);
 		foreach($user_offres as $offre){
 			$temps_offres += $offre['Annonce']['temps_requis'];
 		}
-		if($user['User']['offre_de_bienvenue']== 'oui'){
-			$temps_offres += 3;
+		$user_offres = $this->Annonce->findAllByDemandeAndArchiveAndUserId(
+				 1,
+				 1,
+				 $user['User']['id']
+		);
+		foreach($user_offres as $offre){
+			$temps_offres += $offre['Annonce']['temps_requis'];
 		}
+		//debug($user_offres);
+		return $temps_offres;
+	}
 
-		$user['User']['credit_temps'] = $temps_offres - $temps_demandes;
+
+	public function getCredit($id_user) {
+
+        $this->User->id = $id_user;
+		$user = $this->User->findById($id_user);
+
+		$user['User']['credit_temps'] =($this->getOffreBienvenue($user)+ $this->getTempsOffre($user)) - $this->getTempsDemande($user);
+
+
 
 		if($this->User->saveField('credit_temps',$user['User']['credit_temps'] )){
-            $this->redirect("/");
+			$this->Session->setFlash('Votre crédit a été actualisé('.$user['User']['credit_temps'].').','default', array('class' => 'alert alert-success'));
+			//$this->redirect("/");
+
         }
-            $this->Session->setFlash('Votre crédit a été actualisé.','default', array('class' => 'alert alert-success'));
+// Variable pour debuger GetCredit en utilisant sa vue
+		$this->set('offre_bienvenue',$this->getOffreBienvenue($user));
+		$this->set('temps_offre',$this->getTempsOffre($user));
+		$this->set('temps_demande',$this->getTempsDemande($user));
+		$this->set('temps_total',$user['User']['credit_temps']);
+
+
 
 
 	}
@@ -230,9 +276,6 @@ class UsersController extends AppController {
 		$this->User->saveField('offre_de_bienvenue', "oui");
 		//$this->getCredit($id_utilisateur);
 		$this->Session->setFlash('Le compte de l\'utilisateur a été crédité de 3 heures.','default', array('class' => 'alert alert-success'));
-
-		// On récupére les informations de l'utilisateur
-		//$mail = $this->User->find('first', array('conditions' => array('User.id' => $id_utilisateur)));
 
 		// Envoie du mail
 		$this->User->send($user, $user['User']['mail'], 'Votre compte sur La Marmite a été validé', 'validation');

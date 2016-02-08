@@ -19,7 +19,11 @@ $(document).ready(function(){
     $('.ligneAnnonce').on('click',function(event){
         $(event.currentTarget).children().children('.lienAuteur').get(0).click();
         //alert('clic');
-        console.log($(event.currentTarget).children().children('.lienAuteur'));
+        //console.log($(event.currentTarget).children().children('.lienAuteur'));
+    });
+
+    $('.ligneAnnonce').hover(function(event){
+      $('.ligneAnnonce *').css('cursor','pointer');
     });
 
 
