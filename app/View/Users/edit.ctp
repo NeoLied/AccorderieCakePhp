@@ -22,6 +22,18 @@ echo $this->Form->input('id', array('type' => 'hidden'));
 		<tbody>
 		<tr>
 			<td><?php
+				echo $this->Form->input('nom',
+					array('label' => 'Nom</td><td>',
+						'class' => 'form-control'));?></td>
+		</tr>
+		<tr>
+			<td><?php
+				echo $this->Form->input('prenom',
+					array('label' => 'Prenom</td><td>',
+						'class' => 'form-control'));?></td>
+		</tr>
+		<tr>
+			<td><?php
 				echo $this->Form->input('mail',
 					array('label' => 'Mail</td><td>',
 						'class' => 'form-control'));?></td>
@@ -63,6 +75,7 @@ echo $this->Form->input('id', array('type' => 'hidden'));
 					array('label' => 'Présentation</td><td>',
 						'class' => 'form-control'));?></td>
 		</tr>
+		<?php if(AuthComponent::user('id') == $this->request->data['User']['id']) { ?>
 		<tr class="active">
 			<td><?php
 				echo $this->Form->input('passwordnew',
@@ -79,7 +92,7 @@ echo $this->Form->input('id', array('type' => 'hidden'));
 						'value' => '',
 						'class' => 'form-control'));?></td>
 		</tr>
-		<?php if(AuthComponent::user('role') == "admin") { ?>
+		<?php } if(AuthComponent::user('role') == "admin") { ?>
 		<tr>
 			<td style="vertical-align:middle">
 				<label>Type de compte</label>
