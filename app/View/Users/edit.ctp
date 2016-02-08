@@ -1,7 +1,7 @@
 <!-- Fichier: /app/View/Posts/edit.ctp -->
 <?php
 
-echo $this->Form->create('User', array('label' => 'User'));
+echo $this->Form->create('User', array('class'=>'form-inline', 'label' => 'User'));
 
 /*echo $this->Form->input('type', array(
 'type' => 'select',

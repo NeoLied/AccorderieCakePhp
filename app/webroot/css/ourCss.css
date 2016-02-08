@@ -72,6 +72,11 @@ nav ul li ul li a {
 	height: 60%;
 }
 
+#content img{
+	width: 30%;
+	height: 30%;
+}
+
 .hide{
 	display: none;
 }

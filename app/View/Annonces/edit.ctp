@@ -1,6 +1,6 @@
 <!-- Fichier: /app/View/Posts/edit.ctp -->
 <?php
-echo $this->Form->create('Annonce');
+echo $this->Form->create('Annonce', array('class'=>'form-inline'));
 
 echo $this->Form->input('id', array('type' => 'hidden'));
 

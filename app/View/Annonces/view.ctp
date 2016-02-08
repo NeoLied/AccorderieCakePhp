@@ -76,7 +76,7 @@
                         array( 'action' => 'desisterAnnonce', $annonce['Annonce']['id']))."</div>";}
 
                 if( (AuthComponent::user('role') == "admin") || ($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')) ) {
-                    ?> <div class="alert alert-info">Vous avez déjà réservez cette annonce</div> <?php
+                    ?> <div class="alert alert-info">Vous avez déjà réservé cette annonce</div> <?php
                 }else{
                     ?> <div class="alert alert-warning">Cette annonce a déjà une réservation</div> <?php
                 }
