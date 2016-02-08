@@ -262,7 +262,7 @@ class AnnoncesController extends AppController
     	}
 
 		$infoP = $this->User->findById( $id_personneReservante);
-		$info = $this->User->findByID($id_personneProprio);
+		$info = $this->User->findById($id_personneProprio);
 
 		$this->User->send($infoP, $info['User']['mail'], 'Un utilisateur vous à fait une demande de réservation sur La Marmite', 'reservation');
 

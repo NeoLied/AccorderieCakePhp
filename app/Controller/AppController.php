@@ -54,7 +54,8 @@ class AppController extends Controller {
 
     public function beforeFilter() {
 		$this->Auth->authenticate = array('Form' => array('scope' => array('User.offre_de_bienvenue' => "oui")));
-        $this->Auth->allow('index', 'view', 'display', 'valider_service', 'cloturer_annonce', 'desisterAnnonce');
+        //$this->Auth->allow('index', 'view', 'display', 'valider_service', 'cloturer_annonce', 'desisterAnnonce');
+		$this->Auth->allow();
         if(AuthComponent::user('id') != null) {
        		$query_to_execute = "select credit_temps from users where id = ".AuthComponent::user('id');
         	$results = $this->User->query($query_to_execute);

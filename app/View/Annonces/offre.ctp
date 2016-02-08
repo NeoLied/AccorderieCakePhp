@@ -25,7 +25,7 @@
         <th>Offreur</th>
         <th>Titre</th>
         <th>Type d'annonce</th>
-        <th>Description</th>
+        <!--<th>Description</th>-->
         <th>Temps de travail</th>
         <th>Date de l'annonce</th>
         <th>Date Limite</th>
@@ -42,7 +42,7 @@
         </td>
         <td><?php echo $annonce['Type']['libelle']?>
         </td>
-        <td><?php echo $annonce['Annonce']['description']; ?></td>
+        <!--<td><?php //echo $annonce['Annonce']['description']; ?></td>-->
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
         <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_post'])); ?></td>
         <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_limite'])); ?></td>
