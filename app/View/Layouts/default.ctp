@@ -118,7 +118,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="alert-danger"><?php echo $this->Html->link('Déconnexion','/users/logout'); ?></li>
-					<li class="alert-warning"><?php  $this->Html->link('Actualiser votre crédit',array('controller'=>'users','action' => 'getCredit', AuthComponent::user('id'))); ?></li>
+
 					<li class="alert-success"><a>
 							<?php echo AuthComponent::user('credit_temps')." Heures"; ?>
 						</a></li></ul> <?php

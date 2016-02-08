@@ -152,7 +152,6 @@ class UsersController extends AppController {
 		$this->loadModel('Annonce');
         $this->User->id = $id_user;
 		$user = $this->User->findById($id_user);
-
 		$temps_demandes=0;
 		$temps_offres=0;
 
@@ -216,28 +215,27 @@ class UsersController extends AppController {
 	{
 		// vérifier si l'utilisateur n'a pas déjà bénéficié de l'offre de bienvenue
 		// sinon le renvoyer sur l'accueil 
-		$array = $this->User->find('first', array('conditions' => array('User.id' => $id_utilisateur,
-		'User.offre_de_bienvenue' => 'non')));
-		if (count($array) == 0) {
+		$this->User->id = $id_utilisateur;
+
+		$user= $this->User->findById($id_utilisateur);
+
+		if ($user['User']['offre_de_bienvenue'] == "oui") {
 			$this->Session->setFlash('L\'utilisateur a déjà bénéficié de l\'offre de bienvenue !','default', array('class' => 'alert alert-warning'));
 			return $this->redirect('/users/');
 		}	
 		// mettre à jour le crédit temps et verrouiller l'offre de bienvenue
-		/*$credit_temps = $array['User']['credit_temps'];
-		$credit_temps += 3;
-		$this->User->id = $array['User']['id'];*/
+		$user['User']['credit_temps'] += 3;
 
-		//var_dump($credit_temps);
 		//$this->User->saveField('credit_temps', $credit_temps);
 		$this->User->saveField('offre_de_bienvenue', "oui");
-		$this->getCredit($id_utilisateur);
+		//$this->getCredit($id_utilisateur);
 		$this->Session->setFlash('Le compte de l\'utilisateur a été crédité de 3 heures.','default', array('class' => 'alert alert-success'));
 
 		// On récupére les informations de l'utilisateur
-		$mail = $this->User->find('first', array('conditions' => array('User.id' => $id_utilisateur)));
+		//$mail = $this->User->find('first', array('conditions' => array('User.id' => $id_utilisateur)));
 
 		// Envoie du mail
-		$this->User->send($mail, $mail['User']['mail'], 'Votre compte sur La Marmite a été validé', 'validation');
+		$this->User->send($user, $user['User']['mail'], 'Votre compte sur La Marmite a été validé', 'validation');
 
 		return $this->redirect('/users/');
 	}

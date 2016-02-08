@@ -13,7 +13,7 @@
     </tr>
     
 <?php    
-    if($offre[0]['users']['offre_de_bienvenue'] == "oui") {
+    if($offre_bienvenue[0]['users']['offre_de_bienvenue'] == "oui") {
     	?>
     	<tr>
     	<td>Offre de bienvenue</td>
@@ -29,7 +29,8 @@
     
     
 
-    <?php foreach ($annonces as $annonce): ?>
+    <?php
+	 foreach ($annonces as $annonce): ?>
     <tr>
     
     	<?php
@@ -101,4 +102,5 @@
    		//echo "Total :".$solde_total[0]['users']['credit_temps'];
     ?>
     <?php unset($annonce); ?>
+
 </table>
