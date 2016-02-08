@@ -85,8 +85,8 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => '',
-		'database' => 'accorderie',
+		'password' => 'root',
+		'database' => 'accorderieTest',
 		'prefix' => '',
 		'encoding' => 'utf8',
 	);

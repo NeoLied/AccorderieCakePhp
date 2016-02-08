@@ -8,7 +8,7 @@
 <table class="table table-hover">
     <tr>
         <td colspan="4" class="info"><?php
-            echo $this->Form->create(null,array('class' => 'form-group'));
+            echo $this->Form->create('Annonce',array('class' => 'form-group'));
             echo "<span class='col-xs-4'>".$this->Form->input('type_id',array(
                     'label' => 'Filtrer par types :</td><td colspan="99" class="info">',
                     'class' => 'form-controller select input form-control',
@@ -59,7 +59,7 @@
 
                     echo $this->Form->postLink(
                         'Supprimer',
-                        array('action' => 'delete', $annonce['Annonce']['id'], 'index'),
+                        array('action' => 'delete', $annonce['Annonce']['id']),
                         array('confirm' => "Êtes-vous sûr ?"));
                     echo " ";
                     echo $this->Html->link(
@@ -123,7 +123,6 @@
         foreach ($annoncesExpires as $annonce): ?>
             <tr class="ligneAnnonce">
 
-
             <td> <?php echo $this->Html->link($annonce['User']['username'],
                     array('controller' => 'users', 'action' => 'view', $annonce['Annonce']['user_id'])); ?></td>
             <td>
@@ -148,7 +147,7 @@
                 if($annonce['Annonce']['user_id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
                     echo $this->Form->postLink(
                         'Supprimer',
-                        array('action' => 'delete', $annonce['Annonce']['id'],'index'),
+                        array('controller'=>'annonce','action' => 'delete', $annonce['Annonce']['id']),
                         array('confirm' => "Êtes-vous sûr ?"));
                     echo " ";
                     echo $this->Html->link(
