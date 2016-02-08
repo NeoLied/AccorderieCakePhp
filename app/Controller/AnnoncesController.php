@@ -253,22 +253,16 @@ class AnnoncesController extends AppController
     }
     
 	public function reservation($id_annonce,$id_personneReservante,$id_personneProprio,$temps,$demande) {
+        $this->loadModel('User');
     	if( $id_personneReservante != $id_personneProprio)
     	{
     		$this->Annonce->id = $id_annonce;
     		$this->Annonce->saveField('id_accepteur', $id_personneReservante);
-    		/*if ($demande == 1) {
-    			$this->operationTemps($id_personneReservante, $temps, 'c');
-    			$this->operationTemps($id_personneProprio, $temps, 'd');
-    		}
-   			else {
-   				$this->operationTemps($id_personneProprio, $temps, 'c');
-   				$this->operationTemps($id_personneReservante, $temps, 'd');
-   			}*/
+
     	}
 
-		$infoP = $this->Annonce->find('first', array('condition' => array('users.id' => $id_personneReservante)));
-		$info = $this->Annonce->find('first', array('condition' => array('users.id' => $id_personneProprio)));
+		$infoP = $this->User->findById( $id_personneReservante);
+		$info = $this->User->findById($id_personneProprio);
 
 		$this->User->send($infoP, $info['User']['mail'], 'Un utilisateur vous à fait une demande de réservation sur La Marmite', 'reservation');
 
@@ -375,20 +369,25 @@ class AnnoncesController extends AppController
     							)
     	)));
 
-	/*	$this->set('annonces',  $this->Annonce->find('all', array(
+		$this->set('demandes',  $this->Annonce->find('all', array(
 			'conditions' => array(
-				'OR' => array(
-					'Annonce.user_id' => AuthComponent::user('id'),
-					'Annonce.id_accepteur' => AuthComponent::user('id')
-				)
+                'Annonce.demande' => 0,
+					'Annonce.user_id' => AuthComponent::user('id')
+
 			)
-		)));*/
+		)));
+        $this->set('offres',  $this->Annonce->find('all', array(
+			'conditions' => array(
+                'Annonce.demande' => 1,
+					'Annonce.user_id' => AuthComponent::user('id')
+			)
+		)));
 
    	 	$requete = "Select offre_de_bienvenue from users where id = ".AuthComponent::user('id');
     	$result = $this->injecterRequete($requete);
 
     	$offre = $result[0];
-    	$this->set('offre',$result);
+    	$this->set('offre_bienvenue',$result);
 
     }
 

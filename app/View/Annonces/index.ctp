@@ -18,7 +18,7 @@
         <th>Nom</th>
         
         <th>Titre</th>
-        <th>Description</th>
+        <!--<th>Description</th>-->
         <th>Temps de travail</th>
         <th>Date de l'annonce</th>
         <th>Date Limite</th>
@@ -34,11 +34,11 @@
             <?php echo $this->Html->link($annonce['Annonce']['titre'],
             array('controller' => 'annonces', 'action' => 'view', $annonce['Annonce']['id'])); ?>
         </td>
-        <td><?php echo $annonce['Annonce']['description']; ?></td>
+        <!--<td><?php //echo $annonce['Annonce']['description']; ?></td>-->
         <td><?php echo $annonce['Annonce']['temps_requis']; ?></td>
         <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_post'])); ?></td>
         <td><?php echo date("d / m / Y", strtotime($annonce['Annonce']['date_limite'])); ?></td>
-        <td>
+        <td style="text-align: right">
         
          <?php echo $this->Form->postLink(
                 'Signaler cette annonce',
