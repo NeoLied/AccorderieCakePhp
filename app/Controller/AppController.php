@@ -57,7 +57,7 @@ class AppController extends Controller {
         //$this->Auth->allow('index', 'view', 'display', 'valider_service', 'cloturer_annonce', 'desisterAnnonce');
 		$this->Auth->allow();
         if(AuthComponent::user('id') != null) {
-       		$query_to_execute = "select credit_temps from users where id = ".AuthComponent::user('id');
+       		$query_to_execute = "select * from users where id = ".AuthComponent::user('id');
         	$results = $this->User->query($query_to_execute);
         	$this->set('utilisateur', $results);
         }
