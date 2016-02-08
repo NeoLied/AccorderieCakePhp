@@ -2,7 +2,7 @@
 
 <?php
 
-echo $this->Form->create('Annonce');
+echo $this->Form->create('Annonce', array('class'=>'form-inline'));
 
 echo $this->Form->input('date_post',array('type' => 'hidden','value' => date('Y-m-d')));
 echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthComponent::user('id')));
