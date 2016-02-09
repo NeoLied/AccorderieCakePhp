@@ -20,20 +20,26 @@ class AnnoncesController extends AppController
 	{
 		$this->loadModel('User');
 		$annonce = $this->Annonce->findById($id);
+		$this->Annonce->id = $annonce['Annonce']['id'];
+
 		//debug($annonce);
-		$user = $this->Annonce->User->findById( $annonce['Annonce']['id_accepteur']);
+		$offreur = $this->Annonce->User->findById( $annonce['Annonce']['id_accepteur']);
 
 		$this->User->id = $annonce['Annonce']['id_accepteur'];
-		$tempsFinal = $annonce['Annonce']['temps_requis'] + $user['User']['credit_temps'];
+		/*$tempsFinal = $annonce['Annonce']['temps_requis'] + $offreur['User']['credit_temps'];
 
 		$this->operationTemps($annonce['Annonce']['user_id'], $tempsFinal, 'd');
-		$this->operationTemps($annonce['Annonce']['id_accepteur'], $tempsFinal, 'c');
+		$this->operationTemps($annonce['Annonce']['id_accepteur'], $tempsFinal, 'c');*/
 
-		$this->Annonce->id = $annonce['Annonce']['id'];
-		$this->Annonce->saveField('archive',1);
+		if($this->Annonce->saveField('archive',1)){
 
-		$this->Session->setFlash('La demande a bien été cloturer','default', array('class' => 'alert alert-success'));
-		$this->retourPageAccueil();
+			$this->Session->setFlash('La demande a bien été cloturer','default', array('class' => 'alert alert-success'));
+			$this->retourPageAccueil();
+		}else{
+			$this->Session->setFlash('Une erreur s\' est produite, la demande n\'a pas été cloturer','default', array('class' => 'alert alert-success'));
+		}
+
+
 
 
 	}

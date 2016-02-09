@@ -10,7 +10,6 @@
 		<th>Crédit Temps</th>
 	</tr>
 
-	<!-- Here is where we loop through our $posts array, printing out post info -->
 
 	<?php foreach ($users as $user): ?>
 		<tr>
@@ -43,7 +42,6 @@
 							array('action' => 'offre_bienvenue', $user['User']['id'])
 						);
 					}
-
 
 
 				}

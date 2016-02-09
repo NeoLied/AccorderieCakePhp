@@ -22,10 +22,19 @@
         <td><?php echo $user['User']['username']; ?></td>
 
        <td>
-           <?php echo $this->Html->link(
+
+           <?php
+           echo $this->Form->postLink(
+               'Supprimer',
+               array('action' => 'delete', $user['User']['id']),
+               array('confirm' => 'Etes-vous sûr ?'));
+           echo " / ";
+           echo $this->Html->link(
                    'Valider le compte',
                    array('action' => 'offre_bienvenue', $user['User']['id'])
-               ); ?>
+               );
+
+           ?>
        </td>
 
         <?php endforeach; ?>
