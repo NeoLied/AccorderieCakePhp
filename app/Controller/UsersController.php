@@ -59,7 +59,7 @@ class UsersController extends AppController {
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash('L\'utilisateur a été sauvegardé, le compte va être prochainement validé par un administrateur','default', array('class' => 'alert alert-success'));
 
-				$this->User->send($this->request->data['User'], 'navarro.linda66@gmail.com', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'notification_nouvel_utilisateur');
+				$this->User->send($this->request->data['User'], 'accorderie31@gmail.com', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'notification_nouvel_utilisateur');
 
                 return $this->redirect('/');
             } else {
@@ -215,7 +215,7 @@ $temps_demandes += $demande['Annonce']['temps_requis'];
         $this->User->id = $id_user;
 		$user = $this->User->findById($id_user);
 
-		$user['User']['credit_temps'] =($this->getOffreBienvenue($user)+ $this->getTempsOffre($user)) - $this->getTempsDemande($user);
+		$user['User']['credit_temps'] =($this->getOffreBienvenue($user)+ abs($this->getTempsOffre($user))) - abs($this->getTempsDemande($user));
 
 
 
