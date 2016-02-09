@@ -32,7 +32,7 @@ class AnnoncesController extends AppController
 		$this->Annonce->id = $annonce['Annonce']['id'];
 		$this->Annonce->saveField('archive',1);
 
-		$this->Session->setFlash(__('La demande a bien été cloturer'));
+		$this->Session->setFlash('La demande a bien été cloturer','default', array('class' => 'alert alert-success'));
 		$this->retourPageAccueil();
 
 
@@ -190,11 +190,11 @@ class AnnoncesController extends AppController
     	if ($this->request->is('post')) {
     		$this->Annonce->create();
     		if ($this->Annonce->save($this->request->data)) {
-				$this->Session->setFlash(__('L\'annonce a été ajoutée.'));
+				$this->Session->setFlash('L\'annonce a été ajoutée.','default', array('class' => 'alert alert-success'));
 
 				$this->retourPageAccueil();
     		}
-    		$this->Session->setFlash(__('Impossible d\'ajouter votre annonce.'));
+			$this->Session->setFlash('Impossible d\'ajouter votre annonce.','default', array('class' => 'alert alert-danger'));
 		}
     }
     
@@ -217,10 +217,10 @@ class AnnoncesController extends AppController
 		)));
     	if ($this->request->is( 'put')) {
 			if ($this->Annonce->save($this->request->data)) {
-				$this->Session->setFlash(__('Votre annonce a été éditée'));
+				$this->Session->setFlash('Votre annonce a été éditée','default', array('class' => 'alert alert-success'));
 				$this->retourPageAccueil();
 			}
-			$this->Session->setFlash(__('Impossible de modifier l\'annonce.'));
+			$this->Session->setFlash('Impossible de modifier l\'annonce.','default', array('class' => 'alert alert-warning'));
 		}
     	if (!$this->request->data) {
     		$this->request->data = $annonce;
@@ -235,7 +235,7 @@ class AnnoncesController extends AppController
     	}
     	if ($this->Annonce->delete($id))
     	{
-    		$this->Session->setFlash(__('L\'annonce avec id : %s a été supprimée.', h($id)));
+    		$this->Session->setFlash('L\'annonce avec id : %id a été supprimée.', h($id), array('class' => 'alert alert-warning'));
     		$this->retourPageAccueil();
     	}
     }
@@ -262,6 +262,7 @@ class AnnoncesController extends AppController
     	}
 
 		$infoP = $this->User->findById( $id_personneReservante);
+		$info = $this->User->findById($id_personneProprio);
 		$info = $this->User->findById($id_personneProprio);
 
 		$this->User->send($infoP, $info['User']['mail'], 'Un utilisateur vous à fait une demande de réservation sur La Marmite', 'reservation');
@@ -404,10 +405,10 @@ class AnnoncesController extends AppController
 		if($this->request->is('post')){
 			$type = $this->request->data;
 			if ($this->Type->save($this->request->data)) {
-				$this->Session->setFlash(__('Le type de service %s a bien été crée',$type['Type']['libelle']));
+				$this->Session->setFlash('Le type de service %s a bien été crée', $type['Type']['libelle'], array('class' => 'alert alert-success'));
 				$this->redirect(array("action" => "manage"));
 			}else{
-				$this->Session->setFlash(__('Impossible de créer le type de service'));
+				$this->Session->setFlash('Impossible de créer le type de service', 'default', array('class' => 'alert alert-danger'));
 			}
 		}
 	}
