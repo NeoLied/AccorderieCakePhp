@@ -5,32 +5,39 @@ App::uses('AppController', 'Controller');
 class AnnonceControllerTest extends ControllerTestCase 
 {
 	public $fixtures = array('app.annonce', 'app.user');
+
+	public function setUp() {
+		parent::setUp();
+		$Controller = new Controller();
+		$View = new View($Controller);
+
+	}
 	
-	public function test_annonces_add()
+	public function testAdd()
 	{
 		$result = $this->testAction('/annonces/add');
 		debug($result);
 	}
 	
-	public function test_annonces_annonce_signalee()
+/*	public function testAnnonceSignalee()
 	{
 		$result = $this->testAction('/annonces/annonceSignalee');
 		debug($result);
-	}
+	}*/
 	
-	public function test_annonces_demande()
+	public function testDemande()
 	{
 		$result = $this->testAction('/annonces/demande');
 		debug($result);
 	}
 	
-	public function test_annonces_edit()
+	public function testEdit()
 	{
 		$result = $this->testAction('/annonces/edit/1');
 		debug($result);
 	}
 	
-	public function test_annonces_edit_sans_id()
+	public function testAnnonces_edit_sans_id()
 	{
 		try {
 			$result = $this->testAction('/annonces/edit/10');
@@ -42,7 +49,7 @@ class AnnonceControllerTest extends ControllerTestCase
 		}	
 	}
 	
-	public function test_annonces_edit_null()
+	public function testAnnonces_edit_null()
 	{
 		try {
 			$result = $this->testAction('/annonces/edit');
@@ -54,31 +61,31 @@ class AnnonceControllerTest extends ControllerTestCase
 		}
 	}
 	
-	public function test_annonces_index() 
+	public function testAnnonces_index() 
 	{
 		$result = $this->testAction('/annonces/index');
 		debug($result);
 	}
 	
-	public function test_annonces_offre()
+	public function testAnnonces_offre()
 	{
 		$result = $this->testAction('/annonces/offre');
 		debug($result);
 	}
 	
-	public function test_annonces_validation()
+	public function testAnnonces_validation()
 	{
 		$result = $this->testAction('/annonces/validation');
 		debug($result);
 	}
 	
-	public function test_annonces_view()
+	public function testAnnonces_view()
 	{
 		$result = $this->testAction('/annonces/view/1');
 		debug($result);
 	}
 	
-	public function test_annonces_view_sans_id()
+	public function testAnnonces_view_sans_id()
 	{
 		try {
 			$result = $this->testAction('/annonces/view/10');
@@ -90,7 +97,7 @@ class AnnonceControllerTest extends ControllerTestCase
 		}
 	}
 	
-	public function test_annonces_view_null()
+	public function testAnnonces_view_null()
 	{
 		try {
 			$result = $this->testAction('/annonces/view');
@@ -102,19 +109,19 @@ class AnnonceControllerTest extends ControllerTestCase
 		}
 	}
 	
-	public function test_annonces_signaler()
+	public function testAnnonces_signaler()
 	{
 			$result = $this->testAction('/annonces/signaler/1');
 			debug($result);
 	}
 	
-	public function test_annonces_delete()
+	public function testAnnonces_delete()
 	{
 		$result = $this->testAction('/annonces/delete/1/demande');
 		debug($result);
 	}
 	
-	public function test_annonces_delete_methodeGet()
+	public function testAnnonces_delete_methodeGet()
 	{
 		try {
 			$result = $this->testAction('/annonces/delete/1/demande', array('method' => 'get'));
@@ -127,32 +134,32 @@ class AnnonceControllerTest extends ControllerTestCase
 		}
 	}
 	
-	public function test_annonces_delete_null()
+	public function testAnnonces_delete_null()
 	{
 		
 		$result = $this->testAction('/annonces/delete/null/demande');
 		debug($result);
 	}
 	
-	public function test_annonces_reservation_demande()
+	public function testAnnonces_reservation_demande()
 	{
 		$result = $this->testAction('/annonces/reservation/2/2/1/2/1');
 	 	debug($result);
 	}
 	
-	public function test_annonces_reservation_offre()
+	public function testAnnonces_reservation_offre()
 	{
 		$result = $this->testAction('/annonces/reservation/2/2/1/2/0');
 		debug($result);
 	}
 	 
-	 public function test_annonces_mes_annonces()
+	 public function testAnnonces_mes_annonces()
 	 {
 	 	$result = $this->testAction('/annonces/mes_annonces');
 	 	debug($result);
 	 }
 	 
-	 public function test_annonces_isAuthorized()
+	 public function testAnnonces_isAuthorized()
 	 {
 	 	$result = $this->testAction('/annonces/isAuthorized/1');
 	 	debug($result);

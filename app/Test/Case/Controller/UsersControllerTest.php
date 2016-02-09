@@ -4,31 +4,32 @@ App::uses('AppController', 'Controller');
 
 class UserControllerTest extends ControllerTestCase 
 {
-	public $fixtures = array('app.user','app.annonce');
+	public $fixtures = array('app.user','app.annonce','app.type');
 	
 	public function test_users_index() 
 	{
 		$result = $this->testAction('/users/index');
-		debug($result);
+		//debug($result);
 	}
 	
 	public function test_users_add()
 	{
 		$result = $this->testAction('/users/add');
-		debug($result);
+		//debug($result);
 	}
 	
 	public function test_users_edit()
 	{
-		$result = $this->testAction('/users/edit/1');
-		debug($result);
+		$id=11;
+		$result = $this->testAction('/users/edit/'.$id);
+		//debug($result);
 	}
 	
 	public function test_users_edit_sans_id()
 	{
 		try {
 			$result = $this->testAction('/users/edit/null');
-			debug($result);
+			//debug($result);
 		}
 		catch (NOTFOUNDEXCEPTION $e)
 		{
@@ -44,7 +45,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_users_view()
 	{
-		$result = $this->testAction('/users/view/1');
+		$result = $this->testAction('/users/view/11');
 		debug($result);
 	}
 	
@@ -84,23 +85,18 @@ class UserControllerTest extends ControllerTestCase
 		}
 	}
 	
-	public function test_users_credit_temps()
+	public function test_users_getCredit()
 	{
-		$result = $this->testAction('/users/credit_temps');
+		$result = $this->testAction('/users/getCredit');
 		debug($result);
 	}
 	
-	public function test_offre_bienvenue_oui()
+	public function test_offre_bienvenue()
 	{
 		$result = $this->testAction('/users/offre_bienvenue/1');
 		debug($result);
 	}
-	
-	public function test_offre_bienvenue_non()
-	{
-		$result = $this->testAction('/users/offre_bienvenue/2');
-		debug($result);
-	}
+
 	
 	public function test_login() {
 		$data = array(

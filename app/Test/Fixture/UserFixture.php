@@ -3,11 +3,15 @@
 class UserFixture extends CakeTestFixture
 {
 	public $useDbConfig = 'test';
-	
-	public $fields = array(
+
+public $import ='User';
+	/*public $fields = array(
 			'id' => array('type' => 'integer', 'key' => 'primary'),
-			'username' => array('type' => 'string', 'length' => '100'),
-			'password' => array('type' => 'string', 'length' => '100'),
+			'username' => array('type' => 'string', 'length' => '50'),
+			'password' => array('type' => 'string', 'length' => '255'),
+			'nom' => array('type' => 'string', 'length' => '100'),
+			'prenom' => array('type' => 'string', 'length' => '100'),
+			'date_naissance' => array('type' => 'string', 'length' => '100'),
 			'credit_temps' => array('type' => 'integer'),
 			'offre_de_bienvenue' => array('type' => 'string', 'length' => '3'),
 	);
@@ -15,5 +19,5 @@ class UserFixture extends CakeTestFixture
 	public $records = array(
 			array('id' => 1, 'username' => 'Tristan', 'password' => 'test', 'credit_temps' => 3,'offre_de_bienvenue' => 'oui'),
 			array('id' => 2, 'username' => 'aurelien', 'password' => 'aurelien', 'credit_temps' => 3,'offre_de_bienvenue' => 'non')
-	);
+	);*/
 }
