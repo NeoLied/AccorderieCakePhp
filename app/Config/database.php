@@ -83,10 +83,11 @@ class DATABASE_CONFIG {
 	public $test = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
-		'database' => 'accorderieTest',
+		'host' => 'varlamoff.ovh',
+		'port' => '3306',
+		'login' => 'root2',
+		'password' => 'projet',
+		'database' => 'accorderieTestCases',
 		'prefix' => '',
 		'encoding' => 'utf8',
 	);
