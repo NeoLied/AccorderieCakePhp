@@ -225,8 +225,10 @@ $temps_demandes += $demande['Annonce']['temps_requis'];
 			$this->Session->setFlash('Vous avez atteint le seuil maximal d\'heures.','default', array('class' => 'alert alert-warning'));
 		}
 
-		if($this->User->saveField('credit_temps',$user['User']['credit_temps'] )){
-			$this->Session->setFlash('Votre crédit a été actualisé.','default', array('class' => 'alert alert-success'));
+		if($this->User->saveField('credit_temps',$user['User']['credit_temps'])){
+			if($user['User']['credit_temps'] < $maxHeures){
+				$this->Session->setFlash('Votre crédit a été actualisé.','default', array('class' => 'alert alert-success'));
+			}
 			//$this->redirect($this->referer());
 
         }
