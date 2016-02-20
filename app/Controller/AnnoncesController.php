@@ -241,7 +241,7 @@ class AnnoncesController extends AppController
     	}
     	if ($this->Annonce->delete($id))
     	{
-    		$this->Session->setFlash('L\'annonce avec id : %id a été supprimée.', h($id), array('class' => 'alert alert-warning'));
+    		$this->Session->setFlash(__('L\'annonce avec id : %s a été supprimée.', h($id)), 'default', array('class' => 'alert alert-warning'));
     		$this->retourPageAccueil();
     	}
     }
@@ -411,7 +411,7 @@ class AnnoncesController extends AppController
 		if($this->request->is('post')){
 			$type = $this->request->data;
 			if ($this->Type->save($this->request->data)) {
-				$this->Session->setFlash('Le type de service %s a bien été crée', $type['Type']['libelle'], array('class' => 'alert alert-success'));
+				$this->Session->setFlash(__('Le type de service %s a bien été crée', $type['Type']['libelle']), 'default', array('class' => 'alert alert-success'));
 				$this->redirect(array("action" => "manage"));
 			}else{
 				$this->Session->setFlash('Impossible de créer le type de service', 'default', array('class' => 'alert alert-danger'));

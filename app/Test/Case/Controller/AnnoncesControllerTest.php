@@ -19,11 +19,11 @@ class AnnonceControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-/*	public function testAnnonceSignalee()
+	public function testAnnonceSignalee()
 	{
 		$result = $this->testAction('/annonces/annonceSignalee');
 		debug($result);
-	}*/
+	}
 	
 	public function testDemande()
 	{
@@ -73,11 +73,11 @@ class AnnonceControllerTest extends ControllerTestCase
 		debug($result);
 	}
 	
-	public function testAnnonces_validation()
+	/*public function testAnnonces_validation()
 	{
 		$result = $this->testAction('/annonces/validation');
 		debug($result);
-	}
+	}*/
 	
 	public function testAnnonces_view()
 	{
@@ -177,7 +177,7 @@ class AnnonceControllerTest extends ControllerTestCase
 	 	debug($result);
 	 }
 	 
-	 public function test_mon_historique()
+	 public function test_annonce_mon_historique()
 	 {
 	 	$result = $this->testAction('/annonces/mon_historique');
 	 	debug($result);

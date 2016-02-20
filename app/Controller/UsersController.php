@@ -25,7 +25,8 @@ class UsersController extends AppController {
 
     public function index() {
         $this->User->recursive = 0;
-        $this->set('users', $this->paginate());
+        //$this->set('users', $this->paginate());
+		$this->set('users', $this->User->find('all'));
     }
 
     public function view($id = null) {
@@ -212,12 +213,17 @@ $temps_demandes += $demande['Annonce']['temps_requis'];
 
 	public function getCredit($id_user) {
 
+		$maxHeures = 50;
+
         $this->User->id = $id_user;
 		$user = $this->User->findById($id_user);
 
 		$user['User']['credit_temps'] =($this->getOffreBienvenue($user)+ abs($this->getTempsOffre($user))) - abs($this->getTempsDemande($user));
 
-
+		if($user['User']['credit_temps'] > $maxHeures){
+			$user['User']['credit_temps'] = $maxHeures;
+			$this->Session->setFlash('Vous avez atteint le seuil maximal d\'heures.','default', array('class' => 'alert alert-warning'));
+		}
 
 		if($this->User->saveField('credit_temps',$user['User']['credit_temps'] )){
 			$this->Session->setFlash('Votre crédit a été actualisé.','default', array('class' => 'alert alert-success'));
