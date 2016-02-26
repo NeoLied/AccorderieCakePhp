@@ -211,36 +211,52 @@ $temps_demandes += $demande['Annonce']['temps_requis'];
 	}
 
 
-	public function getCredit($id_user) {
+	public function getCredit($id_user=null, $retour=false) {
+        $this->loadModel('Parametres');
+        $limit = $this->Parametres->find('first');
 
-		$maxHeures = 50;
+        $maxHeures = $limit['Parametres']['limiteTemp'];
 
-        $this->User->id = $id_user;
-		$user = $this->User->findById($id_user);
+        if($id_user != null){
+            $this->User->id = $id_user;
+            $user = $this->User->findById($id_user);
 
-		$user['User']['credit_temps'] =($this->getOffreBienvenue($user)+ abs($this->getTempsOffre($user))) - abs($this->getTempsDemande($user));
+            $user['User']['credit_temps'] =($this->getOffreBienvenue($user)+ abs($this->getTempsOffre($user))) - abs($this->getTempsDemande($user));
 
-		if($user['User']['credit_temps'] > $maxHeures){
-			$user['User']['credit_temps'] = $maxHeures;
-			$this->Session->setFlash('Vous avez atteint le seuil maximal d\'heures.','default', array('class' => 'alert alert-warning'));
-		}
+            if($user['User']['credit_temps'] > $maxHeures){
+                $user['User']['credit_temps'] = $maxHeures;
+				if($retour == false){
+					$this->Session->setFlash('Vous avez atteint le seuil maximal d\'heures.','default', array('class' => 'alert alert-warning'));
+				}
+            }
 
-		if($this->User->saveField('credit_temps',$user['User']['credit_temps'])){
-			if($user['User']['credit_temps'] < $maxHeures){
-				$this->Session->setFlash('Votre crédit a été actualisé.','default', array('class' => 'alert alert-success'));
-			}
-			//$this->redirect($this->referer());
+            if($this->User->saveField('credit_temps',$user['User']['credit_temps'])){
+                if($user['User']['credit_temps'] < $maxHeures){
+					if($retour == false) {
+						$this->Session->setFlash('Votre crédit a été actualisé.','default', array('class' => 'alert alert-success'));
+					}
+                }
 
-        }
+            }
 // Variable pour debuger GetCredit en utilisant sa vue
-		$this->set('offre_bienvenue',$this->getOffreBienvenue($user));
-		$this->set('temps_offre',$this->getTempsOffre($user));
-		$this->set('temps_demande',$this->getTempsDemande($user));
-		$this->set('temps_total',$user['User']['credit_temps']);
+            $this->set('offre_bienvenue',$this->getOffreBienvenue($user));
+            $this->set('temps_offre',$this->getTempsOffre($user));
+            $this->set('temps_demande',$this->getTempsDemande($user));
+            $this->set('temps_total',$user['User']['credit_temps']);
+            $this->set('limit',$maxHeures);
+
+			if($retour == true){
+				return $user['User']['credit_temps'];
+			}
 
 
-
-
+            //$this->redirect('/users/getCredit/'. $id_user);
+            //$this->redirect($this->referer());
+        }else{
+			if($retour == false){
+				$this->redirect('/');
+			}
+        }
 	}
 	
 	public function isAuthorized($user) {
@@ -334,5 +350,10 @@ $temps_demandes += $demande['Annonce']['temps_requis'];
         }
 
     }
+
+	public function update($id){
+		$temps = $this->getCredit($id, true);
+		$this->set('utilisateur', $temps);
+	}
 }
 ?>

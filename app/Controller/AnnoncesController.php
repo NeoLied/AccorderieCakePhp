@@ -410,12 +410,27 @@ class AnnoncesController extends AppController
 
 		if($this->request->is('post')){
 			$type = $this->request->data;
-			if ($this->Type->save($this->request->data)) {
-				$this->Session->setFlash(__('Le type de service %s a bien été crée', $type['Type']['libelle']), 'default', array('class' => 'alert alert-success'));
-				$this->redirect(array("action" => "manage"));
+
+			if(!isset($this->request->data['Parametres']['limiteTemps'])){
+
+				if ($this->Type->save($this->request->data)) {
+					$this->Session->setFlash(__('Le type de service %s a bien été crée', $type['Type']['libelle']), 'default', array('class' => 'alert alert-success'));
+					$this->redirect(array("action" => "manage"));
+				}else{
+					$this->Session->setFlash('Impossible de créer le type de service', 'default', array('class' => 'alert alert-danger'));
+				}
 			}else{
-				$this->Session->setFlash('Impossible de créer le type de service', 'default', array('class' => 'alert alert-danger'));
+				$this->loadModel('Parametres');
+				$this->set('parametres',$this->Parametres->find('first'));
+				$this->Parametres->id = 1;
+
+				if($this->Parametres->saveField('limiteTemp', $this->request->data['Parametres']['limiteTemps'])){
+					$this->Session->setFlash('Limite crédit temps modifié.','default', array('class' => 'alert alert-success'));
+				}else{
+					$this->Session->setFlash('Echec de l\'enregistrement.','default', array('class' => 'alert alert-danger'));
+				}
 			}
+
 		}
 	}
 	public function isUrgente($annonce){

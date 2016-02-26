@@ -1,12 +1,23 @@
-<p>
-    Votre offre de bienvenue : <?php
-    echo $offre_bienvenue;
-    ?><br/>
-    Temps que vous avez offert : <?php
-    echo $temps_offre;
-    ?><br/>
-    Temps que vous avez demandé:<?php echo $temps_demande;
-    ?> <br/>
+<table class="table table-hover" style="width: auto; margin: 0 auto;">
+    <tr>
+        <td>Votre offre de bienvenue : </td><td style="font-weight: bold;"><?php
+            echo $offre_bienvenue;
+            ?></td>
+    </tr>
+    <tr>
+        <td>Temps que vous avez offert : </td><td style="font-weight: bold;"><?php
+            echo $temps_offre;
+            ?></td>
+    </tr>
+    <tr>
+        <td>Temps que vous avez demandé: </td><td style="font-weight: bold;"><?php echo $temps_demande;
+            ?></td>
+    </tr>
+    <tr class="info" style="font-weight: bold; font-size: larger;">
+        <td>Votre crédit : </td><td><?php echo $temps_total; ?></td>
+    </tr>
 
-    Votre crédit : <?php echo $temps_total; ?>
-</p>
+    <tr class="warning" style="font-weight: bold;">
+        <td>Crédit temps maximum : </td><td><?php echo $limit; ?></td>
+    </tr>
+</table>
