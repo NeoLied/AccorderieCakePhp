@@ -15,8 +15,23 @@ class AnnoncesController extends AppController
 		$this->Session->setFlash('Vous avez bien été désisté de cette annonce','default', array('class' => 'alert alert-warning'));
 		return $this->redirect("/");
 	}
+    public function refuserOffre($idAnnonce){
+        $this->loadModel('User');
+        $this->Annonce->id = $idAnnonce;
+        $annonce =$this->Annonce->findById($idAnnonce);
+        $offreur = $this->User->findById($annonce['Annonce']['id_accepteur']);
+        $this->Annonce->saveField('id_accepteur', '0');
 
-	public function cloturer_annonce($id)
+        $this->User->send($annonce, $offreur['User']['mail'], 'Votre offre de service a été refusé', 'refuserOffre');
+
+        $this->Session->setFlash('La proposition de service a été refusée','default', array('class' => 'alert alert-warning'));
+
+
+        return $this->redirect("/");
+    }
+
+
+    public function cloturer_annonce($id)
 	{
 		$this->loadModel('User');
 		$annonce = $this->Annonce->findById($id);
