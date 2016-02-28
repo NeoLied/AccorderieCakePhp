@@ -43,7 +43,7 @@ class AnnoncesController extends AppController
             $offreur = $this->Annonce->User->findById( $annonce['Annonce']['id_accepteur']);
 
             $this->User->id = $annonce['Annonce']['id_accepteur'];
-            if($this->Annonce->save($this->request->data)){
+            if($this->Annonce->saveAll($this->request->data)){
 
                 $this->Session->setFlash('La demande a bien été cloturer','default', array('class' => 'alert alert-success'));
                 $this->retourPageAccueil();

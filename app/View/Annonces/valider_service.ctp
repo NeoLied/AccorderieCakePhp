@@ -20,10 +20,16 @@
         'type' =>'hidden',
         'value' => 1
     ));
+
+    echo $this->Form->input('offreur_id', array(
+        'type' =>'hidden',
+        'value' => $offreur['User']['id']
+    ));
+
     ?>
     <?php
     echo $this->Form->input('note', array(
-        'options' => array(1, 2, 3, 4, 5,6,7,8,9,10),
+        'options' => array(0,1, 2, 3, 4, 5,6,7,8,9,10),
         'class' => array("form-control col-sm-2"),
         'empty' => 'Choisissez une note entre 1 et 10',
         'label' =>''

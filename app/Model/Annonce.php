@@ -4,7 +4,11 @@ class Annonce extends AppModel
 
 {
 	public $name = 'Annonce';
-public  $hasOne = 'Evaluation';
+public  $hasOne = array('Evaluation'=>
+    array(
+        'className' => 'Evaluation',
+        'foreignKey' =>'annonce_id'
+    ));
 	public $belongsTo = array(
 			'User' => array(
 					'className' => 'User',

@@ -64,15 +64,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+
         <?php
             foreach($evaluations as $evaluation){
+                ?>
+                <tr>
 
+                    <?php
                 echo "<td>".$evaluation['Annonce']['titre']."</td>";
-                echo "<td>".$evaluation['Evaluation']['note']."</td>";
+                echo "<td>".$evaluation['Evaluation']['note']."</td></tr>";
+
+
             }
+
         ?>
-        </tr>
+
         </tbody>
     </table>
 </div>
