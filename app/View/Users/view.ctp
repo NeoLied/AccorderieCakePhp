@@ -54,4 +54,25 @@
         <?php } ?>
         </tbody>
     </table>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+
+            <th>Annonce réalisée</th>
+            <th> Note sur 10</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <?php
+            foreach($evaluations as $evaluation){
+
+                echo "<td>".$evaluation['Annonce']['titre']."</td>";
+                echo "<td>".$evaluation['Evaluation']['note']."</td>";
+            }
+        ?>
+        </tr>
+        </tbody>
+    </table>
 </div>

@@ -31,21 +31,27 @@ class AnnoncesController extends AppController
     }
 
 
-    public function cloturer_annonce($id)
+    public function cloturer_annonce()
 	{
 		$this->loadModel('User');
-		$annonce = $this->Annonce->findById($id);
-		$this->Annonce->id = $annonce['Annonce']['id'];
 
-		//debug($annonce);
-		$offreur = $this->Annonce->User->findById( $annonce['Annonce']['id_accepteur']);
+        if($this->request->is("post")){
+            $annonce = $this->Annonce->findById($this->request->data['Annonce']['id']);
+            $this->Annonce->id = $annonce['Annonce']['id'];
 
-		$this->User->id = $annonce['Annonce']['id_accepteur'];
-		/*$tempsFinal = $annonce['Annonce']['temps_requis'] + $offreur['User']['credit_temps'];
+            //debug($annonce);
+            $offreur = $this->Annonce->User->findById( $annonce['Annonce']['id_accepteur']);
 
-		$this->operationTemps($annonce['Annonce']['user_id'], $tempsFinal, 'd');
-		$this->operationTemps($annonce['Annonce']['id_accepteur'], $tempsFinal, 'c');*/
+            $this->User->id = $annonce['Annonce']['id_accepteur'];
+            if($this->Annonce->save($this->request->data)){
 
+                $this->Session->setFlash('La demande a bien été cloturer','default', array('class' => 'alert alert-success'));
+                $this->retourPageAccueil();
+            }else{
+                $this->Session->setFlash('Une erreur s\' est produite, la demande n\'a pas été cloturer','default', array('class' => 'alert alert-success'));
+            }
+        }
+/*
 		if($this->Annonce->saveField('archive',1)){
 
 			$this->Session->setFlash('La demande a bien été cloturer','default', array('class' => 'alert alert-success'));
@@ -53,7 +59,7 @@ class AnnoncesController extends AppController
 		}else{
 			$this->Session->setFlash('Une erreur s\' est produite, la demande n\'a pas été cloturer','default', array('class' => 'alert alert-success'));
 		}
-
+*/
 
 
 
@@ -144,7 +150,8 @@ class AnnoncesController extends AppController
 					'conditions' => array('Annonce.demande' => 0,
 						'Annonce.annonceValide' => 'oui',
 						'Annonce.archive' => false,
-						'Annonce.type_id' => $this->request->data['Annonce']['type_id'])
+						'Annonce.type_id' => $this->request->data['Annonce']['type_id']),
+                    'order' =>  'Annonce.date_post DESC'
 
 				));
 			} else {
@@ -153,7 +160,9 @@ class AnnoncesController extends AppController
 					'conditions' => array('Annonce.demande' => 0,
 						'Annonce.annonceValide' => 'oui',
 						'Annonce.archive' => false
-					)));
+					),
+                    'order' =>  'Annonce.date_post DESC'
+                    ));
 			}
 
 			list($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales) = $this->setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
@@ -164,14 +173,19 @@ class AnnoncesController extends AppController
 				'conditions' => array('Annonce.demande' => 0,
 					'Annonce.annonceValide' => 'oui',
 					'Annonce.archive' => false
-				)));
+				),
+                'order' => 'Annonce.date_post DESC'
+            ));
 
 			list($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales) = $this->setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
 		}
 
     	$this->set('annonces', $annonces);
+
     	$this->set('annoncesUrgentes', $annoncesUrgentes);
+
     	$this->set('annoncesExpires', $annoncesExpires);
+
     	$this->set('annoncesNormales', $annoncesNormales);
 
 		$this->set('types', $this->Type->find('list',array(

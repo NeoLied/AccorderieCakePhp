@@ -30,11 +30,17 @@ class UsersController extends AppController {
     }
 
     public function view($id = null) {
+        $this->loadModel('Evaluation');
+
         $this->User->id = $id;
+        $evaluations = $this->Evaluation->find('all',array(
+          'conditions' => array('offreur_id' => $id)
+        ));
         if (!$this->User->exists()) {
             throw new NotFoundException(__('Utilisateur invalide'));
         }
         $this->set('user', $this->User->read(null, $id));
+        $this->set('evaluations', $evaluations);
     }
 
     public function add() {
