@@ -1,10 +1,18 @@
-<div id="home" style="width:100%; text-align:center;" class="container-fluid">
+<?php
+    if(isset($_POST['last']) || isset($_POST['favType'])){
+        /*echo "<script src='updatePrefs(".AuthComponent::user('id').", \"".$this->html->url("/", true)."\", ".$_POST['last'].", ".$_POST['favType'].")'></script>";*/
+    }
+?>
+
+<div id="home" style="width:100%; text-align:center;" class="container-fluid"
+     xmlns:right="http://www.w3.org/1999/xhtml">
 
     <?php if(AuthComponent::user('id')){ ?>
-    <div id="dynamic" style="width:100%; text-align:justify;">
+    <div style="width:100%; text-align:justify;">
         <h1>Bienvenue <?php echo AuthComponent::user('username'); ?></h1>
 
-    </div>
+        <div id="dynamic" style="margin-bottom: 1%;"></div>
+
     <?php }else{ ?>
 
         <div id="static" style="width:100%; text-align:justify;">

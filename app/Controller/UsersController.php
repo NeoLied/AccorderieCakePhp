@@ -351,9 +351,84 @@ $temps_demandes += $demande['Annonce']['temps_requis'];
 
     }
 
-	public function update($id){
-		$temps = $this->getCredit($id, true);
-		$this->set('utilisateur', $temps);
+	public function update($id=null){
+		$this->set('utilisateur', null);
+
+		if($id != null){
+			$temps = $this->getCredit($id, true);
+			$this->set('utilisateur', $temps);
+		}
 	}
+
+	public function dynamic($id=null){
+		$this->set('user', null);
+
+		if($id != null){
+            $this->set('prefs', $this->User->query(
+                "SELECT *
+                FROM preferences p, types t, users u
+                WHERE p.favoriteType=t.id
+                AND p.user_id=u.id"
+            ));
+
+            $prefs = $this->User->query(
+                "SELECT *
+                FROM preferences p, types t, users u
+                WHERE p.favoriteType=t.id
+                AND p.user_id=u.id"
+            );
+
+			$this->set('user', $id);
+
+            $this->loadModel('Annonce');
+            /*$this->set('annonces', $this->Annonce->find('all',array(
+                'conditions' => array(
+                    'annonceValide' => "oui",
+                    'archive' => "0",
+                    'id_accepteur' => 0,
+                    'order' => array('date_post DESC'),
+                    'limit' => "5")));*/
+
+            $this->set('annonces', $this->Annonce->query(
+                "SELECT *
+                FROM annonces a, types t, users u
+                WHERE a.type_id=t.id
+                AND a.user_id=u.id
+                AND annonceValide = \"oui\"
+                AND archive = '0'
+                AND id_accepteur IN ('0', \"NULL\")
+                ORDER BY date_post DESC
+                LIMIT 5"
+            ));
+
+            $this->set('annoncesType', $this->Annonce->query(
+                "SELECT *
+                FROM annonces a, types t, users u
+                WHERE a.type_id=t.id
+                AND a.user_id=u.id
+                AND annonceValide = \"oui\"
+                AND archive = '0'
+                AND type_id = ".$prefs[0]['p']['favoriteType']."
+                AND id_accepteur IN ('0', \"NULL\")
+                ORDER BY date_post DESC
+                LIMIT 5"
+            ));
+
+            $this->loadModel('Type');
+            $this->set('types', $this->Type->find('all'));
+		}
+	}
+
+    public function prefs($id=NULL, $params1=NULL, $params2=NULL){
+
+        if($id != NULL && $params1 != NULL && $params2 != NULL ){
+            $this->User->query(
+                "UPDATE preferences
+            SET lastPost = ".$params1.", favoriteType = ".$params2."
+            WHERE user_id = ".$id
+            );
+        }
+        //$this->redirect($this->Html->url("/", true));
+    }
 }
 ?>

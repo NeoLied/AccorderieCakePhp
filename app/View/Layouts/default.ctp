@@ -28,15 +28,20 @@
 </head>
 
 <?php
-
-	$a = AuthComponent::user('id');
+	$a = '""';
+	if(AuthComponent::user('id') != null){
+		$a = AuthComponent::user('id');
+	}
 	$b = $this->Html->url("/", true);
-	//$c = $this->Html->image("loading.gif", array("alt" => "Chargement ...", "width" => "48px", "height" => "48px"));
 	$c = 'loading.gif';
+	$c2 = 'loading2.gif';
 
+	function params($a, $b, $c){
+		return $a.", \"".$b."\", \"".$c."\"";
+	}
 ?>
 
-<body onload='update(<?php echo $a.", \"".$b."\", \"".$c."\""; ?>);'>
+<body onload='update(<?php echo params($a, $b, $c); ?>); homePage(<?php echo $a.", \"".$b."\", \"".$c2."\""; ?>);'>
 
 <div id="container">
 
@@ -128,7 +133,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li class="alert-danger"><?php echo $this->Html->link('Déconnexion','/users/logout'); ?></li>
 					<li class="alert-warning"><?php  echo $this->Html->link('Actualiser votre crédit',array('controller'=>'users','action' => 'getCredit', AuthComponent::user('id'))); ?></li>
-					<li class="alert-success"><a id="time"><?php //echo $utilisateur[0]['users']['credit_temps']." Heures"; ?></a></li></ul> <?php
+					<li class="alert-success"><a id="time"><?php //echo "<b>".$utilisateur[0]['users']['credit_temps']."</b> Heures"; ?></a></li></ul> <?php
 				}
 				?>
 				</ul>
