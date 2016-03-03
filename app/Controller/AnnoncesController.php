@@ -3,6 +3,14 @@ class AnnoncesController extends AppController
 {
 
 	public $helpers = array('Html', 'Form');
+	public $components = array('Paginator');
+
+	public $paginate = array(
+		'limit' => 10,
+		'order' => array(
+			'Annonce.date_post' => 'desc'
+		)
+	);
 
 	/*
      * Fonctions refactorées

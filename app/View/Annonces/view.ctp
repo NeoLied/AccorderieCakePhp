@@ -57,31 +57,37 @@
         </tr>
 		<tr class="info">
             <?php
-            // Affichage du bouton supprimer pour les administrateurs et pour l'auteur de l'annonce
-            if($annonce['User']['id'] == AuthComponent::user('id') || AuthComponent::user('role') == 'admin') {
-                echo "<div class='btn btn-default'>".$this->Form->postLink('Supprimer cette annonce',array('class'=>'btn btn-default', 'action' => 'delete', $annonce['Annonce']['id']))."</div>";
-            }
 
-            if($annonce['Annonce']['id_accepteur'] == 0) {
-                if(AuthComponent::user('role') == "admin" && ($annonce['Annonce']['annonceValide'] == "non")){
-                        echo "<div class='btn btn-default'>".$this->Form->postLink('Valider cette annonce',array('class'=>'btn btn-default', 'action' => 'valider_service', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],$demande))."</div>";
+            if(!$annonce['Annonce']['archive']){
+                // Affichage du bouton supprimer pour les administrateurs et pour l'auteur de l'annonce
+                if($annonce['User']['id'] == AuthComponent::user('id') || AuthComponent::user('role') == 'admin') {
+                    echo "<div class='btn btn-default'>".$this->Form->postLink('Supprimer cette annonce',array('class'=>'btn btn-default', 'action' => 'delete', $annonce['Annonce']['id']))."</div>";
                 }
-                if(AuthComponent::user('id') != $annonce['Annonce']['user_id'])
-                echo "<div class='btn btn-default'>".$this->Form->postLink('Réserver cette annonce',array('class'=>'btn btn-default', 'action' => 'reservation', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],
-                            $annonce['Annonce']['temps_requis'],$demande))."</div>";
-            }else {
-              if($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')){
 
-                echo "<div class='btn btn-default'>".$this->Form->postLink('Se désister de cette annonce',
-                        array( 'action' => 'desisterAnnonce', $annonce['Annonce']['id']))."</div>";
-                echo '<div class="alert alert-info">Vous avez déjà réservé cette annonce</div> ';
-              }else if($annonce['Annonce']['user_id'] == AuthComponent::user('id')){
-                    echo "<div class='btn btn-default'>".$this->Form->postLink('Refuser offre de service',
-                            array( 'action' => 'refuserOffre', $annonce['Annonce']['id']))."</div>";
-                } else{
-                  echo '<div class="alert alert-warning">Cette annonce a déjà une réservation</div> ';
-              }
+                if($annonce['Annonce']['id_accepteur'] == 0) {
+                    if(AuthComponent::user('role') == "admin" && ($annonce['Annonce']['annonceValide'] == "non")){
+                        echo "<div class='btn btn-default'>".$this->Form->postLink('Valider cette annonce',array('class'=>'btn btn-default', 'action' => 'valider_service', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],$demande))."</div>";
+                    }
+                    if(AuthComponent::user('id') != $annonce['Annonce']['user_id'])
+                        echo "<div class='btn btn-default'>".$this->Form->postLink('Réserver cette annonce',array('class'=>'btn btn-default', 'action' => 'reservation', $annonce['Annonce']['id'],AuthComponent::user('id'),$annonce['Annonce']['user_id'],
+                                $annonce['Annonce']['temps_requis'],$demande))."</div>";
+                }else {
+                    if($annonce['Annonce']['id_accepteur'] == AuthComponent::user('id')){
+
+                        echo "<div class='btn btn-default'>".$this->Form->postLink('Se désister de cette annonce',
+                                array( 'action' => 'desisterAnnonce', $annonce['Annonce']['id']))."</div>";
+                        echo '<div class="alert alert-info">Vous avez déjà réservé cette annonce</div> ';
+                    }else if($annonce['Annonce']['user_id'] == AuthComponent::user('id')){
+                        echo "<div class='btn btn-default'>".$this->Form->postLink('Refuser offre de service',
+                                array( 'action' => 'refuserOffre', $annonce['Annonce']['id']))."</div>";
+                    } else{
+                        echo '<div class="alert alert-warning">Cette annonce a déjà une réservation</div> ';
+                    }
+                }
+            }else{
+                echo '<div class="alert alert-warning">Cette annonce est clôturée.</div> ';
             }
+
             ?>
 		</tr>
 		</tbody>
