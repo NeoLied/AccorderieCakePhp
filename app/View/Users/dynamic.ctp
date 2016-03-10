@@ -1,17 +1,39 @@
 <?php
-
 $check = "";
 $favType = NULL;
 
-if(isset($prefs)){
-    if($prefs[0]['p']['lastPost'] == true){
+if(!empty($prefs)){
+    if($prefs[0]['u']['lastPost'] == true){
         $check = "checked";
     }
 
-    $favType = $prefs[0]['p']['favoriteType'];
+    $favType = $prefs[0]['u']['favoriteType'];
+}else{
+    $prefs = NULL;
 }
+?>
 
-if($prefs[0]['p']['lastPost'] == 1) {
+<div class="params">
+    <form method="post" action="<?php echo $this->Html->url("/", true) ?>users/prefs">
+        <b>Mes préférences : </b><br/>
+        <ul class="list-group">
+            <li class="list-group-item">Voir les dernières annonces ?<br/><input type="checkbox" name="last" <?php echo $check; ?>></php></li>
+            <li class="list-group-item">Type d'annonce préféré <select name="favType"> <option value="NULL">Aucun</option>
+                    <?php for($o=1; $o < count($types); $o++){
+                        if($favType == $types[$o]['Type']['id']){
+                            echo "<option value='".$types[$o]['Type']['id']."' selected>".$types[$o]['Type']['libelle']."</option>";
+                        }else{
+                            echo "<option value='".$types[$o]['Type']['id']."'>".$types[$o]['Type']['libelle']."</option>";
+                        }
+                    }?>
+                </select></li>
+            <li class="list-group-item"><input type="submit" name="save" value="Enregistrer" class="form-control btn btn-success"></li>
+        </ul>
+    </form>
+</div>
+
+<?php
+if($prefs[0]['u']['lastPost'] == 1) {
 
     echo "<br/><u><h4>Les dernières annonces : </h4></u>";
 
@@ -57,7 +79,9 @@ if($prefs[0]['p']['lastPost'] == 1) {
     }
 }
 
-echo "<br/><u><h4>Les dernières annonces de ".$prefs[0]['t']['libelle']." : </h4></u>";
+if($prefs[0]['u']['favoriteType'] != 0){
+
+echo "<br/><u><h4>Les dernières annonces de ".$prefs[0]['u']['libelle']." : </h4></u>";
 
 if (!empty($annoncesType)) {
 
@@ -94,30 +118,13 @@ if (!empty($annoncesType)) {
     }
 
     echo "</table>";
-
-
-} else {
-    echo "<b>Aucunes annonces disponibles</b>";
 }
 
-?>
-<div class="params">
-    <form method="post" action="<?php echo $this->Html->url("/", true) ?>users/prefs">
-            <b>Mes préférences : </b><br/>
-            <ul class="list-group">
-                <li class="list-group-item">Voir les dernières annonces ?<br/><input type="checkbox" name="last" <?php echo $check; ?>></php></li>
-                <li class="list-group-item">Type d'annonce préféré <select name="favType"> <option value="NULL">Aucun</option>
-                        <?php for($o=0; $o < count($types); $o++){
-                            if($favType == $types[$o]['Type']['id']){
-                                echo "<option value='".$types[$o]['Type']['id']."' selected>".$types[$o]['Type']['libelle']."</option>";
-                            }else{
-                                echo "<option value='".$types[$o]['Type']['id']."'>".$types[$o]['Type']['libelle']."</option>";
-                            }
-                        }?>
-                    </select></li>
-                <li class="list-group-item"><input type="submit" name="save" value="Enregistrer" class="form-control btn btn-success"></li>
-            </ul>
-    </form>
-        </div>
-<?php
+} else {
+    if($prefs == NULL) {
+        echo "<b>Vous n'avez pas enregistrer de préférences !</b>";
+    }else{
+        echo "<b>Aucunes annonces disponibles</b>";
+    }
+}
 exit();

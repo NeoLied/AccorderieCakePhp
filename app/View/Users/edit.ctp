@@ -110,6 +110,20 @@ echo $this->Form->input('id', array('type' => 'hidden'));
 				?></td>
 		</tr>
 		<?php } ?>
+		<tr>
+			<td><?php
+				$strings = array();
+				for($i=1; $i < count($types); $i++){
+					array_push($strings, $types[$i]['Type']['libelle']);
+				}
+				echo $this->Form->input('favoriteType',
+					array('options' =>
+						array($strings),
+						'empty' => 'Aucun',
+						'label' => 'Type de service favoris</td><td>',
+						'class' => 'form-control'));?>
+			</td>
+		</tr>
 		<tr class="info">
 			<td colspan="99"><?php echo $this->Form->end(array('label'=>'Modifier', 'class'=>'btn btn-primary'));?></td>
 		</tr>

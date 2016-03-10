@@ -1,4 +1,3 @@
-
 /** Style du module Gestion de Types de Services **/
 #gestion_annonce{
     width: 400px;
@@ -26,12 +25,38 @@
     background-image: url(../img/ui-icons_222222_256x240.png);
 }
 
-.params{
-    float: right;
-    position: absolute;
-    width: 300px;
-    height: 500px;
-    right: 1%;
-    top : 40%;
-    text-align: center;
+noscript {
+    color: red;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.noscriptHome {
+    font-size: 200%;
+}
+
+@media (max-width: 1000px) {
+    .params{
+        /*float: right;*/
+        /*position: absolute;
+        */width: 300px;/*
+        height: 500px;
+        right: 1px;
+        left: 500px;
+        top: 30%;*/
+        text-align: center;
+    }
+}
+
+@media (min-width: 1001px) {
+    .params{
+        float: right;
+        /*position: absolute;
+        */width: 300px;/*
+        height: 500px;
+        right: 1px;
+        left: 500px;
+        top: 30%;*/
+        text-align: center;
+    }
 }
