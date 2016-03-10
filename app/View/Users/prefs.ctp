@@ -1,6 +1,5 @@
 <?php
-Configure::write('debug', 2);
-
+//Configure::write('debug', 2);
 if(isset($_POST['last']) || isset($_POST['favType'])){
     if(isset($_POST['last'])){
         if($_POST['last'] == "on"){
@@ -16,3 +15,4 @@ if(isset($_POST['last']) || isset($_POST['favType'])){
     echo $this->Html->image('loading2.gif', array('alt' => 'Chargement'));
     echo '<meta http-equiv="refresh" content="0; url='.$this->Html->url("/", true).'" />';
 }
+?>

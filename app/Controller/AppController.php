@@ -36,13 +36,14 @@ class AppController extends Controller {
 	public $components = array(
         'Session',
         'Auth' => array(
-            'loginRedirect' => array('controller' => 'users', 'action' => 'login'),
-            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home'),
-        	'authorize' => array('Controller')
+			'loginRedirect' => array('controller' => 'users', 'action' => 'login'),
+            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display','home'),
+        	'authorize' => array('Controller'),
+			'unauthorizedRedirect' => array('controller' => 'users', 'action' => 'notAuthorized')
         ),
 			'DebugKit.Toolbar'
     );
-	
+
 	public function isAuthorized($user) {
 		// Admin peut accéder à toute action
 		if (isset($user['role']) && $user['role'] === 'admin') {
@@ -56,6 +57,11 @@ class AppController extends Controller {
 		$this->Auth->authenticate = array('Form' => array('scope' => array('User.offre_de_bienvenue' => "oui")));
         //$this->Auth->allow('index', 'view', 'display', 'valider_service', 'cloturer_annonce', 'desisterAnnonce');
 		$this->Auth->allow();
+
+		if(AuthComponent::user('role')!='admin'){
+			//Bloquer ces actions pour les non admins
+			$this->Auth->deny('manage','utilisateur_pas_valide','annonce_pas_valide','offre_bienvenue','delete');
+		}
         if(AuthComponent::user('id') != null) {
        		$query_to_execute = "select * from users where id = ".AuthComponent::user('id');
         	$results = $this->User->query($query_to_execute);

@@ -16,12 +16,12 @@ class UsersController extends AppController {
 	public function afterFilter() {
 	    parent::afterFilter();
 	    // Permet aux utilisateurs de s'enregistrer, de se déconnecter et de reset le mot de passe
-
-
-
 	}
 
-
+	public function notAuthorized(){
+		$this->Session->setFlash("Vous n'êtes pas autorisé à accéder à cette page !");
+		$this->redirect('/');
+	}
 
     public function index() {
         $this->User->recursive = 0;
@@ -158,7 +158,10 @@ class UsersController extends AppController {
 					$this->Session->setFlash("Nom d'utilisateur ou mot de passe invalide, merci de réessayez",'default', array('class' => 'alert alert-danger'));
 				}
 	        }
-	    }
+	    }else{
+			if($this->Auth->login())
+			return $this->redirect(('/'));
+		}
 	}
 	
 	public function logout() {
@@ -267,7 +270,10 @@ $temps_demandes += $demande['Annonce']['temps_requis'];
 	
 	public function isAuthorized($user) {
 		// Tous les users inscrits peuvent ajouter les posts
-		if ($this->action === 'add') {
+		if ($this->action === 'add' ) {
+			return true;
+		}
+		if($this->action === 'login'){
 			return true;
 		}
 	
