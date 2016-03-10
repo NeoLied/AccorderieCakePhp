@@ -84,7 +84,7 @@ function homePage(id, $path, $loadingImg) {
     xhr.open("GET",$path+"users/dynamic/"+id,true);
     xhr.send();
 }
-
+/*
 function updatePrefs($id, $path, $param1, $param2) {
 
     $.ajax({
@@ -99,4 +99,4 @@ function updatePrefs($id, $path, $param1, $param2) {
             drawVisualization();
         },
     });
-}
+}*/

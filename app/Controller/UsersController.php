@@ -270,10 +270,7 @@ $temps_demandes += $demande['Annonce']['temps_requis'];
 	
 	public function isAuthorized($user) {
 		// Tous les users inscrits peuvent ajouter les posts
-		if ($this->action === 'add' ) {
-			return true;
-		}
-		if($this->action === 'login'){
+		if ($this->action === 'add') {
 			return true;
 		}
 	

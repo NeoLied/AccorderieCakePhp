@@ -7,7 +7,7 @@
 		<div class="alert-warning" style="text-align: center; color: #404040">Champ obligatoire<span style="color: #e32; display:inline;">*</span> </div>
 
 		<div class="table-responsive">
-			<table class="table table-hover" style="text-align:center;">
+			<table class="table table-striped" style="text-align:center;">
 				<thead>
 				<tr>
 					<th colspan="99"><legend><?php echo __('INSCRIPTION'); ?></legend></th>
@@ -21,7 +21,7 @@
 								'class' => 'form-control',));
 						?></td>
 				</tr>
-				<tr class="active">
+				<tr>
 					<td><?php
 						echo $this->Form->input('password',
 							array('label' => 'Mot de passe</td><td>',
@@ -34,7 +34,7 @@
 								'type' => 'password',
 								'class' => 'form-control'));?></td>
 				</tr>
-				<tr class="active">
+				<tr>
 					<td><?php
 						echo $this->Form->input('nom',
 							array('label' => 'Nom</td><td>',
@@ -46,7 +46,7 @@
 							array('label' => 'Prénom</td><td>',
 								'class' => 'form-control'));?></td>
 				</tr>
-				<tr class="active">
+				<tr>
 					<td><?php
 						echo $this->Form->input('date_naissance',
 							array('label' => 'Date de naissance</td><td>',
@@ -61,7 +61,7 @@
 							array('label' => 'Mail</td><td>',
 								'class' => 'form-control'));?></td>
 				</tr>
-				<tr class="active">
+				<tr>
 					<td><?php
 						echo $this->Form->input('telephone',
 							array('label' => 'Téléphone</td><td>',
@@ -73,7 +73,7 @@
 							array('label' => 'Adresse</td><td>',
 								'class' => 'form-control'));?></td>
 				</tr>
-				<tr class="active">
+				<tr>
 					<td><?php
 						echo $this->Form->input('code_postal',
 							array('label' => 'Code Postal</td><td>',
@@ -90,7 +90,7 @@
 				</tr>
 
 				<?php echo $this->Form->create('User',array('type'=>'file')); ?>
-				<tr class="active">
+				<tr>
 					<td><?php
 						echo $this->Form->input('avatar',
 							array('type' => 'file',
@@ -105,7 +105,7 @@
 								'rows' => '3',
 								'cols' => '65'));?></td>
 				</tr>
-				<tr class="active">
+				<tr>
 					<td><?php
 						echo $this->Form->input('question_secrete',
 							array('options' =>
@@ -118,12 +118,26 @@
 								'label' => 'Question secrète</td><td>',
 								'class' => 'form-control'));?></td>
 				</tr>
-				<tr class="active">
+				<tr>
 					<td><?php
 						echo $this->Form->input('reponse_secrete',
 							array('label' => 'Réponse secrète</td><td>',
 								'class' => 'form-control',
 								'maxLength' => '100'));?></td>
+				</tr>
+				<tr>
+                    <td><?php
+                        $strings = array();
+                        for($i=1; $i < count($types); $i++){
+                            array_push($strings, $types[$i]['Type']['libelle']);
+                        }
+                        echo $this->Form->input('favoriteType',
+                            array('options' =>
+                                array($strings),
+                                'empty' => 'Aucun',
+                                'label' => 'Type de service favoris</td><td>',
+                                'class' => 'form-control'));?>
+                    </td>
 				</tr>
 				<tr class="info">
 					<td colspan="99"><?php echo $this->Form->end(array('label'=>'Ajouter', 'class'=>'btn btn-primary'));?></td>

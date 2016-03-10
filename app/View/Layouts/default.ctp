@@ -41,7 +41,7 @@
 	}
 ?>
 
-<body onload='update(<?php echo params($a, $b, $c); ?>); homePage(<?php echo $a.", \"".$b."\", \"".$c2."\""; ?>);'>
+<body onload='update(<?php echo params($a, $b, $c); ?>); homePage(<?php echo $a.", \"".$b."\", \"".$c2."\""; ?>); updatePrefs("1","/","1","2")'>
 
 <div id="container">
 
@@ -131,14 +131,23 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li class="alert-danger"><?php echo $this->Html->link('Déconnexion','/users/logout'); ?></li>
 					<li class="alert-warning"><?php  echo $this->Html->link('Actualiser votre crédit',array('controller'=>'users','action' => 'getCredit', AuthComponent::user('id'))); ?></li>
-					<li class="alert-success"><a id="time"><?php //echo "<b>".$utilisateur[0]['users']['credit_temps']."</b> Heures"; ?></a></li></ul> <?php
+					<li class="alert-success"><noscript>Merci d'activer JavaScript</noscript>
+						<a id="time"><?php
+							/*
+							 * Ne pas inserer d'espace ou autre caractère dans l'ID 'time'.
+							 * Sinon le loading.gif ne sera pas chargé :(
+							 */
+
+							 //echo "<b>".$utilisateur[0]['users']['credit_temps']."</b> Heures";
+							?></a>
+					</li></ul> <?php
 				}
 				?>
 				</ul>
 			</div>
 		</nav>
 
-		<div id="content" class="container-fluid" style="overflow-x: scroll;">
+		<div id="content" class="container-fluid" style="overflow-x: auto;">
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>

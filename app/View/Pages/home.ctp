@@ -12,6 +12,7 @@
         <h1>Bienvenue <?php echo AuthComponent::user('username'); ?></h1>
 
         <div id="dynamic" style="margin-bottom: 1%;"></div>
+        <noscript class="noscriptHome">Merci d'activer JavaScript</noscript>
 
     <?php }else{ ?>
 
