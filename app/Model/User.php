@@ -90,18 +90,17 @@ class User extends AppModel {
 		),
     	'telephone' => array(
     		'required' => 'create',
+			'allowEmpty' => true ,
 			'rule' => array('phone', null, 'fr'),
 			'message' => 'Un numéro de téléphone valide est requis'
     	),
     	'adresse' => array(
     		'required' => 'create',
-			'rule' => array('notEmpty'),
+			'allowEmpty' => true ,
 			'message' => 'Un adresse valide est requise',
+    			'rule' => array('lengthBetween', 0, 100),
+    			'message' => 'L\'adresse doit faire entre 0 et 100 caractères'
 
-    		'CaracLongueur' => array(
-    			'rule' => array('lengthBetween', 2, 100),
-    			'message' => 'L\'adresse doit faire entre 2 et 100 caractères'
-    		)
     	),
     	'code_postal' => array(
     		'required' => array(
@@ -115,7 +114,7 @@ class User extends AppModel {
     			'message' => 'Une ville est requise'
     		),
     		'CaracLongueur' => array(
-    			'rule' => array('lengthBetween', 2, 100),
+    			'rule' => array('lengthBetween', 0, 100),
     			'message' => 'La ville doit faire entre 2 et 100 caractères'
     		)
     	),
@@ -137,14 +136,11 @@ class User extends AppModel {
     		)
     	),
     	'presentation' => array(
-    		'required' => array(
-    			'rule' => array('notEmpty'),
-    			'message' => 'Une petite présentation est requise'
-    		),
-    		'CaracLongueur' => array(
-    			'rule' => array('lengthBetween', 30, 140),
-    			'message' => 'La présentation doit faire entre 30 et 140 caractères'
-    		)
+    		'required' =>'create',
+			'allowEmpty' => true,
+    			'rule' => array('lengthBetween', 0, 140),
+    			'message' => 'La présentation doit faire entre  140 caractères maximum'
+
     	),
     	'question_secrete' => array(
     		'required' => array(

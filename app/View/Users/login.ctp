@@ -7,7 +7,7 @@
 		<table class="table table-hover" style="text-align:center;">
 			<thead>
 			<tr>
-				<th colspan="99"><legend><?php echo __('Merci d\'entrer votre nom d\'utiliateur et votre mot de passe'); ?></legend></th>
+				<th colspan="99"><legend><?php echo __('Merci d\'entrer votre nom d\'utilisateur et votre mot de passe'); ?></legend></th>
 			</tr>
 			</thead>
 			<tbody>
