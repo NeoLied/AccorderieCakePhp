@@ -79,9 +79,9 @@ if($prefs[0]['u']['lastPost'] == 1) {
     }
 }
 
-if($prefs[0]['u']['favoriteType'] != 0){
 
-echo "<br/><u><h4>Les dernières annonces de ".$prefs[0]['u']['libelle']." : </h4></u>";
+if(isset($prefs[0]['t'])){
+echo "<br/><u><h4>Les dernières annonces de ".$prefs[0]['t']['libelle']." : </h4></u>";
 
 if (!empty($annoncesType)) {
 

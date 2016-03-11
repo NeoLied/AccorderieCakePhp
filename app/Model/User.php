@@ -163,6 +163,7 @@ class User extends AppModel {
     		)
     	),
     	'offre_de_bienvenue' => array(),
+		'favoriteType' => array(),
 
     );
 

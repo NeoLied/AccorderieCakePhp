@@ -49,7 +49,7 @@
          if($annonce['Annonce']['user_id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
          	echo $this->Form->postLink(
                 'Supprimer',
-                array('action' => 'delete', $annonce['Annonce']['id'],'index'),
+                array('action' => 'delete', $annonce['Annonce']['id']),
                 array('confirm' => "Êtes-vous sûr ?"));
          echo " ";
 			echo $this->Html->link(

@@ -393,12 +393,28 @@ class UsersController extends AppController
 		$this->set('user', null);
 
 		if ($id != null) {
-			$this->set('prefs', $this->User->query(
-				"SELECT lastPost, favoriteType, libelle
+
+            $verifPref = $this->User->query(
+                "SELECT lastPost, favoriteType, libelle
                 FROM users u, types t
                 WHERE u.id = ". $id ."
                 AND u.favoriteType = t.id"
-			));
+            );
+
+            if(!empty($verifPref)){
+                $this->set('prefs', $this->User->query(
+                    "SELECT lastPost, favoriteType, libelle
+                FROM users u, types t
+                WHERE u.id = ". $id ."
+                AND u.favoriteType = t.id"
+                ));
+            }else{
+                $this->set('prefs', $this->User->query(
+                    "SELECT lastPost, favoriteType
+                FROM users u
+                WHERE u.id = ". $id
+                ));
+            }
 
 			$prefs = $this->User->query(
 				"SELECT favoriteType
