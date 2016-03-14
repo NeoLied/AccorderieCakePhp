@@ -20,6 +20,7 @@ class AnnonceFixture extends CakeTestFixture
 			'annonceValide' => array('type' => 'string', 'length' => '3'),
 			'statut' => array('type' => 'string', 'length' => '25'),
 			'archive' => array('type' => 'integer', 'length' => '1'),
+			'libelle_categorie' => array('type' => 'string', 'length' => '200'),
 	);
 	
 	public $records = array(
@@ -36,7 +37,9 @@ class AnnonceFixture extends CakeTestFixture
 				'id_accepteur' => 3,
 				'annonceValide' => 'oui',
 				'archive' => '0',
-				'type_id' => '5'
+				'type_id' => '5',
+				'libelle_categorie' => '',
+				'statut' => ''
 			),
 			array(
 					'id' => 2,
@@ -51,7 +54,9 @@ class AnnonceFixture extends CakeTestFixture
 					'id_accepteur' => 0,
 					'annonceValide' => 'non',
 					'archive' => '0',
-					'type_id' => '3'
+					'type_id' => '3',
+					'libelle_categorie' => '',
+					'statut' => ''
 			),
 	);
 }

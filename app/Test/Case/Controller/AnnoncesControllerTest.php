@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class AnnonceControllerTest extends ControllerTestCase 
 {
-	public $fixtures = array('app.annonce', 'app.user');
+	//public $fixtures = array('app.annonce', 'app.user');
 
 	public function setUp() {
 		parent::setUp();

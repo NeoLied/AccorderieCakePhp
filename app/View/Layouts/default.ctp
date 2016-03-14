@@ -140,7 +140,7 @@
 							 * Sinon le loading.gif ne sera pas chargé :(
 							 */
 
-							 echo "<b>".$utilisateur[0]['users']['credit_temps']."</b> Heures";
+							 //echo "<b>".$utilisateur[0]['users']['credit_temps']."</b> Heures";
 							?></a>
 					</li></ul> <?php
 				}

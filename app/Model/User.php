@@ -26,9 +26,9 @@ class User extends AppModel {
     	),
     	'password' => array(
     		'required' => array(
-    			'rule' => array('notEmpty'),
-    			'message' => 'Un mot de passe est requis'
-    		),
+				'rule' => array('notEmpty'),
+				'message' => 'Un mot de passe est requis'
+			),
     		'CaracLongueur' => array(
     			'rule' => array('lengthBetween', 6, 100),
     			'message' => 'Le mot de passe doit faire entre 6 et 100 caractères'

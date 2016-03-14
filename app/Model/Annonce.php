@@ -38,9 +38,12 @@ public  $hasOne = array('Evaluation'=>
     }
 
 	public function beforeSave($options = array()){
-		if($this->data[$this->alias]['id_accepteur'] == '0'){
-			$this->data[$this->alias]['id_accepteur'] = '0';
+		if(!empty($this->data[$this->alias]['id_accepteur']) && isset($this->data[$this->alias]['id_accepteur'])){
+			if($this->data[$this->alias]['id_accepteur'] == '0'){
+				$this->data[$this->alias]['id_accepteur'] = '0';
+			}
 		}
+
 
 		return true;
 	}

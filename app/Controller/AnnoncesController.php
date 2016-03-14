@@ -95,7 +95,6 @@ class AnnoncesController extends AppController
     }
     	 
     public function offre() {
-
 		$this->loadModel('Type');
 		App::uses('CakeTime', 'Utility');
 		$annonces = null;
@@ -104,20 +103,22 @@ class AnnoncesController extends AppController
 		$annoncesNormales=null;
 
 		if($this->request->is('post')) {
-			if (($this->request->data['Annonce']['type_id']) > 0) {
-				$annonces = $this->Annonce->find('all', array(
-					//tableau de conditions
-					'conditions' => array('Annonce.demande' => 1,
-						'Annonce.annonceValide' => 'oui',
-						'Annonce.type_id' => $this->request->data['Annonce']['type_id'])
-				));
-			} else {
-				$annonces = $this->Annonce->find('all', array(
-					//tableau de conditions
-					'conditions' => array('Annonce.demande' => 1,
-						'Annonce.annonceValide' => 'oui'
-					)));
-			}
+            if(!empty($this->request->data) && isset($this->request->data)) {
+                if (($this->request->data['Annonce']['type_id']) > 0) {
+                    $annonces = $this->Annonce->find('all', array(
+                        //tableau de conditions
+                        'conditions' => array('Annonce.demande' => 1,
+                            'Annonce.annonceValide' => 'oui',
+                            'Annonce.type_id' => $this->request->data['Annonce']['type_id'])
+                    ));
+                } else {
+                    $annonces = $this->Annonce->find('all', array(
+                        //tableau de conditions
+                        'conditions' => array('Annonce.demande' => 1,
+                            'Annonce.annonceValide' => 'oui'
+                        )));
+                }
+            }
 
 			list($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales) = $this->setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
 
@@ -152,26 +153,28 @@ class AnnoncesController extends AppController
 		$annoncesNormales=null;
 
 		if($this->request->is('post')) {
-			if (($this->request->data['Annonce']['type_id']) > 0) {
-				$annonces = $this->Annonce->find('all', array(
-					//tableau de conditions
-					'conditions' => array('Annonce.demande' => 0,
-						'Annonce.annonceValide' => 'oui',
-						'Annonce.archive' => false,
-						'Annonce.type_id' => $this->request->data['Annonce']['type_id']),
-                    'order' =>  'Annonce.date_post DESC'
+            if(!empty($this->request->data) && isset($this->request->data)) {
+                if (($this->request->data['Annonce']['type_id']) > 0) {
+                    $annonces = $this->Annonce->find('all', array(
+                        //tableau de conditions
+                        'conditions' => array('Annonce.demande' => 0,
+                            'Annonce.annonceValide' => 'oui',
+                            'Annonce.archive' => false,
+                            'Annonce.type_id' => $this->request->data['Annonce']['type_id']),
+                        'order' => 'Annonce.date_post DESC'
 
-				));
-			} else {
-				$annonces = $this->Annonce->find('all', array(
-					//tableau de conditions
-					'conditions' => array('Annonce.demande' => 0,
-						'Annonce.annonceValide' => 'oui',
-						'Annonce.archive' => false
-					),
-                    'order' =>  'Annonce.date_post DESC'
                     ));
-			}
+                } else {
+                    $annonces = $this->Annonce->find('all', array(
+                        //tableau de conditions
+                        'conditions' => array('Annonce.demande' => 0,
+                            'Annonce.annonceValide' => 'oui',
+                            'Annonce.archive' => false
+                        ),
+                        'order' => 'Annonce.date_post DESC'
+                    ));
+                }
+            }
 
 			list($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales) = $this->setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
 
@@ -207,10 +210,8 @@ class AnnoncesController extends AppController
      */
     
     public function view($id = null) {
-    	$this->testerExistenceAnnonceParID($id);
     	$annonce = $this->Annonce->findById($id);
-    	$this->testerExistenceAnnonceParObjet($annonce);
-    	$this->set('annonce', $annonce);
+        $this->set('annonce', $annonce);
     }
     
     private function testerExistenceAnnonceParID($id) {
@@ -247,29 +248,36 @@ class AnnoncesController extends AppController
     	return $this->redirect("/");
     }
     
-    public function edit($id) {
-    	//$this->testerExistenceAnnonce($id);
-		//$this->testerExistenceAnnonceParObjet($annonce);
+    public function edit($id=null) {
+        if(!empty($id)){
+            //$this->testerExistenceAnnonce($id);
+            //$this->testerExistenceAnnonceParObjet($annonce);
 
-		$this->loadModel('Type');
-		//$requete = "Select libelle from types";
-		//$result = $this->injecterRequete($requete);
+            $this->loadModel('Type');
+            //$requete = "Select libelle from types";
+            //$result = $this->injecterRequete($requete);
 
 
-    	$annonce = $this->Annonce->findById($id);
-		$this->set('type',$this->Type->find('list',array(
-				'fields' => 'Type.libelle'
-		)));
-    	if ($this->request->is( 'put')) {
-			if ($this->Annonce->save($this->request->data)) {
-				$this->Session->setFlash('Votre annonce a été éditée','default', array('class' => 'alert alert-success'));
-				$this->retourPageAccueil();
-			}
-			$this->Session->setFlash('Impossible de modifier l\'annonce.','default', array('class' => 'alert alert-warning'));
-		}
-    	if (!$this->request->data) {
-    		$this->request->data = $annonce;
-    	}
+            $annonce = $this->Annonce->findById($id);
+            $this->set('type',$this->Type->find('list',array(
+                'fields' => 'Type.libelle'
+            )));
+            if ($this->request->is( 'put')) {
+                if ($this->Annonce->save($this->request->data)) {
+                    $this->Session->setFlash('Votre annonce a été éditée','default', array('class' => 'alert alert-success'));
+                    $this->retourPageAccueil();
+                }else{
+                    $this->Session->setFlash('Impossible de modifier l\'annonce.','default', array('class' => 'alert alert-warning'));
+                }
+            }
+            if (!$this->request->data) {
+                $this->request->data = $annonce;
+            }
+        }else{
+            $this->Session->setFlash('Cette annonce n\'existe pas !','default', array('class' => 'alert alert-warning'));
+            $this->retourPageAccueil();
+        }
+
     }
     
     public function delete($id)
@@ -308,7 +316,10 @@ class AnnoncesController extends AppController
 		$infoP = $this->User->findById( $id_personneReservante);
 		$info = $this->User->findById($id_personneProprio);
 
-		$this->User->send($infoP, $info['User']['mail'], 'Un utilisateur vous à fait une demande de réservation sur La Marmite', 'reservation');
+        if(!empty($info) && isset($info)){
+            $this->User->send($infoP, $info['User']['mail'], 'Un utilisateur vous à fait une demande de réservation sur La Marmite', 'reservation');
+        }
+
 
 		return $this->redirect('/annonces/view/'.$id_annonce);
     }
@@ -392,10 +403,12 @@ class AnnoncesController extends AppController
     		$annonceId = (int) $this->request->params['pass'][0];
     		$userId = $this->Annonce->find('first', array(
     				'conditions' => array('Annonce.id' => $annonceId)));
-    		$annonceUserId = $userId['Annonce']['user_id'];
-    		if ($this->Annonce->isOwnedBy($annonceUserId, $user['id'])) {
-    			return true;
-    		}
+            if(!empty($userId) && isset($userId)){
+                $annonceUserId = $userId['Annonce']['user_id'];
+                if ($this->Annonce->isOwnedBy($annonceUserId, $user['id'])) {
+                    return true;
+                }
+            }
     	}
 
     	return parent::isAuthorized($user);

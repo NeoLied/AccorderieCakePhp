@@ -20,7 +20,7 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
       <td><?php
         echo $this->Form->input('titre',
             array('label' => 'Titre</td><td>',
-                'class' => 'form-control col-xs-2',));
+                'class' => 'form-control'));
         ?></td>
     </tr>
     <tr class="active">
