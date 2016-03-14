@@ -445,8 +445,9 @@ class UsersController extends AppController
                 LIMIT 5"
 			));
 
-			$this->set('annoncesType', $this->Annonce->query(
-				"SELECT *
+			if($prefs[0]['u']['favoriteType'] != NULL){
+				$this->set('annoncesType', $this->Annonce->query(
+					"SELECT *
                 FROM annonces a, types t, users u
                 WHERE a.type_id=t.id
                 AND a.user_id=u.id
@@ -456,7 +457,8 @@ class UsersController extends AppController
                 AND id_accepteur IN ('0', \"NULL\")
                 ORDER BY date_post DESC
                 LIMIT 5"
-			));
+				));
+			}
 
 			$this->loadModel('Type');
 			$this->set('types', $this->Type->find('all'));
