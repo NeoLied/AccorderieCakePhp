@@ -151,8 +151,6 @@ class AnnoncesController extends AppController
 		$annoncesExpires=null;
 		$annoncesNormales=null;
 
-		debug($this->request->data['Annonce']['type_id']);
-
 		if($this->request->is('post')) {
 			if (($this->request->data['Annonce']['type_id']) > 0) {
 				$annonces = $this->Annonce->find('all', array(
@@ -299,22 +297,20 @@ class AnnoncesController extends AppController
     	)));
     }
     
-	public function reservation($id_annonce,$id_personneReservante,$id_personneProprio,$temps,$demande) {
-        $this->loadModel('User');
+	public function reservation($id_annonce,$id_personneReservante,$id_personneProprio) {
+		$this->loadModel('User');
     	if( $id_personneReservante != $id_personneProprio)
     	{
     		$this->Annonce->id = $id_annonce;
     		$this->Annonce->saveField('id_accepteur', $id_personneReservante);
-
     	}
 
 		$infoP = $this->User->findById( $id_personneReservante);
 		$info = $this->User->findById($id_personneProprio);
-		$info = $this->User->findById($id_personneProprio);
 
 		$this->User->send($infoP, $info['User']['mail'], 'Un utilisateur vous à fait une demande de réservation sur La Marmite', 'reservation');
 
-    	return $this->redirect('/annonces/view/'.$id_annonce);
+		return $this->redirect('/annonces/view/'.$id_annonce);
     }
 
 	/**
