@@ -144,12 +144,14 @@ class AnnoncesController extends AppController
     }
     
     public function demande() {
-		$this->loadModel('Type');
+		$this->loadModel('Annonce');
 		App::uses('CakeTime', 'Utility');
 		$annonces = null;
 		$annoncesUrgentes=null;
 		$annoncesExpires=null;
 		$annoncesNormales=null;
+
+		debug($this->request->data['Annonce']['type_id']);
 
 		if($this->request->is('post')) {
 			if (($this->request->data['Annonce']['type_id']) > 0) {
@@ -196,6 +198,7 @@ class AnnoncesController extends AppController
 
     	$this->set('annoncesNormales', $annoncesNormales);
 
+		$this->loadModel('Type');
 		$this->set('types', $this->Type->find('list',array(
 				'fields' => 'Type.libelle'
 		)));
