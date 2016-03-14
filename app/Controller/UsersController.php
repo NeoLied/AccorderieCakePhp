@@ -32,6 +32,23 @@ class UsersController extends AppController
 		$this->set('users', $this->User->find('all'));
 	}
 
+	public function bloquer($id)
+	{
+		$this->User->id = $id;
+		$this->User->saveField('bloquer', true);
+		$this->Session->setFlash('Vous avez bien bloqué cette utilisateur', 'default', array('class' => 'alert alert-warning'));
+		return $this->redirect("/");
+	}
+
+	public function debloquer($id)
+	{
+		$this->User->id = $id;
+		$this->User->saveField('bloquer', false);
+		$this->Session->setFlash('Vous avez bien debloqué cette utilisateur', 'default', array('class' => 'alert alert-warning'));
+		return $this->redirect("/");
+	}
+
+
 	public function view($id = null)
 	{
 		$this->loadModel('Evaluation');
@@ -163,10 +180,14 @@ class UsersController extends AppController
 				$passwordHasher = new SimplePasswordHasher();
 				$passwordHasher = $passwordHasher->hash($this->request->data['User']['password']);
 
-				if ($d['User']['offre_de_bienvenue'] == 'non' && $d['User']['password'] == $passwordHasher) {
-					$this->Session->setFlash("Votre compte n'a pas encore été validé", 'default', array('class' => 'alert alert-warning'));
-				} else {
-					$this->Session->setFlash("Nom d'utilisateur ou mot de passe invalide, merci de réessayez", 'default', array('class' => 'alert alert-danger'));
+				if($d['User']['offre_de_bienvenue'] == 'non' && $d['User']['password'] == $passwordHasher){
+					$this->Session->setFlash("Votre compte n'a pas encore été validé",'default', array('class' => 'alert alert-warning'));
+				}
+				if($d['User']['bloquer'] == '1' && $d['User']['password'] == $passwordHasher) {
+					$this->Session->setFlash("Votre compte a été bloqué", 'default', array('class' => 'alert alert-warning'));
+				}
+				else{
+					$this->Session->setFlash("Nom d'utilisateur ou mot de passe invalide, merci de réessayez",'default', array('class' => 'alert alert-danger'));
 				}
 			}
 		}

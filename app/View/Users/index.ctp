@@ -21,6 +21,7 @@
 			<td><?php echo $user['User']['prenom']; ?></td>
 			<td><?php echo $user['User']['username']; ?></td>
 			<td><?php echo $user['User']['credit_temps']; ?></td>
+			<td><?php echo $user['User']['bloquer']; ?></td>
 			<td>
 				<?php
 				if($user['User']['id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
@@ -45,6 +46,20 @@
 
 
 				}
+			if($user['User']['bloquer'] != 0){
+				echo $this->Form->postLink(
+					'Debloquer',
+					array('action' => 'debloquer', $user['User']['id']),
+					array('confirm' => 'Etes-vous sûr ?'));
+				echo" ";
+			 }else{
+			?>
+			<?php echo $this->Form->postLink(
+					'bloquer',
+					array('action' => 'bloquer', $user['User']['id']),
+					array('confirm' => 'Etes-vous sûr ?'));
+				echo " ";
+			}
 				if(AuthComponent::user('role') == "admin"){
 					echo " ";
 					echo $this->Html->link(

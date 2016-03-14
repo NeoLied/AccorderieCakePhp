@@ -54,7 +54,8 @@ class AppController extends Controller {
 	}
 
     public function beforeFilter() {
-		$this->Auth->authenticate = array('Form' => array('scope' => array('User.offre_de_bienvenue' => "oui")));
+		$this->Auth->authenticate = array('Form' => array(
+			'scope' => array('User.offre_de_bienvenue' => "oui",'User.bloquer ' => false)));
         //$this->Auth->allow('index', 'view', 'display', 'valider_service', 'cloturer_annonce', 'desisterAnnonce');
 		$this->Auth->allow();
 

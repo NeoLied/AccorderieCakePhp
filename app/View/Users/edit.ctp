@@ -63,10 +63,13 @@ echo $this->Form->input('id', array('type' => 'hidden'));
 					array('label' => 'Ville</td><td>',
 						'class' => 'form-control'));?></td>
 		</tr>
+
+		<?php echo $this->Form->create('User',array('type'=>'file')); ?>
 		<tr class="active">
 			<td><?php
-				echo $this->Form->input('avatarnew',
+				echo $this->Form->input('avatar_file',
 					array('type' => 'file',
+						'required' => ' ',
 						'label' => 'Avatar</td><td>'));?></td>
 		</tr>
 		<tr>
