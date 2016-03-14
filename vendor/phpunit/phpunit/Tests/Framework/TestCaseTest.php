@@ -239,10 +239,10 @@ class Framework_TestCaseTest extends PHPUnit_Framework_TestCase
      */
     public function testGlobalsBackupPre()
     {
-        global $a;
+        global $id_user;
         global $i;
 
-        $this->assertEquals('a', $a);
+        $this->assertEquals('a', $id_user);
         $this->assertEquals('a', $GLOBALS['a']);
         $this->assertEquals('b', $_ENV['b']);
         $this->assertEquals('c', $_POST['c']);
@@ -265,7 +265,7 @@ class Framework_TestCaseTest extends PHPUnit_Framework_TestCase
         $_REQUEST['h']  = 'hh';
         $GLOBALS['i']   = 'ii';
 
-        $this->assertEquals('aa', $a);
+        $this->assertEquals('aa', $id_user);
         $this->assertEquals('aa', $GLOBALS['a']);
         $this->assertEquals('bar', $GLOBALS['foo']);
         $this->assertEquals('bb', $_ENV['b']);
@@ -281,10 +281,10 @@ class Framework_TestCaseTest extends PHPUnit_Framework_TestCase
 
     public function testGlobalsBackupPost()
     {
-        global $a;
+        global $id_user;
         global $i;
 
-        $this->assertEquals('a', $a);
+        $this->assertEquals('a', $id_user);
         $this->assertEquals('a', $GLOBALS['a']);
         $this->assertEquals('b', $_ENV['b']);
         $this->assertEquals('c', $_POST['c']);

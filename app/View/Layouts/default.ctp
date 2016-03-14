@@ -28,20 +28,22 @@
 </head>
 
 <?php
-	$a = '""';
+	$id_user = '""';
 	if(AuthComponent::user('id') != null){
-		$a = AuthComponent::user('id');
+		$id_user = AuthComponent::user('id');
 	}
-	$b = $this->Html->url("/", true);
-	$c = 'loading.gif';
-	$c2 = 'loading2.gif';
+	$URI = $this->Html->url("/", true);
+	$loading1 = 'loading.gif';
+	$loading2 = 'loading2.gif';
 
-	function params($a, $b, $c){
+
+/*	function params($a, $b, $c){
+
 		return $a.", \"".$b."\", \"".$c."\"";
-	}
+	}*/
 ?>
 
-<body onload='update(<?php echo params($a, $b, $c); ?>); homePage(<?php echo $a.", \"".$b."\", \"".$c2."\""; ?>); updatePrefs("1","/","1","2")'>
+<body>
 
 <div id="container">
 
@@ -157,6 +159,11 @@
 		</div>
 
 </div>
-
+<?php
+echo "<input type='hidden' id='update_uri' value='$URI'>";
+echo "<input type='hidden' id='update_id_user' value='$id_user' >";
+echo "<input type='hidden' id='update_loading_credit_temps' value='$loading1'>";
+echo "<input type='hidden' id='update_loading_page_dynamique'value='$loading2'>";
+?>
 </body>
 </html>

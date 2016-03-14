@@ -8,7 +8,12 @@ $(function() {
 
 });
 
+
 $(document).ready(function(){
+    update($('#update_id_user').val(), $('#update_uri').val(), $('#update_loading_credit_temps').val());
+    homePage($('#update_id_user').val(), $('#update_uri').val(), $('#update_loading_page_dynamique').val());
+ 
+
     $('#AnnonceTypeId').change(function(){
         $('#AnnonceDemandeForm').submit();
     });
@@ -23,7 +28,7 @@ $(document).ready(function(){
     });
 
     $('.ligneAnnonce').hover(function(event){
-      $('.ligneAnnonce *').css('cursor','pointer');
+        $('.ligneAnnonce *').css('cursor','pointer');
     });
 
 
@@ -50,7 +55,8 @@ function getXMLHttpRequest() {
     return xhr;
 }
 
-function update(id, $path, $loadingImg) {
+/* Pour credit */
+function update(id, path, $loadingImg) {
 
     xmlhttp = getXMLHttpRequest();
 
@@ -59,14 +65,15 @@ function update(id, $path, $loadingImg) {
             document.getElementById("time").innerHTML = xmlhttp.responseText;
         }else{
             if(document.getElementById("time").innerHTML == ""){
-                document.getElementById("time").innerHTML = "<img src='"+$path+"img/"+$loadingImg+"' alt='Chargement' width='100%' height='100%' />";
+                document.getElementById("time").innerHTML = "<img src="+path+"img/"+$loadingImg+" alt='Chargement' width='100%' height='100%' />";
             }
         }
     };
-    xmlhttp.open("GET",$path+"users/update/"+id,true);
+    xmlhttp.open("GET",path+"users/update/"+id,true);
     xmlhttp.send();
 }
 
+/* pour la page dynamique*/
 function homePage(id, $path, $loadingImg) {
 
     xhr = getXMLHttpRequest();
@@ -84,19 +91,17 @@ function homePage(id, $path, $loadingImg) {
     xhr.open("GET",$path+"users/dynamic/"+id,true);
     xhr.send();
 }
-/*
-function updatePrefs($id, $path, $param1, $param2) {
 
-    $.ajax({
-        url: $path+"users/prefs/"+$id+"/"+$param1+"/"+$param2,
-        type: "POST",
-        async: true,
-        data: { lastPost:$param1, favoriteType:$param2},
-        dataType: "html",
-
-        success: function(data) {
-            $('#output').html(data);
-            drawVisualization();
-        },
-    });
-}*/
+ /*function updatePrefs($id, $path, $param1, $param2) {
+ $.ajax({
+ url: $path+"users/prefs/"+$id+"/"+$param1+"/"+$param2,
+ type: "POST",
+ async: true,
+ data: { lastPost:$param1, favoriteType:$param2},
+ dataType: "html",
+ success: function(data) {
+ $('#output').html(data);
+ drawVisualization();
+ },
+ });
+ }*/

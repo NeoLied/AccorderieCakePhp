@@ -62,7 +62,14 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
         <label>Type d'annonce</label>
       </td>
       <td><?php
-        echo $this->Form->radio('radio', array(false => 'Demande'), $attributes) . $this->Form->radio('radio', array(true => 'Offre'), $attributes);
+        echo $this->Form->radio(
+                'demande',
+                array(false => 'Demande'), $attributes
+            );
+        echo $this->Form->radio(
+            'demande',
+            array(true => 'Offre'),  $attributes
+            );
         ?>
       </td>
     </tr>
