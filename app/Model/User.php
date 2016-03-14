@@ -123,7 +123,7 @@ class User extends AppModel {
 			'required' => 'update',
 			'allowEmpty' => true,
     		'image' => array(
-        		'rule'    => array('extension', array('gif', 'jpeg', 'png', 'jpg')),
+				'rule'    => array('extension', array('gif', 'jpeg', 'png', 'jpg')),
         		'message' => 'Merci de soumettre une image valide.',
 				'allowEmpty' => true,
 				'required' => false
@@ -135,6 +135,7 @@ class User extends AppModel {
 				'required' => false
     		)
     	),
+
     	'presentation' => array(
     		'required' =>'create',
 			'allowEmpty' => true,
@@ -245,5 +246,6 @@ class User extends AppModel {
 			return $Email->send();
 		}
 	}
+
 }
 ?>

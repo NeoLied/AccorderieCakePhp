@@ -10,8 +10,9 @@
         </thead>
         <tbody>
 
-        <tr>
-            <td rowspan="99" style="vertical-align:middle"> <img src="http://www.varlamoff.ovh/accorderie/app/webroot/img/uploads/avatar.png" alt="Avatar" height="150" width="150  "></td>
+        <tr class ="active">
+            <td rowspan="99" style="vertical-align:middle"> <img src="
+            <?php echo strtolower(h($user['User']['avatar'])) ?> " alt="Avatar" height="150" width="150  "></td>
         </tr>
 
         <tr class="active">
