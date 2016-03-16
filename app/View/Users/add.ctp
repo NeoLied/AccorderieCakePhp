@@ -1,7 +1,7 @@
 <!-- app/View/Users/add.ctp -->
 <div class="users form">
 
-	<?php echo $this->Form->create('User', array('type' => 'post', 'class'=>'form-inline'));?>
+	<?php echo $this->Form->create('User', array('type' => 'file', 'class'=>'form-inline'));?>
 	<fieldset>
 
 		<div class="alert-warning" style="text-align: center; color: #404040">Champ obligatoire<span style="color: #e32; display:inline;">*</span> </div>
@@ -88,13 +88,10 @@
 								'class' => 'form-control',
 								'maxLength' => '100'));?></td>
 				</tr>
-
-				<?php echo $this->Form->create('User',array('type'=>'file')); ?>
 				<tr>
 					<td><?php
 						echo $this->Form->input('avatar',
 							array('type' => 'file',
-								'required' => ' ',
 								'label' => 'Avatar</td><td>'));?></td>
 				</tr>
 				<tr>

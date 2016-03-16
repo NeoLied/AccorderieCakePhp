@@ -1,13 +1,8 @@
 <!-- Fichier: /app/View/Posts/edit.ctp -->
 <?php
 
-echo $this->Form->create('User', array('class'=>'form-inline', 'label' => 'User'));
+echo $this->Form->create('User', array('class'=>'form-inline', 'label' => 'User', 'type' => 'file'));
 
-/*echo $this->Form->input('type', array(
-'type' => 'select',
-'options' => $type,
-'multiple' => 'checkbox'
-));*/
 
 echo $this->Form->input('id', array('type' => 'hidden'));
 ?>
@@ -64,12 +59,12 @@ echo $this->Form->input('id', array('type' => 'hidden'));
 						'class' => 'form-control'));?></td>
 		</tr>
 
-		<?php echo $this->Form->create('User',array('type'=>'file')); ?>
+		<?php // $this->Form->input('avatar',array('type'=>'file')); ?>
 		<tr class="active">
 			<td><?php
-				echo $this->Form->input('avatar_file',
+				echo $this->Form->input('avatar',
 					array('type' => 'file',
-						'required' => ' ',
+						'class' => 'form-control',
 						'label' => 'Avatar</td><td>'));?></td>
 		</tr>
 		<tr>

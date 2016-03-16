@@ -236,7 +236,6 @@ class AnnoncesController extends AppController
     		$this->Annonce->create();
     		if ($this->Annonce->save($this->request->data)) {
 				$this->Session->setFlash('L\'annonce a été ajoutée.','default', array('class' => 'alert alert-success'));
-
 				//debug($this->request->data);
 				$this->retourPageAccueil();
     		}
