@@ -1,5 +1,5 @@
 <?php
-    if(isset($utilisateur) && $utilisateur != null){
+    if(isset($utilisateur)){
         echo "<b>".$utilisateur."</b> Heures";
     }else{
         echo "Erreur <!-- Aucun parametres renseignes -->";

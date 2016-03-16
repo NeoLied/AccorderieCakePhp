@@ -249,6 +249,7 @@ class AnnoncesController extends AppController
     }
     
     public function edit($id=null) {
+		$op=0;
         if(!empty($id)){
             //$this->testerExistenceAnnonce($id);
             //$this->testerExistenceAnnonceParObjet($annonce);

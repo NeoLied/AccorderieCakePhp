@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class UserControllerTest extends ControllerTestCase 
 {
-	public $fixtures = array('app.user','app.annonce','app.type');
+	//public $fixtures = array('app.user','app.annonce','app.type');
 	
 	public function test_users_index() 
 	{
@@ -20,7 +20,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_users_edit()
 	{
-		$id=11;
+		$id=7;
 		$result = $this->testAction('/users/edit/'.$id);
 		//debug($result);
 	}
@@ -45,7 +45,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_users_view()
 	{
-		$result = $this->testAction('/users/view/11');
+		$result = $this->testAction('/users/view/7');
 		debug($result);
 	}
 	
@@ -69,7 +69,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_users_delete()
 	{
-		$result = $this->testAction('/users/delete/1');
+		$result = $this->testAction('/users/delete/7');
 		debug($result);
 	}
 	
@@ -93,7 +93,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_offre_bienvenue()
 	{
-		$result = $this->testAction('/users/offre_bienvenue/1');
+		$result = $this->testAction('/users/offre_bienvenue/7');
 		debug($result);
 	}
 
@@ -101,8 +101,8 @@ class UserControllerTest extends ControllerTestCase
 	public function test_login() {
 		$data = array(
 				'User' => array(
-						'username' => 'tristan',
-						'password' => 'tristan',	
+						'username' => 'Georges',
+						'password' => 'Georges',
 				)
 		);
 		$result = $this->testAction(

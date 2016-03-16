@@ -3,7 +3,7 @@ App::uses('User', 'Model');
 
 class UserTestCase extends CakeTestCase
 {
-	public $fixtures = array('app.user');
+	//public $fixtures = array('app.user');
 	
 	public function setUp()
 	{

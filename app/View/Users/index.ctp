@@ -21,7 +21,6 @@
 			<td><?php echo $user['User']['prenom']; ?></td>
 			<td><?php echo $user['User']['username']; ?></td>
 			<td><?php echo $user['User']['credit_temps']; ?></td>
-			<td><?php echo $user['User']['bloquer']; ?></td>
 			<td>
 				<?php
 				if($user['User']['id'] == AuthComponent::user('id') || AuthComponent::user('role') == "admin"){
@@ -29,12 +28,10 @@
 						'Supprimer',
 						array('action' => 'delete', $user['User']['id']),
 						array('confirm' => 'Etes-vous sûr ?'));
-					echo " ";
 					echo $this->Html->link(
 						'Editer',
 						array('action' => 'edit', $user['User']['id'])
 					);
-					echo " ";
 
 
 					if($user['User']['offre_de_bienvenue'] == 'non') {
@@ -51,17 +48,14 @@
 					'Debloquer',
 					array('action' => 'debloquer', $user['User']['id']),
 					array('confirm' => 'Etes-vous sûr ?'));
-				echo" ";
 			 }else{
 			?>
 			<?php echo $this->Form->postLink(
 					'bloquer',
 					array('action' => 'bloquer', $user['User']['id']),
 					array('confirm' => 'Etes-vous sûr ?'));
-				echo " ";
 			}
 				if(AuthComponent::user('role') == "admin"){
-					echo " ";
 					echo $this->Html->link(
 						'Avertir',
 						'mailto:'.$user['User']['mail']

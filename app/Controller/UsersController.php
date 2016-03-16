@@ -174,20 +174,22 @@ class UsersController extends AppController
 			if ($this->Auth->login()) {
 				return $this->redirect($this->Auth->redirectUrl("/"));
 			} else {
-				$d = $this->User->find('first', array('conditions' => array('username' => $this->request->data['User']['username'])));
-				App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
+				if(!empty($this->request->data) && isset($this->request->data)){
+                    $d = $this->User->find('first', array('conditions' => array('username' => $this->request->data['User']['username'])));
+                    App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
-				$passwordHasher = new SimplePasswordHasher();
-				$passwordHasher = $passwordHasher->hash($this->request->data['User']['password']);
+                    $passwordHasher = new SimplePasswordHasher();
+                    $passwordHasher = $passwordHasher->hash($this->request->data['User']['password']);
 
-				if($d['User']['offre_de_bienvenue'] == 'non' && $d['User']['password'] == $passwordHasher){
-					$this->Session->setFlash("Votre compte n'a pas encore été validé",'default', array('class' => 'alert alert-warning'));
-				}
-				if($d['User']['bloquer'] == '1' && $d['User']['password'] == $passwordHasher) {
-					$this->Session->setFlash("Votre compte a été bloqué", 'default', array('class' => 'alert alert-warning'));
-				}
-				else{
-					$this->Session->setFlash("Nom d'utilisateur ou mot de passe invalide, merci de réessayez",'default', array('class' => 'alert alert-danger'));
+                    if($d['User']['offre_de_bienvenue'] == 'non' && $d['User']['password'] == $passwordHasher){
+                        $this->Session->setFlash("Votre compte n'a pas encore été validé",'default', array('class' => 'alert alert-warning'));
+                    }
+                    if($d['User']['bloquer'] == '1' && $d['User']['password'] == $passwordHasher) {
+                        $this->Session->setFlash("Votre compte a été bloqué", 'default', array('class' => 'alert alert-warning'));
+                    }
+                    else{
+                        $this->Session->setFlash("Nom d'utilisateur ou mot de passe invalide, merci de réessayez",'default', array('class' => 'alert alert-danger'));
+                    }
 				}
 			}
 		}
@@ -335,20 +337,22 @@ class UsersController extends AppController
 
 		$user = $this->User->findById($id_utilisateur);
 
-		if ($user['User']['offre_de_bienvenue'] == "oui") {
-			$this->Session->setFlash('L\'utilisateur a déjà bénéficié de l\'offre de bienvenue !', 'default', array('class' => 'alert alert-warning'));
-			return $this->redirect('/users/');
+		if(!empty($user) && isset($user)){
+			if ($user['User']['offre_de_bienvenue'] == "oui") {
+				$this->Session->setFlash('L\'utilisateur a déjà bénéficié de l\'offre de bienvenue !', 'default', array('class' => 'alert alert-warning'));
+				return $this->redirect('/users/');
+			}
+			// mettre à jour le crédit temps et verrouiller l'offre de bienvenue
+			$user['User']['credit_temps'] += 3;
+
+			//$this->User->saveField('credit_temps', $credit_temps);
+			$this->User->saveField('offre_de_bienvenue', "oui");
+			//$this->getCredit($id_utilisateur);
+			$this->Session->setFlash('Le compte de l\'utilisateur a été crédité de 3 heures.', 'default', array('class' => 'alert alert-success'));
+
+			// Envoie du mail
+			$this->User->send($user, $user['User']['mail'], 'Votre compte sur La Marmite a été validé', 'validation');
 		}
-		// mettre à jour le crédit temps et verrouiller l'offre de bienvenue
-		$user['User']['credit_temps'] += 3;
-
-		//$this->User->saveField('credit_temps', $credit_temps);
-		$this->User->saveField('offre_de_bienvenue', "oui");
-		//$this->getCredit($id_utilisateur);
-		$this->Session->setFlash('Le compte de l\'utilisateur a été crédité de 3 heures.', 'default', array('class' => 'alert alert-success'));
-
-		// Envoie du mail
-		$this->User->send($user, $user['User']['mail'], 'Votre compte sur La Marmite a été validé', 'validation');
 
 		return $this->redirect('/users/');
 	}
@@ -459,7 +463,7 @@ class UsersController extends AppController
                 FROM annonces a, types t, users u
                 WHERE a.type_id=t.id
                 AND a.user_id=u.id
-                AND annonceValide = \"oui\"
+	                AND annonceValide = \"oui\"
                 AND archive = '0'
                 AND id_accepteur IN ('0', \"NULL\")
                 ORDER BY date_post DESC
