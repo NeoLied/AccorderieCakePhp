@@ -77,7 +77,6 @@ class UsersController extends AppController
 			$this->request->data['User']['avatar']= $this->saveAvatar($this->request->data);
 			if ($this->User->save($this->request->data)) {
 
-				$this->User->saveField('avatar',$this->request->data['User']['avatar']);
 				$this->Session->setFlash('L\'utilisateur a été sauvegardé, le compte va être prochainement validé par un administrateur', 'default', array('class' => 'alert alert-success'));
 
 				$this->User->send($this->request->data['User'], 'accorderie31@gmail.com', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'notification_nouvel_utilisateur');
