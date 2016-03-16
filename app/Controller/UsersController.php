@@ -70,23 +70,14 @@ class UsersController extends AppController
 		$this->set('types', $this->Type->find('all', array('fields' => array('libelle'))));
 
 		//S'il n'y a pas d'avatar supprimer sinon ajouter le nouvel avatar
-		$this->User->validator()->remove('avatar');
-		if ($this->request->is('post')) {
 
-			// Envoi fichier avatar
-			if (!empty($this->data['User']['avatar']['name'])) {
-				$file = $this->data['User']['avatar'];
-				$ary_ext = array('png', 'jpg', 'jpeg', 'gif'); //array of allowed extensions
-				$ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-				if (in_array($ext, $ary_ext)) {
-					move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img' . DS . 'uploads' . DS . time() . $file['name']);
-					$this->request->data['User']['avatar'] = time() . $file['name'];
-				}
-			} else {
-				$this->request->data['User']['avatar'] = WWW_ROOT . 'img' . DS . 'uploads' . DS . 'avatar.png';
-			}
+		if ($this->request->is('post')) {
 			$this->User->create();
+
+			$this->request->data['User']['avatar']= $this->saveAvatar($this->request->data);
 			if ($this->User->save($this->request->data)) {
+
+				$this->User->saveField('avatar',$this->request->data['User']['avatar']);
 				$this->Session->setFlash('L\'utilisateur a été sauvegardé, le compte va être prochainement validé par un administrateur', 'default', array('class' => 'alert alert-success'));
 
 				$this->User->send($this->request->data['User'], 'accorderie31@gmail.com', 'Un nouveau utilisateur s\'est inscrit sur La Marmite', 'notification_nouvel_utilisateur');
@@ -102,44 +93,21 @@ class UsersController extends AppController
 		$this->loadModel('Type');
 		$this->set('types', $this->Type->find('all', array('fields' => array('libelle'))));
 
-		$this->User->validator()->remove('avatar');
-		// Envoi fichier avatar
-		/*if(!empty($this->data['User']['avatar']['name']))
-		{
-			$file=$this->data['User']['avatar'];
-			$ary_ext=array('png','jpg','jpeg','gif'); //array of allowed extensions
-			$ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-			if(in_array($ext, $ary_ext))
-			{
-				move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img'. DS . 'uploads' .DS . time().$file['name']);
-				$this->request->data['User']['avatar'] = time().$file['name'];
-			}
-		}else{
-			$this->request->data['User']['avatar'] = WWW_ROOT . 'img'. DS . 'uploads' .DS . 'avatar.png';
-		}*/
+		//$this->User->validator()->remove('avatar');
 
-		//######### AJOUTER UNE COMPETENCE ##########//
-		/*$some_sql = "Select libelle from competences";
-        $db = ConnectionManager::getDataSource('default');
-        $result = $db->query($some_sql);
-
-        $type = array();
-        foreach ($result as $row) {
-            $type[$row['competences']['libelle']] = $row['competences']['libelle'];
-        }
-        $this->set('type', $type);*/
-
-		//$this->User->id = $id;
 
 		if (!$user = $this->User->findById($id)) {
 			throw new NotFoundException(__('Utilisateur Invalide'));
 		}
 		if ($this->request->is('put')) {
 
+			$this->request->data['User']['avatar']= $this->saveAvatar($this->request->data,$user['User']['avatar']);
 			if ($this->User->save($this->request->data)) {
+
+
 				$this->Session->setFlash('L\'utilisateur a été édité', 'default', array('class' => 'alert alert-success'));
 				if ($this->Auth->user('id') == $id) $this->Auth->login($this->request->data['User']);
-				return $this->redirect(array('action' => 'index'));
+				//return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash('L\'utilisateur n\'a pas été édité. Merci de réessayer.', 'default', array('class' => 'alert alert-danger'));
 			}
@@ -395,9 +363,8 @@ class UsersController extends AppController
 				$this->redirect("/users/reset/" . $user['User']['id'] . "-" . md5($user['User']['password']));
 				//$this->User->send($user['User'], $v['mail'], 'Mot de passe oublié', 'reset');
 			}
+			}
 		}
-
-	}
 
 	public function update($id = null)
 	{
@@ -499,5 +466,46 @@ class UsersController extends AppController
 
 			//$this->redirect($this->Html->url("/", true));
 		}
+	}
+
+	/**
+	 * @param $id
+	 * @param $tableau_debug
+	 */
+	public function saveAvatar($data,$oldAvatar="")
+	{
+// Envoi fichier avatar
+
+		$chemin_avatar ='img' . DS . 'avatars' . DS .'avatar_default';
+		$ext='.png';
+		$file_name='avatar_default';
+
+		if(!empty($oldAvatar))
+			if (file_exists('img' . DS . 'avatars' . DS .$oldAvatar)) {
+				unlink('img' . DS . 'avatars' . DS .$oldAvatar);
+
+			$file = $data['User']['avatar']['name'];
+
+			/*On récupere l'extension de l'image*/
+			$ary_ext = array('png', 'jpg', 'jpeg', 'gif'); //array of allowed extensions
+			$ext = strtolower(strrchr($file, ".")); //get the extension
+
+			if (in_array(substr($ext, 1), $ary_ext)) {
+				if(isset($data['User']['id'])){
+					$file_name = 'avatar_user_' . $data['User']['id'];
+				}else{
+					$file_name = 'avatar_user_' .time();
+				}
+
+				$chemin_avatar = 'img' . DS . 'avatars' . DS . $file_name;
+			}else{
+				//TODO : Retourner une exception pour prévenir que l extension de fichier est incorrect
+				return false;
+			}
+		}
+
+		move_uploaded_file($data['User']['avatar']['tmp_name'], $chemin_avatar.$ext);
+
+		return $file_name.$ext;
 	}
 }

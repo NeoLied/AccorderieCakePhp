@@ -11,8 +11,13 @@
         <tbody>
 
         <tr class ="active">
-            <td rowspan="99" style="vertical-align:middle"> <img src="
-            <?php echo strtolower(h($user['User']['avatar'])) ?> " alt="Avatar" height="150" width="150  "></td>
+            <td rowspan="99" class="td_avatar">
+<!--                <img src="--><?php //echo strtolower(h($user['User']['avatar'])) ?><!-- " alt="Avatar" height="150" width="150  ">-->
+                <?php echo $this->Html->image('avatars/'.$user['User']['avatar'],array(
+                    "alt"=> "Avatar",
+                    "class" => 'img_avatar'
+                )) ; ?>
+            </td>
         </tr>
 
         <tr class="active">
