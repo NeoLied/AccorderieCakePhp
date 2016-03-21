@@ -46,6 +46,9 @@
         <tr>
             <td><strong>Présentation : </strong></td><td><?php echo h($user['User']['presentation']); ?></td>
         </tr>
+        <tr>
+            <td><strong>Type de service favoris : </strong></td><td><?php echo h($favType['libelle']); ?></td>
+        </tr>
         <tr class="active">
             <td><strong>Credit temps : </strong></td><td><?php echo h($user['User']['credit_temps']); ?></td>
         </tr

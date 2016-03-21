@@ -62,6 +62,16 @@ class UsersController extends AppController
 		}
 		$this->set('user', $this->User->read(null, $id));
 		$this->set('evaluations', $evaluations);
+
+		$typeId = $this->User->find('first', array(
+			'conditions' => array('id' => $id)
+		));
+
+		$this->loadModel('Type');
+		$favT = $this->Type->find("all", array(
+			'conditions' => array('id' => $typeId['User']['favoriteType'])
+		));
+		$this->set('favType', $favT[0]['Type']);
 	}
 
 	public function add()
