@@ -119,17 +119,14 @@ class User extends AppModel {
     		)
     	),
     	'avatar' => array(
-
 				'rule'    => array('extension', array('gif', 'jpeg', 'png', 'jpg')),
-				'required' => false,
 				'allowEmpty' => true,
 				'message' => 'Merci de soumettre une image valide.',
 
     		'poidsImage' => array(
     			'rule' => array('fileSize', '<=', '1MB'),
     			'message' => 'L\'image doit être inférieure à 1MB',
-				'allowEmpty' => true,
-				'required' => false
+				'allowEmpty' => true
     		)
     	),
 
