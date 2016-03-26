@@ -28,7 +28,7 @@
 </head>
 
 <?php
-	$id_user = '""';
+	$id_user = 0;
 	if(AuthComponent::user('id') != null){
 		$id_user = AuthComponent::user('id');
 	}
@@ -131,7 +131,7 @@
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li class="alert-danger"><?php echo $this->Html->link('Déconnexion','/users/logout'); ?></li>
+					<li class="alert-danger"><?php echo $this->Html->link('Déconnexion',array('controller'=>'users','action' => 'logout')); ?></li>
 					<li class="alert-warning"><?php  echo $this->Html->link('Actualiser votre crédit',array('controller'=>'users','action' => 'getCredit', AuthComponent::user('id'))); ?></li>
 					<li class="alert-success"><noscript>Merci d'activer JavaScript</noscript>
 						<a id="time"><?php

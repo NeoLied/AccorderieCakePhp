@@ -11,10 +11,19 @@ echo $this->Form->input('id', array('type' => 'hidden'));
 	<table class="table table-hover" style="text-align:center;">
 		<thead>
 		<tr>
-			<th colspan="99"><legend>Editer l'utilisateur</legend></th>
+			<th colspan="99"><legend> Modification du profil de  <?php echo $user['User']['username']?></legend></th>
 		</tr>
 		</thead>
 		<tbody>
+		<tr class ="active">
+			<td rowspan="99" class="td_avatar">
+
+				<?php echo $this->Html->image('avatars/'.$user['User']['avatar'],array(
+					"alt"=> "Avatar",
+					"class" => 'img_avatar'
+				)) ; ?>
+			</td>
+		</tr>
 		<tr>
 			<td><?php
 				echo $this->Form->input('nom',

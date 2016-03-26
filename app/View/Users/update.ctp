@@ -1,6 +1,6 @@
 <?php
     if(isset($utilisateur)){
-        echo "<b>".$utilisateur."</b> Heures";
+        echo "<b>".$utilisateur['User']['credit_temps']."</b> Heures";
     }else{
         echo "Erreur <!-- Aucun parametres renseignes -->";
     }

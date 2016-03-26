@@ -35,12 +35,7 @@ class AppController extends Controller {
 	
 	public $components = array(
         'Session',
-        'Auth' => array(
-			'loginRedirect' => array('controller' => 'users', 'action' => 'login'),
-            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display','home'),
-        	'authorize' => array('Controller'),
-			'unauthorizedRedirect' => array('controller' => 'users', 'action' => 'notAuthorized')
-        ),
+        'Auth' ,
 			'DebugKit.Toolbar'
     );
 

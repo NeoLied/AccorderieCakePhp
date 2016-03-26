@@ -84,7 +84,7 @@ class UsersController extends AppController
 		if ($this->request->is('post')) {
 			$this->User->create();
 
-			$this->request->data['User']['avatar']= $this->saveAvatar($this->request->data);
+			$this->request->data['User']['avatar']= $this->saveAvatar($this->request->data,null);
 			if ($this->User->save($this->request->data)) {
 
 				$this->Session->setFlash('L\'utilisateur a été sauvegardé, le compte va être prochainement validé par un administrateur', 'default', array('class' => 'alert alert-success'));
@@ -116,6 +116,7 @@ class UsersController extends AppController
 
 				$this->Session->setFlash('L\'utilisateur a été édité', 'default', array('class' => 'alert alert-success'));
 				if ($this->Auth->user('id') == $id) $this->Auth->login($this->request->data['User']);
+				return $this->redirect($this->here);
 				//return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash('L\'utilisateur n\'a pas été édité. Merci de réessayer.', 'default', array('class' => 'alert alert-danger'));
@@ -124,7 +125,8 @@ class UsersController extends AppController
 			$this->request->data = $user;
 			unset($this->request->data['User']['password']);
 		}
-	}
+		$this->set('user',$user);
+}
 
 	public function delete($id = null)
 	{
@@ -379,14 +381,12 @@ class UsersController extends AppController
 			}
 		}
 
-	public function update($id = null)
+	public function update($id)
 	{
-		$this->set('utilisateur', null);
+		if($id == null)
+			throw new NotFoundException;
+			$this->set('utilisateur', $this->User->findById($id));
 
-		if ($id != null) {
-			$temps = $this->getCredit($id, true);
-			$this->set('utilisateur', $temps);
-		}
 	}
 
 	public function dynamic($id = null)
@@ -485,15 +485,16 @@ class UsersController extends AppController
 	 * @param $id
 	 * @param $tableau_debug
 	 */
-	public function saveAvatar($data,$oldAvatar="")
+	public function saveAvatar($data,$oldAvatar)
 	{
-// Envoi fichier avatar
-
+		// Sauvegarde de l' avatar
+		//On définit le chemin et le nom de l'avatar
 		$chemin_avatar ='img' . DS . 'avatars' . DS .'avatar_default';
 		$ext='.png';
+		// nom de l'avatar par defaut
 		$file_name='avatar_default';
 
-		if(!empty($oldAvatar))
+		if(!empty($oldAvatar) || $oldAvatar == null)
 			if (file_exists('img' . DS . 'avatars' . DS .$oldAvatar)) {
 				unlink('img' . DS . 'avatars' . DS .$oldAvatar);
 
