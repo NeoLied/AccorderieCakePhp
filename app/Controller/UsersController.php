@@ -385,7 +385,8 @@ class UsersController extends AppController
 	{
 		if($id == null)
 			throw new NotFoundException;
-			$this->set('utilisateur', $this->User->findById($id));
+
+			$this->set('utilisateur', $this->User->findAllById($id));
 
 	}
 
