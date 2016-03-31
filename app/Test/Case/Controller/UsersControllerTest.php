@@ -20,7 +20,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_users_edit()
 	{
-		$id=7;
+		$id=1;
 		$result = $this->testAction('/users/edit/'.$id);
 		//debug($result);
 	}
@@ -45,7 +45,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_users_view()
 	{
-		$result = $this->testAction('/users/view/7');
+		$result = $this->testAction('/users/view/1');
 		debug($result);
 	}
 	
@@ -69,7 +69,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_users_delete()
 	{
-		$result = $this->testAction('/users/delete/7');
+		$result = $this->testAction('/users/delete/1');
 		debug($result);
 	}
 	
@@ -93,7 +93,7 @@ class UserControllerTest extends ControllerTestCase
 	
 	public function test_offre_bienvenue()
 	{
-		$result = $this->testAction('/users/offre_bienvenue/7');
+		$result = $this->testAction('/users/offre_bienvenue/1');
 		debug($result);
 	}
 
