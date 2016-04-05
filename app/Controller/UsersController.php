@@ -101,23 +101,18 @@ class UsersController extends AppController
 	public function edit($id){
 		$this->loadModel('Type');
 		$this->set('types', $this->Type->find('all', array('fields' => array('libelle'))));
-
-		//$this->User->validator()->remove('avatar');
-
-
 		if (!$user = $this->User->findById($id)) {
 			throw new NotFoundException(__('Utilisateur Invalide'));
 		}
 		if ($this->request->is('put')) {
-
 			$this->request->data['User']['avatar']= $this->saveAvatar($this->request->data,$user['User']['avatar']);
 			if ($this->User->save($this->request->data)) {
-
-
 				$this->Session->setFlash('L\'utilisateur a été édité', 'default', array('class' => 'alert alert-success'));
-				if ($this->Auth->user('id') == $id) $this->Auth->login($this->request->data['User']);
-				return $this->redirect($this->here);
+				if ($this->Auth->user('id') == $id)
+					$this->Auth->login($this->request->data['User']);
+				$this->redirect(array('action' => 'view',$id));
 				//return $this->redirect(array('action' => 'index'));
+
 			} else {
 				$this->Session->setFlash('L\'utilisateur n\'a pas été édité. Merci de réessayer.', 'default', array('class' => 'alert alert-danger'));
 			}
@@ -385,8 +380,9 @@ class UsersController extends AppController
 	{
 		if($id == null)
 			throw new NotFoundException;
-
-			$this->set('utilisateur', $this->User->findAllById($id));
+			$user =$this->User->findAllById($id);
+		$user['User']['credit_temps'] = $this->getCredit($id,true);
+			$this->set('utilisateur', $user);
 
 	}
 
@@ -496,7 +492,7 @@ class UsersController extends AppController
 		$file_name='avatar_default';
 
 		if(!empty($oldAvatar) || $oldAvatar == null)
-			if (file_exists('img' . DS . 'avatars' . DS .$oldAvatar)) {
+			if ($oldAvatar!= null && file_exists('img' . DS . 'avatars' . DS .$oldAvatar)) {
 				unlink('img' . DS . 'avatars' . DS .$oldAvatar);
 
 			$file = $data['User']['avatar']['name'];

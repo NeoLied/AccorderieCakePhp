@@ -1,7 +1,7 @@
-<!-- Fichier: /app/View/Posts/edit.ctp -->
+<!-- Fichier: /app/View/Users/edit.ctp -->
 <?php
 
-echo $this->Form->create('User', array('class'=>'form-inline', 'label' => 'User', 'type' => 'file'));
+echo $this->Form->create('User', array('class'=>'form-inline', 'type' => 'file'));
 
 
 echo $this->Form->input('id', array('type' => 'hidden'));
