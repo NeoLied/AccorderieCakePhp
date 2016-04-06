@@ -2,7 +2,7 @@
 
 class TypeFixture extends CakeTestFixture
 {
-    public $useDbConfig = 'test';
+  //  public $useDbConfig = 'test';
 
     public $import = array('table' => 'types', 'connection' => 'test');
     /*

@@ -1,4 +1,5 @@
 <?php
+App::import('Controller', 'App');
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 App::uses('CakeEmail', 'Network/Email');
@@ -29,7 +30,8 @@ class UsersController extends AppController
 	{
 		$this->User->recursive = 0;
 		//$this->set('users', $this->paginate());
-		$this->set('users', $this->User->find('all'));
+		$users =$this->User->find('all');
+		$this->set('users', $users);
 	}
 
 	public function bloquer($id)
@@ -51,27 +53,33 @@ class UsersController extends AppController
 
 	public function view($id = null)
 	{
+		$this->loadModel('Type');
 		$this->loadModel('Evaluation');
 
 		$this->User->id = $id;
-		$evaluations = $this->Evaluation->find('all', array(
-			'conditions' => array('offreur_id' => $id)
-		));
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Utilisateur invalide'));
+		}else{
+			$this->set('user', $this->User->Read(null, $id));
+
 		}
-		$this->set('user', $this->User->read(null, $id));
-		$this->set('evaluations', $evaluations);
 
-		$typeId = $this->User->find('first', array(
-			'conditions' => array('id' => $id)
-		));
+		if($evaluations = $this->Evaluation->find('all', array(
+			'conditions' => array('offreur_id' => $id)
+		))){
+			$this->set('evaluations', $evaluations);
+		}
 
-		$this->loadModel('Type');
-		$favT = $this->Type->find("all", array(
-			'conditions' => array('id' => $typeId['User']['favoriteType'])
-		));
-		$this->set('favType', $favT[0]['Type']);
+
+
+		$user = $this->User->findById($id);
+
+	if(	$favT = $this->Type->findById($user['User']['favoriteType'])){
+		$this->set('favType', $favT['Type']);
+	}
+
+
+
 	}
 
 	public function add()
@@ -179,8 +187,9 @@ class UsersController extends AppController
 		return ($user['User']['offre_de_bienvenue'] == "oui") ? 3 : 0;
 	}
 
-	public function getTempsDemande($user)
+	private function getTempsDemande($user)
 	{
+
 		$this->loadModel('Annonce');
 		$temps_demandes = 0;
 
@@ -205,7 +214,7 @@ class UsersController extends AppController
 
 	}
 
-	public function getTempsOffre($user)
+	private function getTempsOffre($user)
 	{
 		$this->loadModel('Annonce');
 		$temps_offres = 0;
@@ -482,7 +491,7 @@ class UsersController extends AppController
 	 * @param $id
 	 * @param $tableau_debug
 	 */
-	public function saveAvatar($data,$oldAvatar)
+	private function saveAvatar($data,$oldAvatar)
 	{
 		// Sauvegarde de l' avatar
 		//On définit le chemin et le nom de l'avatar
@@ -491,31 +500,34 @@ class UsersController extends AppController
 		// nom de l'avatar par defaut
 		$file_name='avatar_default';
 
-		if(!empty($oldAvatar) || $oldAvatar == null)
+		if(isset($data['User']['avatar']['tmp_name']) && !empty(isset($data['User']['avatar']['tmp_name']))){
 			if ($oldAvatar!= null && file_exists('img' . DS . 'avatars' . DS .$oldAvatar)) {
 				unlink('img' . DS . 'avatars' . DS .$oldAvatar);
 
-			$file = $data['User']['avatar']['name'];
+				$file = $data['User']['avatar']['name'];
 
-			/*On récupere l'extension de l'image*/
-			$ary_ext = array('png', 'jpg', 'jpeg', 'gif'); //array of allowed extensions
-			$ext = strtolower(strrchr($file, ".")); //get the extension
+				/*On récupere l'extension de l'image*/
+				$ary_ext = array('png', 'jpg', 'jpeg', 'gif'); //array of allowed extensions
+				$ext = strtolower(strrchr($file, ".")); //get the extension
 
-			if (in_array(substr($ext, 1), $ary_ext)) {
-				if(isset($data['User']['id'])){
-					$file_name = 'avatar_user_' . $data['User']['id'];
+				if (in_array(substr($ext, 1), $ary_ext)) {
+					if(isset($data['User']['id'])){
+						$file_name = 'avatar_user_' . $data['User']['id'];
+					}else{
+						$file_name = 'avatar_user_' .time();
+					}
+
+					$chemin_avatar = 'img' . DS . 'avatars' . DS . $file_name;
 				}else{
-					$file_name = 'avatar_user_' .time();
+					//TODO : Retourner une exception pour prévenir que l extension de fichier est incorrect
+					return false;
 				}
-
-				$chemin_avatar = 'img' . DS . 'avatars' . DS . $file_name;
-			}else{
-				//TODO : Retourner une exception pour prévenir que l extension de fichier est incorrect
-				return false;
 			}
+			move_uploaded_file($data['User']['avatar']['tmp_name'], $chemin_avatar.$ext);
+		}else{
+			$file_name='avatar_default';
 		}
 
-		move_uploaded_file($data['User']['avatar']['tmp_name'], $chemin_avatar.$ext);
 
 		return $file_name.$ext;
 	}

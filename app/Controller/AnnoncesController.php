@@ -1,4 +1,5 @@
 <?php
+App::import('Controller', 'App');
 class AnnoncesController extends AppController
 {
 
@@ -16,6 +17,94 @@ class AnnoncesController extends AppController
      * Fonctions refactorées
      */
 
+	public function add() {
+		$this->loadModel('Type');
+		$this->set('type',$this->Type->find('list',array(
+			'fields' => 'Type.libelle'
+		)));
+		$this->Annonce->create();
+		if ($this->request->is('post')) {
+			try{
+				if ($this->Annonce->save($this->request->data)) {
+					$this->Session->setFlash('L\'annonce a été ajoutée.','default', array('class' => 'alert alert-success'));
+					//debug($this->request->data);
+					$this->retourPageAccueil();
+				}
+
+			}catch (Exception $e) {
+				$this->Session->setFlash('Impossible d\'ajouter votre annonce.','default', array('class' => 'alert alert-danger'));
+				$e.stackTrace();
+
+
+			}
+			}
+	}
+	public function edit($id=null) {
+		$op=0;
+		if(!empty($id)){
+			//$this->testerExistenceAnnonce($id);
+			//$this->testerExistenceAnnonceParObjet($annonce);
+
+			$this->loadModel('Type');
+			//$requete = "Select libelle from types";
+			//$result = $this->injecterRequete($requete);
+
+
+			$annonce = $this->Annonce->findById($id);
+			$this->set('type',$this->Type->find('list',array(
+				'fields' => 'Type.libelle'
+			)));
+			if ($this->request->is( 'put')) {
+				if ($this->Annonce->save($this->request->data)) {
+					$this->Session->setFlash('Votre annonce a été éditée','default', array('class' => 'alert alert-success'));
+					$this->retourPageAccueil();
+				}else{
+					$this->Session->setFlash('Impossible de modifier l\'annonce.','default', array('class' => 'alert alert-warning'));
+				}
+			}
+			if (!$this->request->data) {
+				$this->request->data = $annonce;
+			}
+		}else{
+			$this->Session->setFlash('Cette annonce n\'existe pas !','default', array('class' => 'alert alert-warning'));
+			$this->retourPageAccueil();
+		}
+
+	}
+	public function view($id = null) {
+		$annonce = $this->Annonce->findById($id);
+		$this->set('annonce', $annonce);
+	}
+
+	public function annonce_pas_valide (){
+		$this->set('annonces',  $this->Annonce->find('all', array(
+			'conditions' => array('Annonce.annonceValide' => 'non')
+		)));
+	}
+	public function valider_annonce ($id_annonce){
+		$this->Annonce->id = $id_annonce;
+		$this->Annonce->saveField('annonceValide', 'oui');
+		return $this->redirect(array('action' => 'annonce_pas_valide'));
+	}
+	public function reservation($id_annonce,$id_personneReservante,$id_personneProprio) {
+		$this->loadModel('User');
+		if( $id_personneReservante != $id_personneProprio)
+		{
+			$this->Annonce->id = $id_annonce;
+			$this->Annonce->saveField('id_accepteur', $id_personneReservante);
+		}
+
+		$infoP = $this->User->findById( $id_personneReservante);
+		$info = $this->User->findById($id_personneProprio);
+
+		if(!empty($info) && isset($info)){
+			$this->User->send($infoP, $info['User']['mail'], 'Un utilisateur vous à fait une demande de réservation sur La Marmite', 'reservation');
+		}
+
+
+		return $this->redirect('/annonces/view/'.$id_annonce);
+	}
+
 
 	public function desisterAnnonce($idAnnonce){
 		$this->Annonce->id = $idAnnonce;
@@ -27,17 +116,29 @@ class AnnoncesController extends AppController
         $this->loadModel('User');
         $this->Annonce->id = $idAnnonce;
         $annonce =$this->Annonce->findById($idAnnonce);
-        $offreur = $this->User->findById($annonce['Annonce']['id_accepteur']);
-        $this->Annonce->saveField('id_accepteur', '0');
+		$offreur = $this->User->findById($annonce['Annonce']['id_accepteur']);
+		if($offreur >0){
+			$this->Annonce->saveField('id_accepteur', '0');
 
-        $this->User->send($annonce, $offreur['User']['mail'], 'Votre offre de service a été refusé', 'refuserOffre');
+			$this->User->send($annonce, $offreur['User']['mail'], 'Votre offre de service a été refusé', 'refuserOffre');
 
-        $this->Session->setFlash('La proposition de service a été refusée','default', array('class' => 'alert alert-warning'));
+			$this->Session->setFlash('La proposition de service a été refusée','default', array('class' => 'alert alert-warning'));
+
+		}else{
+			throw new NotFoundException("Impossible de refuser l'offre, offreur introuvable");
+		}
+
 
 
         return $this->redirect("/");
     }
+	public function valider_service($id) {
+		$this->loadModel('User');
+		$annonce =  $this->Annonce->findById($id);
+		$this->set('annonce',$annonce);
+		$this->set('offreur',$this->User->findById($annonce['Annonce']['id_accepteur']));
 
+	}
 
     public function cloturer_annonce()
 	{
@@ -72,13 +173,6 @@ class AnnoncesController extends AppController
 
 
 	}
-	public function valider_service($id) {
-		$this->loadModel('User');
-		$annonce =  $this->Annonce->findById($id);
-		$this->set('annonce',$annonce);
-		$this->set('offreur',$this->User->findById($annonce['Annonce']['id_accepteur']));
-
-	}
 
     public function index() {
          $this->set('annonces', $this->selectAllAnnonces());
@@ -104,21 +198,8 @@ class AnnoncesController extends AppController
 
 		if($this->request->is('post')) {
             if(!empty($this->request->data) && isset($this->request->data)) {
-                if (($this->request->data['Annonce']['type_id']) > 0) {
-                    $annonces = $this->Annonce->find('all', array(
-                        //tableau de conditions
-                        'conditions' => array('Annonce.demande' => 1,
-                            'Annonce.annonceValide' => 'oui',
-                            'Annonce.type_id' => $this->request->data['Annonce']['type_id'])
-                    ));
-                } else {
-                    $annonces = $this->Annonce->find('all', array(
-                        //tableau de conditions
-                        'conditions' => array('Annonce.demande' => 1,
-                            'Annonce.annonceValide' => 'oui'
-                        )));
-                }
-            }
+				$annonces = $this->selectAllOffres();
+			}
 
 			list($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales) = $this->setStatutAnnonce($annonces, $annoncesExpires, $annoncesUrgentes, $annoncesNormales);
 
@@ -192,7 +273,6 @@ class AnnoncesController extends AppController
 		}
 
     	$this->set('annonces', $annonces);
-
     	$this->set('annoncesUrgentes', $annoncesUrgentes);
 
     	$this->set('annoncesExpires', $annoncesExpires);
@@ -204,17 +284,33 @@ class AnnoncesController extends AppController
 				'fields' => 'Type.libelle'
 		)));
     }
-    
-    /*
-     * Fonctions à refactorer
-     */
-    
-    public function view($id = null) {
-    	$annonce = $this->Annonce->findById($id);
-        $this->set('annonce', $annonce);
-    }
-    
-    private function testerExistenceAnnonceParID($id) {
+
+	/**
+	 * Methode créee suite à une factorisation
+	 * @return mixed
+	 */
+	public function selectAllOffres()
+	{
+		if (($this->request->data['Annonce']['type_id']) > 0) {
+			$annonces = $this->Annonce->find('all', array(
+				//tableau de conditions
+				'conditions' => array('Annonce.demande' => 1,
+					'Annonce.annonceValide' => 'oui',
+					'Annonce.type_id' => $this->request->data['Annonce']['type_id'])
+			));
+			return $annonces;
+		} else {
+			$annonces = $this->Annonce->find('all', array(
+				//tableau de conditions
+				'conditions' => array('Annonce.demande' => 1,
+					'Annonce.annonceValide' => 'oui'
+				)));
+			return $annonces;
+		}
+	}
+
+
+	private function testerExistenceAnnonceParID($id) {
     	if (!$id) {
     		throw new NotFoundException(__('Annonce invalide'));
     	}
@@ -226,59 +322,12 @@ class AnnoncesController extends AppController
         }
     }
     
-    public function add() {
-		$this->loadModel('Type');
-		$this->set('type',$this->Type->find('list',array(
-			'fields' => 'Type.libelle'
-		)));
 
-    	if ($this->request->is('post')) {
-    		$this->Annonce->create();
-    		if ($this->Annonce->save($this->request->data)) {
-				$this->Session->setFlash('L\'annonce a été ajoutée.','default', array('class' => 'alert alert-success'));
-				//debug($this->request->data);
-				$this->retourPageAccueil();
-    		}
-			$this->Session->setFlash('Impossible d\'ajouter votre annonce.','default', array('class' => 'alert alert-danger'));
-		}
-    }
-    
     private function retourPageAccueil() {
     	return $this->redirect("/");
     }
     
-    public function edit($id=null) {
-		$op=0;
-        if(!empty($id)){
-            //$this->testerExistenceAnnonce($id);
-            //$this->testerExistenceAnnonceParObjet($annonce);
 
-            $this->loadModel('Type');
-            //$requete = "Select libelle from types";
-            //$result = $this->injecterRequete($requete);
-
-
-            $annonce = $this->Annonce->findById($id);
-            $this->set('type',$this->Type->find('list',array(
-                'fields' => 'Type.libelle'
-            )));
-            if ($this->request->is( 'put')) {
-                if ($this->Annonce->save($this->request->data)) {
-                    $this->Session->setFlash('Votre annonce a été éditée','default', array('class' => 'alert alert-success'));
-                    $this->retourPageAccueil();
-                }else{
-                    $this->Session->setFlash('Impossible de modifier l\'annonce.','default', array('class' => 'alert alert-warning'));
-                }
-            }
-            if (!$this->request->data) {
-                $this->request->data = $annonce;
-            }
-        }else{
-            $this->Session->setFlash('Cette annonce n\'existe pas !','default', array('class' => 'alert alert-warning'));
-            $this->retourPageAccueil();
-        }
-
-    }
     
     public function delete($id)
     {
@@ -290,7 +339,9 @@ class AnnoncesController extends AppController
     	{
     		$this->Session->setFlash(__('L\'annonce avec id : %s a été supprimée.', h($id)), 'default', array('class' => 'alert alert-warning'));
     		$this->retourPageAccueil();
-    	}
+    	}else{
+			throw new NotFoundException();
+		}
     }
     
     public function signaler($id){
@@ -305,24 +356,6 @@ class AnnoncesController extends AppController
     	)));
     }
     
-	public function reservation($id_annonce,$id_personneReservante,$id_personneProprio) {
-		$this->loadModel('User');
-    	if( $id_personneReservante != $id_personneProprio)
-    	{
-    		$this->Annonce->id = $id_annonce;
-    		$this->Annonce->saveField('id_accepteur', $id_personneReservante);
-    	}
-
-		$infoP = $this->User->findById( $id_personneReservante);
-		$info = $this->User->findById($id_personneProprio);
-
-        if(!empty($info) && isset($info)){
-            $this->User->send($infoP, $info['User']['mail'], 'Un utilisateur vous à fait une demande de réservation sur La Marmite', 'reservation');
-        }
-
-
-		return $this->redirect('/annonces/view/'.$id_annonce);
-    }
 
 	/**
 	 * @param $annonces
@@ -371,23 +404,6 @@ class AnnoncesController extends AppController
     {
     	$this->set('annonces',  $this->Annonce->find('all', array(
     			'conditions' => array('Annonce.user_id' => AuthComponent::user('id'))
-    	)));
-    }
-    
-    /*
-     * Fonctions privées réutilisables
-     */
-
-
-	public function valider_annonce ($id_annonce){
-    	$this->Annonce->id = $id_annonce;
-    	$this->Annonce->saveField('annonceValide', 'oui');
-    	return $this->redirect(array('action' => 'annonce_pas_valide'));
-    }
-    
-    public function annonce_pas_valide (){
-    	$this->set('annonces',  $this->Annonce->find('all', array(
-    			'conditions' => array('Annonce.annonceValide' => 'non')
     	)));
     }
     

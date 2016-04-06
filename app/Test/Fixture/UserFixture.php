@@ -2,7 +2,7 @@
 
 class UserFixture extends CakeTestFixture
 {
-	public $useDbConfig = 'test';
+	//public $useDbConfig = 'test';
 
 public $import ='User';
 	public $fields = array(

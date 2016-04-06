@@ -1,124 +1,243 @@
 <?php
+App::uses('UsersController', 'Controller');
 
-App::uses('AppController', 'Controller');
+/**
+ * UsersController Test Case
+ *
+ */
 
-class UserControllerTest extends ControllerTestCase 
+class UsersControllerTest extends ControllerTestCase
 {
-	//public $fixtures = array('app.user','app.annonce','app.type');
-	
-	public function test_users_index() 
+
+	protected $userController;
+	public function setUp(){
+		parent::setUp();
+		$userController = new UsersController();
+	}
+	public function testIndex()
 	{
 		$result = $this->testAction('/users/index');
 		//debug($result);
 	}
-	
-	public function test_users_add()
-	{
-		$result = $this->testAction('/users/add');
+	/**
+	 * testAdd method
+	 *
+	 * @return void
+	 */
+	public function testAdd() {
+		$user = array(
+			'User' => array(
+				'id' => '282',
+				'username' => 'fredo',
+				'password' => '123456',
+				'nom' => 'francois',
+				'prenom' => 'frederick',
+				'date_naissance' => '1966-06-01',
+				'mail' => 'info@exmple.org',
+				'adresse' => '',
+				'code_postal' => '31000',
+				'ville' => 'Toulouse',
+				'telephone' => '0100000000',
+				'avatar' => 'avatar_default.png',
+				'identite' => '',
+				'presentation' => 'Compte test unitaire',
+				'question_secrete' => '0',
+				'reponse_secrete' => 'f887019040975579ec12578d5eb586981fc910ef',
+				'credit_temps' => '3',
+				'role' => 'admin',
+				'offre_de_bienvenue' => 'oui',
+				'created' => '2016-03-11 15:28:18',
+				'evaluation_id' => '0',
+				'bloquer' => false,
+				'favoriteType' => '2',
+				'lastPost' => true
+			)
+		);
+		$result = $this->testAction('/users/add',array('data'=>$user,'method'=>'post'));
 		//debug($result);
 	}
-	
-	public function test_users_edit()
-	{
-		$id=1;
-		$result = $this->testAction('/users/edit/'.$id);
-		//debug($result);
-	}
-	
-	public function test_users_edit_sans_id()
-	{
-		try {
-			$result = $this->testAction('/users/edit/null');
-			//debug($result);
-		}
-		catch (NOTFOUNDEXCEPTION $e)
-		{
-			assert(true);
-		}
-	}
-	
-	public function test_users_login()
-	{
-		$result = $this->testAction('/users/login');
-		debug($result);
-	}
-	
-	public function test_users_view()
-	{
-		$result = $this->testAction('/users/view/1');
-		debug($result);
-	}
-	
-	public function test_users_view_sans_id()
-	{
-		try {
-			$result = $this->testAction('/users/view/null');
-			debug($result);
-		}
-		catch (NOTFOUNDEXCEPTION $e)
-		{
-			assert(true);
-		}
-	}
-	
-	public function test_users_logout()
-	{
-		$result = $this->testAction('/users/logout');
-		debug($result);
-	}
-	
-	public function test_users_delete()
-	{
-		$result = $this->testAction('/users/delete/1');
-		debug($result);
-	}
-	
-	public function test_users_delete_sans_id()
-	{
-		try {
-			$result = $this->testAction('/users/delete/null');
-			debug($result);
-		}
-		catch (NOTFOUNDEXCEPTION $e)
-		{
-			assert(true);
-		}
-	}
-	
-	public function test_users_getCredit()
-	{
-		$result = $this->testAction('/users/getCredit');
-		debug($result);
-	}
-	
-	public function test_offre_bienvenue()
-	{
-		$result = $this->testAction('/users/offre_bienvenue/1');
-		debug($result);
+	/**
+	 * testUtilisateurPasValide method
+	 *
+	 * @return void
+	 */
+	public function testUtilisateurPasValide() {
+
+		$result = $this->testAction('/users/utilisateur_pas_valide');
 	}
 
-	
-	public function test_login() {
-		$data = array(
-				'User' => array(
-						'username' => 'Georges',
-						'password' => 'Georges',
-				)
+	/**
+	 * testGetOffreBienvenue method
+	 *
+	 * @return void
+	 */
+	public function testGetOffreBienvenue($user=null)
+	{
+		$user = array(
+			'User' => array(
+				'id' => '282',
+				'username' => 'fredo',
+				'password' => '123456',
+				'nom' => 'francois',
+				'prenom' => 'frederick',
+				'date_naissance' => '1966-06-01',
+				'mail' => 'info@exmple.org',
+				'adresse' => '',
+				'code_postal' => '31000',
+				'ville' => 'Toulouse',
+				'telephone' => '0100000000',
+				'avatar' => 'avatar_default.png',
+				'identite' => '',
+				'presentation' => 'Compte test unitaire',
+				'question_secrete' => '0',
+				'reponse_secrete' => 'f887019040975579ec12578d5eb586981fc910ef',
+				'credit_temps' => '3',
+				'role' => 'admin',
+				'offre_de_bienvenue' => 'oui',
+				'created' => '2016-03-11 15:28:18',
+				'evaluation_id' => '0',
+				'bloquer' => false,
+				'favoriteType' => '2',
+				'lastPost' => true
+			)
 		);
-		$result = $this->testAction(
-				'/users/login',
-				array('data' => $data, 'method' => 'post')
-		);
-		debug($result);
+		return ($user['User']['offre_de_bienvenue'] == "oui") ? 3 : 0;
 	}
-	
-	public function test_is_authorized_1() {
-		$result = $this->testAction('/users/isAuthorized/1');
-		debug($result);
+	/**
+	 * testLogin method
+	 *
+	 * @return void
+	 */
+	public function testLogin() {
+		$this->testAction('/users/login');	}
+	/**
+	 * testEdit method
+	 *
+	 * @return void
+	 */
+	public function testEdit($id=276) {
+			$result = $this->testAction('/users/edit/'.$id);
+			//debug($result);
+
 	}
-	
-	public function test_is_authorized_2() {
-		$result = $this->testAction('/users/isAuthorized/1');
-		debug($result);
+	/**
+	 * testView method
+	 *
+	 * @return void
+	 */
+	public function testView($id=4) {
+		$this->testAction("/users/view/$id");
 	}
+	/**
+	 * testReset method
+	 *
+	 * @return void
+	 */
+	public function testReset() {
+		$this->testAction("/users/reset");
+	}
+
+	/**
+	 * testUpdate method
+	 *
+	 * @return void
+	 */
+	public function testUpdate($id=276) {
+		$this->testAction('/users/update/276');
+	}
+	/**
+	 * testDynamic method
+	 *
+	 * @return void
+	 */
+	public function testDynamic($id=276) {
+		$this->testAction('/users/dynamic/276');	}
+
+	/**
+	 * testPrefs method
+	 *
+	 * @return void
+	 */
+	public function testPrefs($id = 276, $params1 = 1, $params2 = 1) {
+		$this->testAction('/users/update/276');
+	}
+
+	/**
+	 * testGetTempsDemande method
+	 *
+	 * @expectedException PRIVATEACTIONEXCEPTION
+	 */
+	public function testGetTempsDemande() {
+		$this->testAction("/users/getTempsDemande");
+	}
+
+	/**
+	 * testGetTempsOffre method
+	 *
+	 * @expectedException PRIVATEACTIONEXCEPTION
+	 */
+	public function testGetTempsOffre() {
+		$this->testAction('/users/getTempsOffre');
+	}
+
+	/**
+	 * testGetCredit method
+	 *
+	 * @return void
+	 */
+	public function testGetCredit($id=276,$retour=false) {
+		$this->testAction("/users/getCredit/$id");
+	}
+
+	/**
+	 * testOffreBienvenue method
+	 *
+	 * @return void
+	 */
+	public function testOffreBienvenue($id=276) {
+		$this->testAction("/users/offre_bienvenue/$id");
+	}
+
+	/**
+ * testBloquer method
+ *
+ * @return void
+ */
+	public function testBloquer($id=276) {
+		$this->testAction("/users/bloquer/$id");
+	}
+
+	/**
+ * testDebloquer method
+ *
+ * @return void
+ */
+	public function testDebloquer($id=276) {
+		$this->testAction("/users/bloquer/$id");	}
+
+	/**
+	 * testLogout method
+	 *
+	 * @return void
+	 */
+	public function testLogout() {
+		$this->testAction('/users/logout');
+	}
+	/**
+	 * testDelete method
+	 *
+	 * @expectedException NOTFOUNDEXCEPTION
+	 */
+	public function testDelete($id=null) {
+		$this->testAction("/users/delete/$id");
+	}
+	/**
+	 * testSaveAvatar method
+	 *
+	 * @expectedException PRIVATEACTIONEXCEPTION
+	 */
+	public function testSaveAvatar() {
+		$this->testAction('/users/saveAvatar');
+	}
+
 }

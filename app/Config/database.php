@@ -67,7 +67,7 @@
  * A key/value array of driver specific connection options.
  */
 class DATABASE_CONFIG {
-
+/*
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
@@ -78,8 +78,32 @@ class DATABASE_CONFIG {
 		'database' => 'accorderieTest',
 		'prefix' => '',
 		'encoding' => 'utf8',
+	);*/
+	public $default = array(
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
+		'host' => '127.0.0.1',
+		'port' => '3306',
+		'login' => 'root',
+		'password' => '',
+		'database' => 'accorderieTest',
+		'prefix' => '',
+		'encoding' => 'utf8',
 	);
 
+	public $test = array(
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
+		'host' => '127.0.0.1',
+		'port' => '3306',
+		'login' => 'root',
+		'password' => '',
+		'database' => 'accorderieTestCase',
+		'prefix' => '',
+		'encoding' => 'utf8',
+	);
+
+/*
 	public $test = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
@@ -92,5 +116,5 @@ class DATABASE_CONFIG {
 		'encoding' => 'utf8',
 	);
 
-
+*/
 }
