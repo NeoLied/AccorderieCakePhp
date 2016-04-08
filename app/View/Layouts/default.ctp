@@ -105,7 +105,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mon profil<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><?php echo $this->Html->link('Voir mon profil','/users/view/'.AuthComponent::user('id')); ?></li>
-							<li><?php echo $this->Html->link('Editer','/users/edit/'.AuthComponent::user('id')); ?></li>
+							<li><?php echo $this->Html->link('Editer mon profil','/users/edit/'.AuthComponent::user('id')); ?></li>
 							<li><?php echo $this->Html->link('Mes annonces','/annonces/mes_annonces'); ?></li>
 							<li><?php echo $this->Html->link('Mon Historique','/annonces/mon_historique'); ?></li>
 						</ul>

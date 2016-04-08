@@ -64,11 +64,11 @@ echo $this->Form->input('user_id',array('type' => 'hidden','value' => AuthCompon
       <td><?php
         echo $this->Form->radio(
                 'demande',
-                array(false => 'Demande'), $attributes
+                array(0 => 'Demande'), $attributes
             );
         echo $this->Form->radio(
             'demande',
-            array(true => 'Offre'),  $attributes
+            array(1 => 'Offre'),  $attributes
             );
         ?>
       </td>

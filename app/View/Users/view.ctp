@@ -16,7 +16,8 @@
                 <?php echo $this->Html->image('avatars/'.$user['User']['avatar'],array(
                     "alt"=> "Avatar",
                     "class" => 'img_avatar'
-                )) ; ?>
+                )) ;
+                ?>
             </td>
         </tr>
 
@@ -47,7 +48,12 @@
             <td><strong>Présentation : </strong></td><td><?php echo h($user['User']['presentation']); ?></td>
         </tr>
         <tr>
-            <td><strong>Type de service favoris : </strong></td><td><?php echo h($favType['libelle']); ?></td>
+            <td><strong>Type de service favoris : </strong></td>
+            <td>
+                <?php if(isset($favType['libelle'])){
+                    echo h($favType['libelle']);
+                }else{ echo $favType;} ?>
+            </td>
         </tr>
         <tr class="active">
             <td><strong>Credit temps : </strong></td><td><?php echo h($user['User']['credit_temps']); ?></td>
@@ -75,6 +81,7 @@
         <tbody>
 
         <?php
+        if(isset($evaluations)){
             foreach($evaluations as $evaluation){
                 ?>
                 <tr>
@@ -84,7 +91,7 @@
                 echo "<td>".$evaluation['Evaluation']['note']."</td></tr>";
 
 
-            }
+            }}
 
         ?>
 

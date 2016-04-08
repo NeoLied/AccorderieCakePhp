@@ -3,7 +3,7 @@ App::import('Controller', 'App');
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 App::uses('CakeEmail', 'Network/Email');
-
+App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 class UsersController extends AppController
 {
 
@@ -13,6 +13,7 @@ class UsersController extends AppController
 		// Permet aux utilisateurs de s'enregistrer, de se déconnecter et de reset le mot de passe
 		$this->Auth->allow('add', 'logout');
 		$this->Auth->allow('add', 'reset');
+		$this->Auth->allow('add', 'add');
 
 
 	}
@@ -50,7 +51,6 @@ class UsersController extends AppController
 		return $this->redirect("/");
 	}
 
-
 	public function view($id = null)
 	{
 		$this->loadModel('Type');
@@ -63,19 +63,17 @@ class UsersController extends AppController
 			$this->set('user', $this->User->Read(null, $id));
 
 		}
-
 		if($evaluations = $this->Evaluation->find('all', array(
 			'conditions' => array('offreur_id' => $id)
 		))){
 			$this->set('evaluations', $evaluations);
 		}
 
-
-
 		$user = $this->User->findById($id);
-
 	if(	$favT = $this->Type->findById($user['User']['favoriteType'])){
 		$this->set('favType', $favT['Type']);
+	}else{
+		$this->set('favType', "Aucun");
 	}
 
 
@@ -158,20 +156,21 @@ class UsersController extends AppController
 			} else {
 				if(!empty($this->request->data) && isset($this->request->data)){
                     $d = $this->User->find('first', array('conditions' => array('username' => $this->request->data['User']['username'])));
-                    App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
+
 
                     $passwordHasher = new SimplePasswordHasher();
                     $passwordHasher = $passwordHasher->hash($this->request->data['User']['password']);
 
-                    if($d['User']['offre_de_bienvenue'] == 'non' && $d['User']['password'] == $passwordHasher){
+					if($d['User']['password'] != $passwordHasher || $d['User']['username']!= $this->request->data['User']['username']){
+						$this->Session->setFlash("Nom d'utilisateur ou mot de passe invalide, merci de réessayez",'default', array('class' => 'alert alert-danger'));
+					}
+                    else if($d['User']['offre_de_bienvenue'] == 'non'){
                         $this->Session->setFlash("Votre compte n'a pas encore été validé",'default', array('class' => 'alert alert-warning'));
                     }
-                    if($d['User']['bloquer'] == '1' && $d['User']['password'] == $passwordHasher) {
+                    else if($d['User']['bloquer'] == '1' && $d['User']['password'] == $passwordHasher) {
                         $this->Session->setFlash("Votre compte a été bloqué", 'default', array('class' => 'alert alert-warning'));
                     }
-                    else{
-                        $this->Session->setFlash("Nom d'utilisateur ou mot de passe invalide, merci de réessayez",'default', array('class' => 'alert alert-danger'));
-                    }
+
 				}
 			}
 		}
@@ -503,7 +502,7 @@ class UsersController extends AppController
 		if(isset($data['User']['avatar']['tmp_name']) && !empty(isset($data['User']['avatar']['tmp_name']))){
 			if ($oldAvatar!= null && file_exists('img' . DS . 'avatars' . DS .$oldAvatar)) {
 				unlink('img' . DS . 'avatars' . DS .$oldAvatar);
-
+			}
 				$file = $data['User']['avatar']['name'];
 
 				/*On récupere l'extension de l'image*/
@@ -522,9 +521,10 @@ class UsersController extends AppController
 					//TODO : Retourner une exception pour prévenir que l extension de fichier est incorrect
 					return false;
 				}
-			}
+
 			move_uploaded_file($data['User']['avatar']['tmp_name'], $chemin_avatar.$ext);
 		}else{
+
 			$file_name='avatar_default';
 		}
 

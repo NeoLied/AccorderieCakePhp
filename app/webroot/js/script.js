@@ -10,9 +10,6 @@ $(function() {
 
 
 $(document).ready(function(){
-    update($('#update_id_user').val(), $('#update_uri').val(), $('#update_loading_credit_temps').val());
-    homePage($('#update_id_user').val(), $('#update_uri').val(), $('#update_loading_page_dynamique').val());
- 
 
     $('#AnnonceTypeId').change(function(){
         $('#AnnonceDemandeForm').submit();
@@ -30,6 +27,10 @@ $(document).ready(function(){
     $('.ligneAnnonce').hover(function(event){
         $('.ligneAnnonce *').css('cursor','pointer');
     });
+
+    update($('#update_id_user').val(), $('#update_uri').val(), $('#update_loading_credit_temps').val());
+
+    homePage($('#update_id_user').val(), $('#update_uri').val(), $('#update_loading_page_dynamique').val());
 
 
 });
@@ -59,7 +60,9 @@ function getXMLHttpRequest() {
 function update(id, path, $loadingImg) {
 
     xmlhttp = getXMLHttpRequest();
+    xmlhttp.open("GET",path+"users/update/"+id,true);
 
+    xmlhttp.send();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && (xmlhttp.status == 200 || xmlhttp.status == 0)) {
             document.getElementById("time").innerHTML = xmlhttp.responseText;
@@ -69,8 +72,7 @@ function update(id, path, $loadingImg) {
             }
         }
     };
-    xmlhttp.open("GET",path+"users/update/"+id,true);
-    xmlhttp.send();
+
 }
 
 /* pour la page dynamique*/
@@ -82,7 +84,7 @@ function homePage(id, $path, $loadingImg) {
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
             document.getElementById("dynamic").innerHTML = xhr.responseText;
         }else{
-            alert
+
             if(document.getElementById("dynamic").innerHTML == ""){
                 document.getElementById("dynamic").innerHTML = "<img src='"+$path+"img/"+$loadingImg+"' alt='Chargement' />";
             }

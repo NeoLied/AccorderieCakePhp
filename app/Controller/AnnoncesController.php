@@ -22,21 +22,17 @@ class AnnoncesController extends AppController
 		$this->set('type',$this->Type->find('list',array(
 			'fields' => 'Type.libelle'
 		)));
-		$this->Annonce->create();
+
 		if ($this->request->is('post')) {
-			try{
+			$this->Annonce->create();
+
 				if ($this->Annonce->save($this->request->data)) {
 					$this->Session->setFlash('L\'annonce a été ajoutée.','default', array('class' => 'alert alert-success'));
 					//debug($this->request->data);
 					$this->retourPageAccueil();
 				}
 
-			}catch (Exception $e) {
-				$this->Session->setFlash('Impossible d\'ajouter votre annonce.','default', array('class' => 'alert alert-danger'));
-				$e.stackTrace();
 
-
-			}
 			}
 	}
 	public function edit($id=null) {
@@ -310,19 +306,6 @@ class AnnoncesController extends AppController
 	}
 
 
-	private function testerExistenceAnnonceParID($id) {
-    	if (!$id) {
-    		throw new NotFoundException(__('Annonce invalide'));
-    	}
-    }
-    
-    private function testerExistenceAnnonceParObjet($annonce) {
-    	if (!$annonce) {
-            throw new NotFoundException(__('Annonce invalide'));
-        }
-    }
-    
-
     private function retourPageAccueil() {
     	return $this->redirect("/");
     }
@@ -421,7 +404,7 @@ class AnnoncesController extends AppController
     				'conditions' => array('Annonce.id' => $annonceId)));
             if(!empty($userId) && isset($userId)){
                 $annonceUserId = $userId['Annonce']['user_id'];
-                if ($this->Annonce->isOwnedBy($annonceUserId, $user['id'])) {
+                if ($this->Annonce->isOwnedBy($annonceId, $userId['id'])) {
                     return true;
                 }
             }
@@ -432,6 +415,7 @@ class AnnoncesController extends AppController
     
 	public function mon_historique()
     {
+		$this->loadModel("User");
     	//récupérer la liste de toutes les annonces
     	$this->set('annonces',  $this->Annonce->find('all', array(
     			'conditions' => array(
@@ -457,9 +441,13 @@ class AnnoncesController extends AppController
 		)));
 
    	 	$requete = "Select offre_de_bienvenue from users where id = ".AuthComponent::user('id');
-    	$result = $this->injecterRequete($requete);
+    	$result=null;
+		try{
+			$result = $this->injecterRequete($requete);
+		}catch(Exception $e ){
 
-    	$offre = $result[0];
+			}
+
     	$this->set('offre_bienvenue',$result);
 
     }
@@ -504,6 +492,19 @@ class AnnoncesController extends AppController
 		 return (date_diff(new DateTime($annonce['Annonce']['date_limite']), new DateTime('now'))->format("%a") < 4 )? true : false;
 
 		}
+
+	private function testerExistenceAnnonceParID($id) {
+		if (!$id) {
+			throw new NotFoundException(__('Annonce invalide'));
+		}
+	}
+
+	private function testerExistenceAnnonceParObjet($annonce) {
+		if (!$annonce) {
+			throw new NotFoundException(__('Annonce invalide'));
+		}
+	}
+
 
 }
 ?>

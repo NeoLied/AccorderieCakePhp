@@ -34,7 +34,8 @@ public  $hasOne = array('Evaluation'=>
     );
      
     public function isOwnedBy($annonce, $user) {
-    	return $annonce == $user;
+		return $this->field('id',
+			array('id' => $annonce, 'user_id' => $user)) !== false;
     }
 
 	public function beforeSave($options = array()){

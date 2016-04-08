@@ -17,7 +17,6 @@
             <?php echo $this->Html->link($user['User']['nom'],
                 array('controller' => 'users', 'action' => 'view', $user['User']['id'])); ?>
         </td>
-        <td><?php echo $user['User']['nom']; ?></td>
         <td><?php echo $user['User']['prenom']; ?></td>
         <td><?php echo $user['User']['username']; ?></td>
 
