@@ -35,3 +35,6 @@ Thumbs.db
 # config files #
 #################################
 /app/Config
+Plugin
+Lib
+/plugins
