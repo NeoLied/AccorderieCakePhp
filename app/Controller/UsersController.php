@@ -392,9 +392,7 @@ class UsersController extends AppController
 		$user['User']['credit_temps'] = $this->getCredit($id,true);
 			$this->set('utilisateur', $user);
 
-	}
-
-	public function dynamic($id = null)
+	}	public function dynamic($id = null)
 	{
 		$this->set('user', null);
 

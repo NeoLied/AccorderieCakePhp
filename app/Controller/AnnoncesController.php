@@ -289,10 +289,12 @@ class AnnoncesController extends AppController
 	{
 		if (($this->request->data['Annonce']['type_id']) > 0) {
 			$annonces = $this->Annonce->find('all', array(
+				
 				//tableau de conditions
 				'conditions' => array('Annonce.demande' => 1,
 					'Annonce.annonceValide' => 'oui',
 					'Annonce.type_id' => $this->request->data['Annonce']['type_id'])
+
 			));
 			return $annonces;
 		} else {
