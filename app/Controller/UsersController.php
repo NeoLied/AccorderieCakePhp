@@ -154,10 +154,11 @@ class UsersController extends AppController
 			if ($this->Auth->login()) {
 				return $this->redirect($this->Auth->redirectUrl("/"));
 			} else {
-				if(!empty($this->request->data) && isset($this->request->data)){
+				if(!empty($this->request->data) && isset($this->request->data) && isset($this->request->data['User'])){
                     $d = $this->User->find('first', array('conditions' => array('username' => $this->request->data['User']['username'])));
-
-
+					if(empty($d)){
+						throw new Exception("L'utilisateur entré n'existe pas");
+					}
                     $passwordHasher = new SimplePasswordHasher();
                     $passwordHasher = $passwordHasher->hash($this->request->data['User']['password']);
 
