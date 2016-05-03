@@ -1,0 +1,1 @@
+mysql -u root -p root < database_test.sql
